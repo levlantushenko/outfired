@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3626644356398838701}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.48, z: 0}
+  m_LocalPosition: {x: 0, y: -1.21, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -138,7 +138,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 4
-  m_Time: 0.3
+  m_Time: 0.5
   m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3
@@ -160,7 +160,7 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 0}
+      key0: {r: 1, g: 1, b: 1, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -356,9 +356,10 @@ GameObject:
   m_Component:
   - component: {fileID: 8168851206926914676}
   - component: {fileID: 8584859748216562992}
-  - component: {fileID: 1322144527976129673}
   - component: {fileID: 4108189645304623391}
   - component: {fileID: 8935335239747378095}
+  - component: {fileID: 7513696568805012493}
+  - component: {fileID: 3710477763200461816}
   m_Layer: 0
   m_Name: player
   m_TagString: Player
@@ -413,42 +414,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &1322144527976129673
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6941273551317526572}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c023834ec67d004b9737591feb4a980, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 10
-  force: 10
-  jump: 0
-  jumpT: 1
-  rememberTime: 0
-  space: 0
-  rb: {fileID: 8584859748216562992}
-  groundCheck: {fileID: 5307184560833828326}
-  lay:
-    serializedVersion: 2
-    m_Bits: 51
-  SC: {fileID: 3970553361648210299}
-  slash: {fileID: 3217810388079908213, guid: 89eea14819de7ad49a8a3d531a23503f, type: 3}
-  attPos: {fileID: 7242983312264892752}
-  shootP: {fileID: 8286988507634793354}
-  bullet: {fileID: 3217810388079908213, guid: 0624e58376f89154a80649d1cf5c3217, type: 3}
-  damage: 0
-  bulSpeed: 20
-  cam: {fileID: 0}
-  cameraLimit: {fileID: 0}
-  items: []
-  canv: {fileID: 0}
-  controlDist: 10
-  encounterSpeed: 10
 --- !u!95 &4108189645304623391
 Animator:
   serializedVersion: 5
@@ -505,6 +470,56 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.93
+--- !u!114 &7513696568805012493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6941273551317526572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba3ae7fcd3a711742b4e15f39eccd6d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundCheck: {fileID: 5307184560833828326}
+  lay:
+    serializedVersion: 2
+    m_Bits: 55
+  force: 10
+  speed: 10
+  sc: {fileID: 3970553361648210299}
+  dashSpd: 70
+  dashDur: 0.1
+  dashCd: 1
+  dist: 5
+--- !u!320 &3710477763200461816
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6941273551317526572}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 6bc786295471dbe418f3cddd01d61ffd, type: 2}
+  m_InitialState: 1
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: -6635016327792857171, guid: 6bc786295471dbe418f3cddd01d61ffd, type: 2}
+    value: {fileID: 4108189645304623391}
+  - key: {fileID: -4177036278514888784, guid: 6bc786295471dbe418f3cddd01d61ffd, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -7082569517291969154, guid: 6bc786295471dbe418f3cddd01d61ffd, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 468400647901971845, guid: 6bc786295471dbe418f3cddd01d61ffd, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 2597771483567194119, guid: 6bc786295471dbe418f3cddd01d61ffd, type: 2}
+    value: {fileID: 0}
+  m_ExposedReferences:
+    m_References: []
 --- !u!1 &7589030884476768273
 GameObject:
   m_ObjectHideFlags: 0
