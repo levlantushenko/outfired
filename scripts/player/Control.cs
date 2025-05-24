@@ -71,6 +71,8 @@ public class Control : MonoBehaviour
         if (!isRanged)
         {
             GameObject _slash = Instantiate(att, attPos.position, attPos.rotation);
+            _slash.transform.localScale = new Vector3(SC.localScale.x / Mathf.Abs(SC.localScale.x) * _slash.transform.localScale.x,
+                _slash.transform.localScale.y, 1);
             _slash.transform.parent = tr;
             Destroy(_slash, 0.1f);
         }
@@ -103,6 +105,8 @@ public class Control : MonoBehaviour
                     enemy = enemies[i];
                 }
             }
+            if (enemy.GetComponent<unit>().hp <= 0)
+                enemy.GetComponent<unit>().hp = 1;
             enemy.isControlled = true;
             cam.Follow = enemy.transform;
             Destroy(tr.gameObject);

@@ -493,6 +493,8 @@ MonoBehaviour:
   dashDur: 0.1
   dashCd: 1
   dist: 5
+  deathEff: {fileID: 8474352548453540660, guid: 843751c67614eee4481293df4de3882c, type: 3}
+  deathT: 2
 --- !u!320 &3710477763200461816
 PlayableDirector:
   m_ObjectHideFlags: 0

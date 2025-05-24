@@ -1,6 +1,7 @@
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
@@ -26,6 +27,8 @@ public class unit : MonoBehaviour
     public float speed;
     public Transform sc;
     public CinemachineConfiner2D conf;
+    public GameObject slash;
+    public Transform attPos;
 
     private void Start()
     {
@@ -34,9 +37,30 @@ public class unit : MonoBehaviour
     }
     private void Update()
     {
+        if(hp<=0)
+        {
+            anim.SetTrigger("die");
+            GetComponent<Collider2D>().enabled = false;
+            GetComponent<Rigidbody2D>().simulated = false;
+            return;
+        }
         if (!isControlled)
         {
-            Transform enemy = FindAnyObjectByType<player_main>().transform;
+            Transform enemy = null;
+            if (FindAnyObjectByType<player_main>() != null)
+                enemy = FindAnyObjectByType<player_main>().transform;
+            else
+            {
+                unit[] units = FindObjectsByType<unit>(FindObjectsSortMode.None);
+                for (int i = 0; i < units.Count(); i++)
+                {
+                    if (units[i].isControlled && units[i].type != type)
+                    {
+                        enemy = units[i].transform;
+                    }
+                }
+            }
+                
             if (enemy == null) return;
             if (Vector2.Distance(transform.position, enemy.position) < dist)
             {
@@ -53,6 +77,8 @@ public class unit : MonoBehaviour
         Animate();
         Control.Move(gameObject, speed, sc, true);
         Control.Jump(gameObject, groundCheck, lay, force);
+        if(Input.GetKeyDown(KeyCode.X))
+            Control.Attack(transform, slash, attPos, false,  transform);
         
     }
     public void Animate()
@@ -74,7 +100,9 @@ public class unit : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(isControlled)
+        if (isControlled && collision.gameObject.layer == 3)
             Control.CameraControl(collision, conf);
+        else if (collision.gameObject.tag == "slash")
+            hp -= 1;
     }
 }

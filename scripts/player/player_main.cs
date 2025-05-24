@@ -80,5 +80,5 @@ public class player_main : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
-    void SceneReset() => SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    void SceneReset() => GameObject.FindGameObjectWithTag("deathScr").GetComponent<Animator>().SetTrigger("die");
 }
