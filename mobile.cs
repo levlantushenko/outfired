@@ -5,6 +5,11 @@ using UnityEngine;
 public class mobile : MonoBehaviour
 {
     public GameObject player;
+    private void Awake()
+    {
+        if(!Application.isMobilePlatform)
+            gameObject.SetActive(false);
+    }
     void Update()
     {
         if (player == null)

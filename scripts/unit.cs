@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -5,6 +6,11 @@ using UnityEngine;
 
 public class unit : MonoBehaviour
 {
+    public enum enTypes
+    {
+        Miner
+    }
+    public enTypes type;
     public bool isControlled;
     [Header("enemy")]
     public float hp;
@@ -19,30 +25,41 @@ public class unit : MonoBehaviour
     public float force;
     public float speed;
     public Transform sc;
+    public CinemachineConfiner2D conf;
 
     private void Start()
     {
         anim = GetComponent<Animator>();
+        conf = FindAnyObjectByType<CinemachineConfiner2D>();
     }
     private void Update()
     {
-        Transform enemy = FindAnyObjectByType<player_main>().transform;
-        if (Vector2.Distance(transform.position, enemy.position) < dist)
+        if (!isControlled)
         {
-            anim.SetBool("chase", true);
-            transform.localScale = new Vector2(posDifference(transform.position.x, enemy.position.x), transform.localScale.y);
-            transform.Translate(Vector3.left * transform.localScale.x * speed * Time.deltaTime);
+            Transform enemy = FindAnyObjectByType<player_main>().transform;
+            if (enemy == null) return;
+            if (Vector2.Distance(transform.position, enemy.position) < dist)
+            {
+                anim.SetBool("chase", true);
+                transform.localScale = new Vector2(posDifference(transform.position.x, enemy.position.x), transform.localScale.y);
+                transform.Translate(Vector3.left * transform.localScale.x * speed * Time.deltaTime);
+            }
+            else
+                anim.SetBool("chase", false);
+                if (Vector2.Distance(transform.position, enemy.position) < attDist)
+                    anim.SetTrigger("attack");
         }
-        else
-            anim.SetBool("chase", false);
-        if (Vector2.Distance(transform.position, enemy.position) < attDist)
-            anim.SetTrigger("attack");
-        
-
         if (!isControlled) return;
-        Control.Move(gameObject, speed, sc);
+        Animate();
+        Control.Move(gameObject, speed, sc, true);
         Control.Jump(gameObject, groundCheck, lay, force);
         
+    }
+    public void Animate()
+    {
+        if (Input.GetAxis("Horizontal") != 0) anim.SetBool("chase", true);
+        else anim.SetBool("chase", false);
+
     }
     float posDifference(float a, float b)
     {
@@ -54,5 +71,10 @@ public class unit : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, dist);
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attDist);
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(isControlled)
+            Control.CameraControl(collision, conf);
     }
 }

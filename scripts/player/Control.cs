@@ -2,12 +2,13 @@ using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Control : MonoBehaviour
 {
-    //test void comment
-    public static void Move(GameObject gm, float speed, Transform SC)
+    public static void Move(GameObject gm, float speed, Transform SC, bool isInverted)
     {
         Rigidbody2D rb = gm.GetComponent<Rigidbody2D>();
         if (Input.GetAxis("Horizontal") != 0)
@@ -16,27 +17,32 @@ public class Control : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            SC.localScale = new Vector3(-1, 1, 1);
+            if (!isInverted) SC.localScale = new Vector3(-1, 1, 1);
+            else SC.localScale = new Vector3(1, 1, 1);
         }
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            SC.localScale = new Vector3(1, 1, 1);
+            if (!isInverted) SC.localScale = new Vector3(1, 1, 1);
+            else SC.localScale = new Vector3(-1, 1, 1);
         }
     }
-    public static void Move(GameObject gm, float speed, Transform SC, Joystick joy)
+    public static void Move(GameObject gm, float speed, Transform SC, Joystick joy, bool isInverted)
     {
         Rigidbody2D rb = gm.GetComponent<Rigidbody2D>();
         if (joy.Horizontal != 0)
         {
             rb.velocity = new Vector2(speed * joy.Horizontal / Mathf.Abs(joy.Horizontal), rb.velocity.y);
-        }
+        }else
+            rb.velocity = new Vector2(0, rb.velocity.y);
         if (joy.Horizontal < 0)
         {
-            SC.localScale = new Vector3(-1, 1, 1);
+            if(!isInverted) SC.localScale = new Vector3(-1, 1, 1);
+            else SC.localScale = new Vector3(1, 1, 1);
         }
         if (joy.Horizontal > 0)
         {
-            SC.localScale = new Vector3(1, 1, 1);
+            if (!isInverted) SC.localScale = new Vector3(1, 1, 1);
+            else SC.localScale = new Vector3(-1, 1, 1);
         }
     }
     public static void Jump(GameObject gm, Transform groundCheck, LayerMask lay, float force)
@@ -81,11 +87,11 @@ public class Control : MonoBehaviour
     bool isControlling = false;
     public float controlDist = 4;
     public float encounterSpeed;
-    public static void getControl(Transform tr, float dist)
+    public static void getControl(Transform tr, float dist, CinemachineVirtualCamera cam)
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
-            List<unit> enemies = Control.getWeakEnemy(tr, dist);
+            List<unit> enemies = getWeakEnemies(tr, dist);
             if (enemies.Count == 0) return;
             float closestDist = dist;
             unit enemy = null;
@@ -98,14 +104,16 @@ public class Control : MonoBehaviour
                 }
             }
             enemy.isControlled = true;
+            cam.Follow = enemy.transform;
             Destroy(tr.gameObject);
         }
     }
     //getting all enemies in range
-    public static List<unit> getWeakEnemy(Transform tr, float dist)
+    public static List<unit> getWeakEnemies(Transform tr, float dist)
     {
         List<unit> enemies = new List<unit>();
         unit[] enemiesRaw = FindObjectsByType<unit>(FindObjectsSortMode.None);
+        Debug.Log("enemies on Map : " + enemiesRaw.Count());
         foreach (unit enemy in enemiesRaw)
         {
             Transform t = enemy.transform;

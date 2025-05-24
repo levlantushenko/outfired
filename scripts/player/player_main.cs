@@ -2,6 +2,7 @@ using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class player_main : MonoBehaviour
 {
@@ -20,6 +21,9 @@ public class player_main : MonoBehaviour
     public float dist;
     CinemachineConfiner2D conf;
     Joystick joy;
+    [Header("death")]
+    public GameObject deathEff;
+    public float deathT;
     private void Start()
     {
         FindAnyObjectByType<CinemachineVirtualCamera>().LookAt = transform;
@@ -33,9 +37,9 @@ public class player_main : MonoBehaviour
         if (!isDashing)
         {
             if(!Application.isMobilePlatform)
-                Control.Move(gameObject, speed, sc);
+                Control.Move(gameObject, speed, sc, false);
             else
-                Control.Move(gameObject, speed, sc, joy);
+                Control.Move(gameObject, speed, sc, joy, false);
         }
         
         if (Input.GetKeyDown(KeyCode.LeftShift) && isDashAble)
@@ -47,8 +51,9 @@ public class player_main : MonoBehaviour
             Invoke("DashReset", dashCd);
         }
         if (Input.GetKeyDown(KeyCode.A))
-            Control.getControl(transform, dist);
+            Control.getControl(transform, dist, conf.GetComponent<CinemachineVirtualCamera>());
     }
+    
     public void Jump() => Control.Jump(gameObject, groundCheck, lay, force);
     public void Dash()
     {
@@ -66,6 +71,14 @@ public class player_main : MonoBehaviour
     void DashReset() => isDashAble = true;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Control.CameraControl(collision, conf);
+        if(collision.gameObject.layer == 3)
+            Control.CameraControl(collision, conf);
+        else if(collision.gameObject.tag == "slash")
+        {
+            Instantiate(deathEff, transform.position, transform.rotation);
+            Invoke("SceneReset", deathT);
+            gameObject.SetActive(false);
+        }
     }
+    void SceneReset() => SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 }

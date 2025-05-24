@@ -7212,7 +7212,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 869035841}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.231789, y: 5.3449593, z: -10}
+  m_LocalPosition: {x: -10.99456, y: 5.3496, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -14589,6 +14589,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -832302524656157817, guid: 7d996431115b24845bd4a54ddae4654d, type: 3}
+      propertyPath: controlHp
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 7217437945539357031, guid: 7d996431115b24845bd4a54ddae4654d, type: 3}
       propertyPath: m_Name
       value: miner
@@ -14670,6 +14674,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: player
       objectReference: {fileID: 0}
+    - target: {fileID: 7513696568805012493, guid: 0211b4f88929872468da9994192b4d93, type: 3}
+      propertyPath: deathT
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7513696568805012493, guid: 0211b4f88929872468da9994192b4d93, type: 3}
+      propertyPath: deathEff
+      value: 
+      objectReference: {fileID: 8474352548453540660, guid: 843751c67614eee4481293df4de3882c, type: 3}
     - target: {fileID: 8168851206926914676, guid: 0211b4f88929872468da9994192b4d93, type: 3}
       propertyPath: m_RootOrder
       value: 1

@@ -42,7 +42,7 @@ Material:
     - _opacity: 0.5
     - _scale: 1
     m_Colors:
-    - _color: {r: 0, g: 0, b: 0, a: 0}
+    - _color: {r: 0, g: 0, b: 0, a: 1}
     - _speed: {r: 0, g: -2, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &2147622126896073478
