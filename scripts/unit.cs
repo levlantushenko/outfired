@@ -29,9 +29,14 @@ public class unit : MonoBehaviour
     public CinemachineConfiner2D conf;
     public GameObject slash;
     public Transform attPos;
+    Joystick joy = null;
+    public float dashSpd;
+    public float dashDur;
 
     private void Start()
     {
+        if(Application.isMobilePlatform)
+            joy = FindAnyObjectByType<Joystick>();
         anim = GetComponent<Animator>();
         conf = FindAnyObjectByType<CinemachineConfiner2D>();
     }
@@ -75,11 +80,19 @@ public class unit : MonoBehaviour
         }
         if (!isControlled) return;
         Animate();
-        Control.Move(gameObject, speed, sc, true);
-        Control.Jump(gameObject, groundCheck, lay, force);
-        if(Input.GetKeyDown(KeyCode.X))
-            Control.Attack(transform, slash, attPos, false,  transform);
-        
+        if (!Application.isMobilePlatform)
+            Control.Move(gameObject, speed, sc, true);
+        else
+            Control.Move(gameObject, speed, sc, joy, true);
+        if(Input.GetKeyDown(KeyCode.Z))
+            Jump();
+        if (Input.GetKeyDown(KeyCode.X))
+            Attack();
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            Dash();
+            Invoke("stopDash", dashDur);
+        }
     }
     public void Animate()
     {
@@ -91,6 +104,12 @@ public class unit : MonoBehaviour
     {
         return (a - b) / Mathf.Abs(a - b);
     }
+    public void Jump() => Control.Jump(gameObject, groundCheck, lay, force);
+    public void Attack() => Control.Attack(transform, slash, attPos, false, transform);
+    public void Dash() => Control.Dash(gameObject, dashSpd);
+    public void StopDash() => Control.DashStop(gameObject);
+
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;

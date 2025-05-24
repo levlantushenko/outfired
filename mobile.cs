@@ -26,6 +26,27 @@ public class mobile : MonoBehaviour
             }
         }
     }
-    public void Jump() => player.GetComponent<player_main>().Jump();
-    public void Dash() => player.GetComponent<player_main>().Dash();
+    public void Jump(){
+        if (player.TryGetComponent<player_main>(out player_main pl))
+            pl.Jump();
+        else
+            player.GetComponent<unit>().Jump();
+    }
+    public void Dash()
+    {
+        if (player.TryGetComponent<player_main>(out player_main pl))
+            pl.Jump();
+        else
+            player.GetComponent<unit>().Dash();
+    }
+    public void GetControl()
+    {
+        if (player.TryGetComponent<player_main>(out player_main pl))
+            pl.GetControl();
+    }
+    public void Attack()
+    {
+        if (!player.TryGetComponent<player_main>(out player_main pl))
+            player.GetComponent<unit>().Attack();
+    }
 }

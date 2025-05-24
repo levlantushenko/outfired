@@ -51,9 +51,9 @@ public class player_main : MonoBehaviour
             Invoke("DashReset", dashCd);
         }
         if (Input.GetKeyDown(KeyCode.A))
-            Control.getControl(transform, dist, conf.GetComponent<CinemachineVirtualCamera>());
+            GetControl();
     }
-    
+    public void GetControl() => Control.getControl(transform, dist, conf.GetComponent<CinemachineVirtualCamera>());
     public void Jump() => Control.Jump(gameObject, groundCheck, lay, force);
     public void Dash()
     {
