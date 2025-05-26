@@ -91,26 +91,25 @@ public class Control : MonoBehaviour
     public float encounterSpeed;
     public static void getControl(Transform tr, float dist, CinemachineVirtualCamera cam)
     {
-        if (Input.GetKeyDown(KeyCode.A))
+        Debug.Log("control : void caused!");
+        List<unit> enemies = getWeakEnemies(tr, dist);
+        if (enemies.Count == 0) return;
+        float closestDist = dist;
+        unit enemy = null;
+        for (int i = 0; i < enemies.Count; i++)
         {
-            List<unit> enemies = getWeakEnemies(tr, dist);
-            if (enemies.Count == 0) return;
-            float closestDist = dist;
-            unit enemy = null;
-            for (int i = 0; i < enemies.Count; i++)
+            if (Vector3.Distance(enemies[i].transform.position, tr.position) < closestDist)
             {
-                if (Vector3.Distance(enemies[i].transform.position, tr.position) < closestDist)
-                {
-                    closestDist = Vector3.Distance(enemies[i].transform.position, tr.position);
-                    enemy = enemies[i];
-                }
+                closestDist = Vector3.Distance(enemies[i].transform.position, tr.position);
+                enemy = enemies[i];
             }
-            if (enemy.GetComponent<unit>().hp <= 0)
-                enemy.GetComponent<unit>().hp = 1;
-            enemy.isControlled = true;
-            cam.Follow = enemy.transform;
-            Destroy(tr.gameObject);
         }
+        if (enemy.GetComponent<unit>().hp <= 0)
+            enemy.GetComponent<unit>().hp = 1;
+        enemy.isControlled = true;
+        cam.Follow = enemy.transform;
+        Destroy(tr.gameObject);
+        Debug.Log("we took control!");
     }
     //getting all enemies in range
     public static List<unit> getWeakEnemies(Transform tr, float dist)

@@ -28,10 +28,14 @@ public class forklift : MonoBehaviour
             }
         }
             
-        if (Input.GetKeyDown(KeyCode.Z) && Vector2.Distance(transform.position, obj.position) < dist)
+        if (Vector2.Distance(transform.position, obj.position) < dist)
         {
-            ride = true;
-            Debug.Log("enjoy the ride!");
+            if (Application.isMobilePlatform && mobile.isInteracting ||
+                !Application.isMobilePlatform && Input.GetKeyDown(KeyCode.Z))
+            {
+                ride = true;
+                Debug.Log("enjoy the ride!");
+            }
         }
         if (ride)
         {

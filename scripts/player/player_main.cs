@@ -53,7 +53,11 @@ public class player_main : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A))
             GetControl();
     }
-    public void GetControl() => Control.getControl(transform, dist, conf.GetComponent<CinemachineVirtualCamera>());
+    public void GetControl()
+    {
+        Control.getControl(transform, dist, conf.GetComponent<CinemachineVirtualCamera>());
+        Debug.Log("player : void caused!");
+    }
     public void Jump() => Control.Jump(gameObject, groundCheck, lay, force);
     public void Dash()
     {
