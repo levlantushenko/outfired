@@ -5,7 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
-public class unit : MonoBehaviour
+public class Unit : MonoBehaviour
 {
     public enum enTypes
     {
@@ -32,6 +32,9 @@ public class unit : MonoBehaviour
     Joystick joy = null;
     public float dashSpd;
     public float dashDur;
+    public GameObject origin;
+    public float explForce;
+    public GameObject expl;
 
     private void Start()
     {
@@ -39,12 +42,21 @@ public class unit : MonoBehaviour
             joy = FindAnyObjectByType<Joystick>();
         anim = GetComponent<Animator>();
         conf = FindAnyObjectByType<CinemachineConfiner2D>();
+
     }
     private void Update()
     {
+        if(isControlled && hp <= 0)
+        {
+            hp = 1;
+            Debug.Log("unit rebirthed!");
+            anim.SetBool("isAlive", true);
+            GetComponent<Collider2D>().enabled = true;
+            GetComponent<Rigidbody2D>().simulated = true;
+        }
         if(hp<=0)
         {
-            anim.SetTrigger("die");
+            anim.SetBool("isAlive", false);
             GetComponent<Collider2D>().enabled = false;
             GetComponent<Rigidbody2D>().simulated = false;
             return;
@@ -56,7 +68,7 @@ public class unit : MonoBehaviour
                 enemy = FindAnyObjectByType<player_main>().transform;
             else
             {
-                unit[] units = FindObjectsByType<unit>(FindObjectsSortMode.None);
+                Unit[] units = FindObjectsByType<Unit>(FindObjectsSortMode.None);
                 for (int i = 0; i < units.Count(); i++)
                 {
                     if (units[i].isControlled && units[i].type != type)
@@ -93,16 +105,28 @@ public class unit : MonoBehaviour
             Dash();
             Invoke("stopDash", dashDur);
         }
+        if (Input.GetKeyDown(KeyCode.A) && isControlled)
+            Explode();
     }
     public void Animate()
     {
+        if (Application.isMobilePlatform) return;
         if (Input.GetAxis("Horizontal") != 0) anim.SetBool("chase", true);
         else anim.SetBool("chase", false);
-
+    }
+    public void Animate(Joystick joy, Animator anim)
+    {
+        if (joy.Horizontal != 0) anim.SetBool("chase", true);
+        else anim.SetBool("chase", false);
     }
     float posDifference(float a, float b)
     {
         return (a - b) / Mathf.Abs(a - b);
+    }
+    bool explodable = false;
+    public void BombTime() => explodable = true;
+    public void Explode() { 
+        if (explodable) Control.Explode(origin, transform, explForce, expl);
     }
     public void Jump() => Control.Jump(gameObject, groundCheck, lay, force);
     public void Attack() => Control.Attack(transform, slash, attPos, false, transform);
@@ -121,7 +145,11 @@ public class unit : MonoBehaviour
     {
         if (isControlled && collision.gameObject.layer == 3)
             Control.CameraControl(collision, conf);
-        else if (collision.gameObject.tag == "slash")
+        if (collision.gameObject.tag == "slash")
             hp -= 1;
+        if(collision.gameObject.tag == "explosion")
+        {
+            hp -= 5;
+        }
     }
 }

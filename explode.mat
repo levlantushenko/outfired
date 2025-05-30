@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: forklift trail
+  m_Name: explode
   m_Shader: {fileID: -6465566751694194690, guid: d40c877549848f749888b65e81939370, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -24,7 +24,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 59f3092d037d07144bd9314805d52735, type: 3}
+        m_Texture: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_a89d0ff1ba234bec87b6c1770763d24b_Texture_1_Texture2D:
@@ -32,18 +32,18 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _texture:
-        m_Texture: {fileID: 2800000, guid: 7e3f6d839d20c254c8fda81fb56d7593, type: 3}
+        m_Texture: {fileID: 2800000, guid: 18e803cadf78c3c4cb447c8e5fa774eb, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
-    - _opacity: 0.5
+    - _opacity: 1
     - _scale: 1
     m_Colors:
-    - _color: {r: 0, g: 4, b: 3.7764444, a: 1}
-    - _speed: {r: 0, g: 5, b: 0, a: 0}
+    - _color: {r: 15.999999, g: 8.801099, b: 0, a: 1}
+    - _speed: {r: 0, g: -5, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &2147622126896073478
 MonoBehaviour:

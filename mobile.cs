@@ -5,10 +5,11 @@ using UnityEngine;
 public class mobile : MonoBehaviour
 {
     public GameObject player = null;
+    public Joystick joy;
     private void Awake()
     {
-        //if (!Application.isMobilePlatform)
-        //    gameObject.SetActive(false);
+        if (!Application.isMobilePlatform)
+            gameObject.SetActive(false);
     }
     void Update()
     {
@@ -20,11 +21,11 @@ public class mobile : MonoBehaviour
             else
             {
                 Debug.Log("Searching for unit");
-                unit[] list = FindObjectsByType<unit>(FindObjectsSortMode.None);
+                Unit[] list = FindObjectsByType<Unit>(FindObjectsSortMode.None);
                 for(int i = 0; i < list.Length; i++)
                 {
                     player = list[i].gameObject;
-                    if (!player.GetComponent<unit>().isControlled)
+                    if (!player.GetComponent<Unit>().isControlled)
                         player = null;
                     if (player != null)
                     {
@@ -35,19 +36,23 @@ public class mobile : MonoBehaviour
                 }
             }
         }
+        if(player.TryGetComponent<Unit>(out Unit pl))
+        {
+            pl.Animate(joy, pl.GetComponent<Animator>());
+        }
     }
     public void Jump(){
         if (player.TryGetComponent<player_main>(out player_main pl))
             pl.Jump();
         else
-            player.GetComponent<unit>().Jump();
+            player.GetComponent<Unit>().Jump();
     }
     public void Dash()
     {
         if (player.TryGetComponent<player_main>(out player_main pl))
             pl.Dash();
         else
-            player.GetComponent<unit>().Dash();
+            player.GetComponent<Unit>().Dash();
     }
     public void GetControl()
     {
@@ -55,12 +60,12 @@ public class mobile : MonoBehaviour
         if (player.TryGetComponent<player_main>(out player_main pl))
             pl.GetControl();
         else
-            Debug.LogWarning("err : no player found");
+            player.GetComponent<Unit>().Explode();
     }
     public void Attack()
     {
         if (!player.TryGetComponent<player_main>(out player_main pl))
-            player.GetComponent<unit>().Attack();
+            player.GetComponent<Unit>().Attack();
     }
     public static bool isInteracting = false;
     public void Interact()

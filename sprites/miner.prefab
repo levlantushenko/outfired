@@ -1280,7 +1280,7 @@ GameObject:
   - component: {fileID: 3155398209789823349}
   - component: {fileID: 3277456388285669757}
   - component: {fileID: 5694598173845295571}
-  - component: {fileID: -832302524656157817}
+  - component: {fileID: 4375272664330528999}
   m_Layer: 0
   m_Name: miner
   m_TagString: Untagged
@@ -1309,7 +1309,7 @@ Transform:
   - {fileID: 5907472670041177687}
   - {fileID: 8518765481673990739}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &3155398209789823349
 Animator:
@@ -1404,7 +1404,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &-832302524656157817
+--- !u!114 &4375272664330528999
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1413,25 +1413,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 7217437945539357031}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f504b9e20972c2749a80999a2c5d7c23, type: 3}
+  m_Script: {fileID: 11500000, guid: 46c097f58b76f3f49ae7fdece11111d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
   isControlled: 0
   hp: 5
-  controlHp: 6
-  dist: 10
-  attDist: 3
+  controlHp: 3
+  dist: 7
+  attDist: 2
   groundCheck: {fileID: 0}
   lay:
     serializedVersion: 2
     m_Bits: 0
   force: 0
-  speed: 3
+  speed: 5
   sc: {fileID: 7372002728943352438}
   conf: {fileID: 0}
-  slash: {fileID: 0}
-  attPos: {fileID: 0}
+  slash: {fileID: 6661352027396472916, guid: 1fde41f36e7829d4fb9f76d5f453f3dc, type: 3}
+  attPos: {fileID: 8518765481673990739}
+  dashSpd: 0
+  dashDur: 0
+  origin: {fileID: 6941273551317526572, guid: 0211b4f88929872468da9994192b4d93, type: 3}
+  explForce: 50
+  expl: {fileID: 4416799296767080569, guid: 17d859c2ffb2fff4d94585851621aca3, type: 3}
 --- !u!1 &7722439228765693652
 GameObject:
   m_ObjectHideFlags: 0

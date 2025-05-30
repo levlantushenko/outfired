@@ -1,6 +1,7 @@
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -17,7 +18,7 @@ public class player_main : MonoBehaviour
     public float dashDur;
     public float dashCd;
     bool isDashAble = true;
-    bool isDashing;
+    [DoNotSerialize] public bool isDashing;
     public float dist;
     CinemachineConfiner2D conf;
     Joystick joy;
@@ -26,12 +27,14 @@ public class player_main : MonoBehaviour
     public float deathT;
     private void Start()
     {
-        FindAnyObjectByType<CinemachineVirtualCamera>().LookAt = transform;
+        FindAnyObjectByType<CinemachineVirtualCamera>().Follow = transform;
         conf = FindAnyObjectByType<CinemachineConfiner2D>();
         joy = FindAnyObjectByType<Joystick>();  
     }
     void Update()
     {
+        if (FindAnyObjectByType<CinemachineVirtualCamera>().Follow != transform)
+            FindAnyObjectByType<CinemachineVirtualCamera>().Follow = transform;
         if (Input.GetKeyDown(KeyCode.Z))
             Jump();
         if (!isDashing)

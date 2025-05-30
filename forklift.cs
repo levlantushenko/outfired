@@ -18,7 +18,7 @@ public class forklift : MonoBehaviour
             obj = FindAnyObjectByType<player_main>().transform;
         else
         {
-            unit[] units = FindObjectsByType<unit>(FindObjectsSortMode.None);
+            Unit[] units = FindObjectsByType<Unit>(FindObjectsSortMode.None);
             for(int i = 0; i < units.Count(); i++)
             {
                 if (units[i].isControlled)

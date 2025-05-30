@@ -359,7 +359,6 @@ GameObject:
   - component: {fileID: 4108189645304623391}
   - component: {fileID: 8935335239747378095}
   - component: {fileID: 7513696568805012493}
-  - component: {fileID: 3710477763200461816}
   m_Layer: 0
   m_Name: player
   m_TagString: Player
@@ -492,36 +491,10 @@ MonoBehaviour:
   dashSpd: 70
   dashDur: 0.1
   dashCd: 1
+  isDashing: 0
   dist: 5
   deathEff: {fileID: 8474352548453540660, guid: 843751c67614eee4481293df4de3882c, type: 3}
   deathT: 2
---- !u!320 &3710477763200461816
-PlayableDirector:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6941273551317526572}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: 6bc786295471dbe418f3cddd01d61ffd, type: 2}
-  m_InitialState: 1
-  m_WrapMode: 2
-  m_DirectorUpdateMode: 1
-  m_InitialTime: 0
-  m_SceneBindings:
-  - key: {fileID: -6635016327792857171, guid: 6bc786295471dbe418f3cddd01d61ffd, type: 2}
-    value: {fileID: 4108189645304623391}
-  - key: {fileID: -4177036278514888784, guid: 6bc786295471dbe418f3cddd01d61ffd, type: 2}
-    value: {fileID: 0}
-  - key: {fileID: -7082569517291969154, guid: 6bc786295471dbe418f3cddd01d61ffd, type: 2}
-    value: {fileID: 0}
-  - key: {fileID: 468400647901971845, guid: 6bc786295471dbe418f3cddd01d61ffd, type: 2}
-    value: {fileID: 0}
-  - key: {fileID: 2597771483567194119, guid: 6bc786295471dbe418f3cddd01d61ffd, type: 2}
-    value: {fileID: 0}
-  m_ExposedReferences:
-    m_References: []
 --- !u!1 &7589030884476768273
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,0 +1,28 @@
+From 5112ea4cad320874814c58938a10a2d31a273957 Mon Sep 17 00:00:00 2001
+From: levlantushenko <109666289+levlantushenko@users.noreply.github.com>
+Date: Sat, 24 May 2025 17:38:45 +0300
+Subject: mobile control patch
+
+
+diff --git a/Scenes/SampleScene.unity b/Scenes/SampleScene.unity
+index e0722f1..4abef14 100644
+--- a/Scenes/SampleScene.unity
++++ b/Scenes/SampleScene.unity
+@@ -7679,7 +7679,7 @@ GameObject:
+   m_Icon: {fileID: 0}
+   m_NavMeshLayer: 0
+   m_StaticEditorFlags: 0
+-  m_IsActive: 0
++  m_IsActive: 1
+ --- !u!224 &866219861
+ RectTransform:
+   m_ObjectHideFlags: 0
+@@ -7804,7 +7804,7 @@ Transform:
+   m_PrefabAsset: {fileID: 0}
+   m_GameObject: {fileID: 869035841}
+   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+-  m_LocalPosition: {x: -10.99456, y: 5.3496, z: -10}
++  m_LocalPosition: {x: -15.256607, y: 5.36078, z: -10}
+   m_LocalScale: {x: 1, y: 1, z: 1}
+   m_ConstrainProportionsScale: 0
+   m_Children:

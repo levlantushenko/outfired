@@ -74,7 +74,7 @@ public class Control : MonoBehaviour
             _slash.transform.localScale = new Vector3(SC.localScale.x / Mathf.Abs(SC.localScale.x) * _slash.transform.localScale.x,
                 _slash.transform.localScale.y, 1);
             _slash.transform.parent = tr;
-            Destroy(_slash, 0.1f);
+            Destroy(_slash, 0.3f);
         }
         else
         {
@@ -92,10 +92,10 @@ public class Control : MonoBehaviour
     public static void getControl(Transform tr, float dist, CinemachineVirtualCamera cam)
     {
         Debug.Log("control : void caused!");
-        List<unit> enemies = getWeakEnemies(tr, dist);
+        List<Unit> enemies = getWeakEnemies(tr, dist);
         if (enemies.Count == 0) return;
         float closestDist = dist;
-        unit enemy = null;
+        Unit enemy = null;
         for (int i = 0; i < enemies.Count; i++)
         {
             if (Vector3.Distance(enemies[i].transform.position, tr.position) < closestDist)
@@ -104,20 +104,19 @@ public class Control : MonoBehaviour
                 enemy = enemies[i];
             }
         }
-        if (enemy.GetComponent<unit>().hp <= 0)
-            enemy.GetComponent<unit>().hp = 1;
+        enemy.Invoke("BombTime", 0.5f);
         enemy.isControlled = true;
         cam.Follow = enemy.transform;
         Destroy(tr.gameObject);
         Debug.Log("we took control!");
     }
     //getting all enemies in range
-    public static List<unit> getWeakEnemies(Transform tr, float dist)
+    public static List<Unit> getWeakEnemies(Transform tr, float dist)
     {
-        List<unit> enemies = new List<unit>();
-        unit[] enemiesRaw = FindObjectsByType<unit>(FindObjectsSortMode.None);
+        List<Unit> enemies = new List<Unit>();
+        Unit[] enemiesRaw = FindObjectsByType<Unit>(FindObjectsSortMode.None);
         Debug.Log("enemies on Map : " + enemiesRaw.Count());
-        foreach (unit enemy in enemiesRaw)
+        foreach (Unit enemy in enemiesRaw)
         {
             Transform t = enemy.transform;
             if (enemy.hp <= enemy.controlHp && Vector2.Distance(t.position, tr.position) < dist)
@@ -156,12 +155,12 @@ public class Control : MonoBehaviour
             cam.m_BoundingShape2D = collision.gameObject.GetComponent<PolygonCollider2D>();
         }
     }
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if (collision.gameObject.layer == 3)
-    //    {
-    //        Debug.Log("now starring : " + collision.name);
-    //        cameraLimit = collision.gameObject.GetComponent<PolygonCollider2D>();
-    //    }
-    //}
+    public static void Explode(GameObject origin, Transform tr, float force, GameObject expl)
+    {
+        Vector2 bakedForce = new Vector2(Input.GetAxis("Horizontal") * force, Input.GetAxis("Vertical") * force);
+        GameObject obj = Instantiate(origin, tr.position, tr.rotation);
+        GameObject _expl = Instantiate(expl, tr.position, tr.rotation);
+        Destroy(tr.gameObject);
+        obj.GetComponent<Rigidbody2D>().velocity = bakedForce;
+    }
 }
