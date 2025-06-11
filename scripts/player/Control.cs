@@ -8,6 +8,17 @@ using UnityEngine;
 
 public class Control : MonoBehaviour
 {
+    /// <summary>
+    /// moves player with speed
+    /// </summary>
+    /// <param name="gm"></param>
+    /// which gameobject to move
+    /// <param name="speed"></param>
+    /// speed of the movement
+    /// <param name="SC"></param>
+    /// transform that will invert scale
+    /// <param name="isInverted"></param>
+    /// invert SC on start?
     public static void Move(GameObject gm, float speed, Transform SC, bool isInverted)
     {
         Rigidbody2D rb = gm.GetComponent<Rigidbody2D>();
@@ -26,6 +37,19 @@ public class Control : MonoBehaviour
             else SC.localScale = new Vector3(-1, 1, 1);
         }
     }
+    /// <summary>
+    /// moves player with speed (mobile ver)
+    /// </summary>
+    /// <param name="gm"></param>
+    /// which gameobject to move
+    /// <param name="speed"></param>
+    /// speed of the movement
+    /// <param name="SC"></param>
+    /// transform that will invert scale
+    /// <param name="joy"></param>
+    /// joystick used for movement
+    /// <param name="isInverted"></param>
+    /// invert SC on start?
     public static void Move(GameObject gm, float speed, Transform SC, Joystick joy, bool isInverted)
     {
         Rigidbody2D rb = gm.GetComponent<Rigidbody2D>();
@@ -45,6 +69,17 @@ public class Control : MonoBehaviour
             else SC.localScale = new Vector3(-1, 1, 1);
         }
     }
+    /// <summary>
+    /// player jump
+    /// </summary>
+    /// <param name="gm"></param>
+    /// player gameobject
+    /// <param name="groundCheck"></param>
+    /// ground check point
+    /// <param name="lay"></param>
+    /// layer checked or ignored by groundCheck
+    /// <param name="force"></param>
+    /// jump force
     public static void Jump(GameObject gm, Transform groundCheck, LayerMask lay, float force)
     {
         bool jump;
@@ -66,6 +101,19 @@ public class Control : MonoBehaviour
             jump = false;
         }
     }
+    /// <summary>
+    /// player attack method
+    /// </summary>
+    /// <param name="tr"></param>
+    /// player transform
+    /// <param name="att"></param>
+    /// projectile gameobject
+    /// <param name="attPos"></param>
+    /// where to span projectile
+    /// <param name="isRanged"></param>
+    /// is attack ranged?
+    /// <param name="SC"></param>
+    /// SC of the movement
     public static void Attack(Transform tr, GameObject att, Transform attPos, bool isRanged, Transform SC)
     {
         if (!isRanged)
@@ -89,6 +137,16 @@ public class Control : MonoBehaviour
     bool isControlling = false;
     public float controlDist = 4;
     public float encounterSpeed;
+
+    /// <summary>
+    /// recieve control of the opponent
+    /// </summary>
+    /// <param name="tr"></param>
+    /// player transform
+    /// <param name="dist"></param>
+    /// finds opponents in distance
+    /// <param name="cam"></param>
+    /// world cinemachine camera
     public static void getControl(Transform tr, float dist, CinemachineVirtualCamera cam)
     {
         Debug.Log("control : void caused!");
@@ -128,6 +186,13 @@ public class Control : MonoBehaviour
             Debug.Log("enemies not found!");
         return enemies;
     }
+    /// <summary>
+    /// Dashes player in direction
+    /// </summary>
+    /// <param name="gm"></param>
+    /// player gameobject
+    /// <param name="dashSpd"></param>
+    /// dash speed
     public static void Dash(GameObject gm, float dashSpd)
     {
         Rigidbody2D rb = gm.GetComponent<Rigidbody2D>();
@@ -135,6 +200,15 @@ public class Control : MonoBehaviour
         rb.velocity = bakedDashSpd;
 
     }
+    /// <summary>
+    /// Dashes player in direction (mobile)
+    /// </summary>
+    /// <param name="gm"></param>
+    /// player gameobject
+    /// <param name="dashSpd"></param>
+    /// dash speed
+    /// <param name="joy"></param>
+    /// joystick used to find dash direction
     public static void Dash(GameObject gm, float dashSpd, Joystick joy)
     {
         Rigidbody2D rb = gm.GetComponent<Rigidbody2D>();
@@ -147,6 +221,13 @@ public class Control : MonoBehaviour
         rb.velocity = Vector2.zero;
         return false;
     }
+    /// <summary>
+    /// camera followment through rooms
+    /// </summary>
+    /// <param name="collision"></param>
+    /// in which polygon is player staying?
+    /// <param name="cam"></param>
+    /// camera
     public static void CameraControl(Collider2D collision, CinemachineConfiner2D cam)
     {
         if (collision.gameObject.layer == 3)
@@ -155,6 +236,17 @@ public class Control : MonoBehaviour
             cam.m_BoundingShape2D = collision.gameObject.GetComponent<PolygonCollider2D>();
         }
     }
+    /// <summary>
+    /// explodes instillated enemy
+    /// </summary>
+    /// <param name="origin"></param>
+    /// player object
+    /// <param name="tr"></param>
+    /// enemy transform
+    /// <param name="force"></param>
+    /// explosion force
+    /// <param name="expl"></param>
+    /// explosion effect
     public static void Explode(GameObject origin, Transform tr, float force, GameObject expl)
     {
         Vector2 bakedForce = new Vector2(Input.GetAxis("Horizontal") * force, Input.GetAxis("Vertical") * force);

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class forklift : MonoBehaviour
@@ -9,25 +10,19 @@ public class forklift : MonoBehaviour
     public string scene;
     public float dist;
     public Transform ridePos;
+    public Transform[] stopPoints;
     bool ride = false;
     float lerpSpeed = 0;
+    public bool isOnTop = false;
     void Update()
     {
+
+        transform.Translate(Vector2.up * lerpSpeed * Time.deltaTime);
         Transform obj = gameObject.transform;
         if (FindAnyObjectByType<player_main>() != null)
             obj = FindAnyObjectByType<player_main>().transform;
         else
-        {
-            Unit[] units = FindObjectsByType<Unit>(FindObjectsSortMode.None);
-            for(int i = 0; i < units.Count(); i++)
-            {
-                if (units[i].isControlled)
-                {
-                    obj = units[i].transform;
-                }
-            }
-        }
-            
+            return;
         if (Vector2.Distance(transform.position, obj.position) < dist)
         {
             if (Application.isMobilePlatform && mobile.isInteracting ||
@@ -43,5 +38,6 @@ public class forklift : MonoBehaviour
             transform.Translate(Vector2.up * lerpSpeed * Time.deltaTime);
             obj.position = ridePos.position;
         }
+        
     }
 }
