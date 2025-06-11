@@ -401,7 +401,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 1.75
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -411,7 +411,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!95 &4108189645304623391
 Animator:
@@ -485,8 +485,8 @@ MonoBehaviour:
   lay:
     serializedVersion: 2
     m_Bits: 55
-  force: 10
-  speed: 10
+  force: 15
+  speed: 15
   sc: {fileID: 3970553361648210299}
   dashSpd: 70
   dashDur: 0.1

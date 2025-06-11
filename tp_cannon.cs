@@ -7,6 +7,7 @@ public class tp_cannon : MonoBehaviour
     public Vector2 force;
     public float dist;
     Transform obj;
+    public GameObject eff;
 
     void Update()
     {
@@ -32,5 +33,11 @@ public class tp_cannon : MonoBehaviour
     {
         obj.gameObject.SetActive(true);
         obj.GetComponent<Rigidbody2D>().velocity = force;
+        Instantiate(eff, transform.position, transform.rotation);
+    }
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, dist);
     }
 }
