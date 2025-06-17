@@ -56,10 +56,11 @@ public class Control : MonoBehaviour
     public static void Move(GameObject gm, float speed, Transform SC, Joystick joy, bool isInverted)
     {
         Rigidbody2D rb = gm.GetComponent<Rigidbody2D>();
-        if (joy.Horizontal != 0)
+        if (joy.Horizontal != 0 && Mathf.Abs(rb.velocity.x) < speed)
         {
+            Debug.Log("moving!");
             if (rb.velocity.x < speed)
-                rb.AddForce(Vector2.right * joy.Horizontal * speed * 2 * Input.GetAxis("Horizontal"), ForceMode2D.Force);
+                rb.AddForce(Vector2.right * joy.Horizontal * speed * 2, ForceMode2D.Force);
         }
         else
             rb.velocity /= new Vector2(1.2f, 1);
@@ -90,8 +91,6 @@ public class Control : MonoBehaviour
         bool jump;
         float space;
         Rigidbody2D rb = gm.GetComponent<Rigidbody2D>();
-        #region space int
-        #endregion
         if (Physics2D.Raycast(groundCheck.position, Vector2.down, 0.1f, lay))
         {
 
@@ -259,5 +258,22 @@ public class Control : MonoBehaviour
         GameObject _expl = Instantiate(expl, tr.position, tr.rotation);
         Destroy(tr.gameObject);
         obj.GetComponent<Rigidbody2D>().velocity = bakedForce;
+    }
+
+    /// <summary>
+    /// Method used to make player jump frome a wall
+    /// </summary>
+    /// <param name="gm"></param>
+    /// player gameobject
+    /// <param name="direction"></param>
+    /// direction of jump
+    /// 1 = right
+    /// -1 = left
+    /// <param name="force"></param>
+    /// the force of walljump
+    public static void WallJump(GameObject gm, float direction, Vector2 force)
+    {
+        Rigidbody2D rb = gm.GetComponent<Rigidbody2D>();
+        rb.velocity = new Vector2(direction * force.x, force.y);
     }
 }
