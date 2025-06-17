@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class player_main : MonoBehaviour
 {
     [Header("movement")]
+    Rigidbody2D rb;
     public Transform groundCheck;
     public LayerMask lay;
     public float force;
@@ -23,13 +24,17 @@ public class player_main : MonoBehaviour
     CinemachineConfiner2D conf;
     Joystick joy;
     [Header("death")]
+    public float hp;
+    public float knockback;
     public GameObject deathEff;
     public float deathT;
+    
     private void Start()
     {
         FindAnyObjectByType<CinemachineVirtualCamera>().Follow = transform;
         conf = FindAnyObjectByType<CinemachineConfiner2D>();
         joy = FindAnyObjectByType<Joystick>();  
+        rb = GetComponent<Rigidbody2D>();
     }
     void Update()
     {
@@ -82,10 +87,23 @@ public class player_main : MonoBehaviour
             Control.CameraControl(collision, conf);
         else if(collision.gameObject.tag == "slash")
         {
-            Instantiate(deathEff, transform.position, transform.rotation);
-            Invoke("SceneReset", deathT);
-            gameObject.SetActive(false);
+            hp -= 1;
+            if (hp <= 0)
+                Death();
+            else
+            {
+                RaycastHit2D hit;
+                rb.velocity = (collision.transform.position - transform.position).normalized * knockback;
+            }
+                
         }
     }
+    void Death()
+    {
+        Instantiate(deathEff, transform.position, transform.rotation);
+        Invoke("SceneReset", deathT);
+        gameObject.SetActive(false);
+    }
+
     void SceneReset() => GameObject.FindGameObjectWithTag("deathScr").GetComponent<Animator>().SetTrigger("die");
 }

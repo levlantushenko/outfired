@@ -24,8 +24,11 @@ public class Control : MonoBehaviour
         Rigidbody2D rb = gm.GetComponent<Rigidbody2D>();
         if (Input.GetAxis("Horizontal") != 0)
         {
-            rb.velocity = new Vector2(speed * Input.GetAxis("Horizontal"), rb.velocity.y);
+            if (Mathf.Abs(rb.velocity.x) < speed)
+                rb.AddForce(Vector2.right * speed * 2 * Input.GetAxis("Horizontal"), ForceMode2D.Force);
         }
+        else
+            rb.velocity /= new Vector2(1.2f, 1);
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             if (!isInverted) SC.localScale = new Vector3(-1, 1, 1);
@@ -55,9 +58,11 @@ public class Control : MonoBehaviour
         Rigidbody2D rb = gm.GetComponent<Rigidbody2D>();
         if (joy.Horizontal != 0)
         {
-            rb.velocity = new Vector2(speed * joy.Horizontal / Mathf.Abs(joy.Horizontal), rb.velocity.y);
-        }else
-            rb.velocity = new Vector2(0, rb.velocity.y);
+            if (rb.velocity.x < speed)
+                rb.AddForce(Vector2.right * joy.Horizontal * speed * 2 * Input.GetAxis("Horizontal"), ForceMode2D.Force);
+        }
+        else
+            rb.velocity /= new Vector2(1.2f, 1);
         if (joy.Horizontal < 0)
         {
             if(!isInverted) SC.localScale = new Vector3(-1, 1, 1);
@@ -218,7 +223,7 @@ public class Control : MonoBehaviour
     public static bool DashStop(GameObject gm)
     {
         Rigidbody2D rb = gm.GetComponent<Rigidbody2D>();
-        rb.velocity = Vector2.zero;
+        rb.velocity = rb.velocity / 3;
         return false;
     }
     /// <summary>
