@@ -545,6 +545,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba3ae7fcd3a711742b4e15f39eccd6d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  joy: {fileID: 0}
+  axis: {x: 0, y: 0}
+  jump: 0
+  dash: 0
   groundCheck: {fileID: 5307184560833828326}
   lay:
     serializedVersion: 2
@@ -560,7 +564,7 @@ MonoBehaviour:
   wallCheckBox: {x: 0.2, y: 1}
   wallFallSpd: -4
   isWallJumping: 0
-  dashSpd: 70
+  dashSpd: 30
   dashDur: 0.1
   dashCd: 1
   isDashing: 0

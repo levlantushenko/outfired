@@ -7,6 +7,24 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
+    #region input system init
+    _InputSystem input;
+    public float X;
+    public float Y;
+    //private void Awake()
+    //{
+    //    input = new _InputSystem();
+    //    input.Enable();
+    //    input.normal.X.performed += ctx =>
+    //    {
+    //        X = ctx.ReadValue<float>();
+    //    };
+    //    input.normal.Y.performed += ctx =>
+    //    {
+    //        Y = ctx.ReadValue<float>();
+    //    };
+    //}
+    #endregion
     public enum enTypes
     {
         Miner
@@ -82,7 +100,7 @@ public class Unit : MonoBehaviour
             if (Vector2.Distance(transform.position, enemy.position) < dist)
             {
                 anim.SetBool("chase", true);
-                transform.localScale = new Vector2(posDifference(transform.position.x, enemy.position.x), transform.localScale.y);
+                transform.localScale *= new Vector2(posDifference(transform.position.x, enemy.position.x), 1);
                 transform.Translate(Vector3.left * transform.localScale.x * speed * Time.deltaTime);
             }
             else
@@ -93,7 +111,7 @@ public class Unit : MonoBehaviour
         if (!isControlled) return;
         Animate();
         if (!Application.isMobilePlatform)
-            Control.Move(gameObject, speed, sc, true);
+            Control.Move(gameObject, speed, sc, true, X);
         else
             Control.Move(gameObject, speed, sc, joy, true);
         if(Input.GetKeyDown(KeyCode.Z))
@@ -130,7 +148,7 @@ public class Unit : MonoBehaviour
     }
     public void Jump() => Control.Jump(gameObject, groundCheck, lay, force);
     public void Attack() => Control.Attack(transform, slash, attPos, false, transform);
-    public void Dash() => Control.Dash(gameObject, dashSpd);
+    public void Dash() => Control.Dash(gameObject, dashSpd, new Vector2(X, Y));
     public void StopDash() => Control.DashStop(gameObject);
 
 

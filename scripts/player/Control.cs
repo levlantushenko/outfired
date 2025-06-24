@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -19,25 +20,25 @@ public class Control : MonoBehaviour
     /// transform that will invert scale
     /// <param name="isInverted"></param>
     /// invert SC on start?
-    public static void Move(GameObject gm, float speed, Transform SC, bool isInverted)
+    public static void Move(GameObject gm, float speed, Transform SC, bool isInverted, float direction)
     {
         Rigidbody2D rb = gm.GetComponent<Rigidbody2D>();
-        if (Input.GetAxis("Horizontal") != 0)
+        if (direction != 0)
         {
             if (Mathf.Abs(rb.velocity.x) < speed)
-                rb.AddForce(Vector2.right * speed * 2 * Input.GetAxis("Horizontal"), ForceMode2D.Force);
+                rb.AddForce(Vector2.right * speed * 2 * direction, ForceMode2D.Force);
         }
-        else
-            rb.velocity /= new Vector2(1.2f, 1);
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if(direction == 0)
+            rb.velocity /= new Vector2(1.02f, 1);
+        if (direction < 0)
         {
-            if (!isInverted) SC.localScale = new Vector3(-1, 1, 1);
+            if (!isInverted) SC.localScale *= new Vector2(-1, 1);
             else SC.localScale = new Vector3(1, 1, 1);
         }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (direction > 0)
         {
-            if (!isInverted) SC.localScale = new Vector3(1, 1, 1);
-            else SC.localScale = new Vector3(-1, 1, 1);
+            if (!isInverted) SC.localScale = new Vector2(1, 1);
+            else SC.localScale *= new Vector2(-1, 1);
         }
     }
     /// <summary>
@@ -63,7 +64,7 @@ public class Control : MonoBehaviour
                 rb.AddForce(Vector2.right * joy.Horizontal * speed * 2, ForceMode2D.Force);
         }
         else
-            rb.velocity /= new Vector2(1.2f, 1);
+            rb.velocity /= new Vector2(1.02f, 1);
         if (joy.Horizontal < 0)
         {
             if(!isInverted) SC.localScale = new Vector3(-1, 1, 1);
@@ -197,13 +198,19 @@ public class Control : MonoBehaviour
     /// player gameobject
     /// <param name="dashSpd"></param>
     /// dash speed
-    public static void Dash(GameObject gm, float dashSpd)
+    public static void Dash(GameObject gm, float dashSpd, Vector2 input)
     {
         Rigidbody2D rb = gm.GetComponent<Rigidbody2D>();
-        Vector2 bakedDashSpd = new Vector2(dashSpd * Input.GetAxis("Horizontal"), dashSpd * Input.GetAxis("Vertical"));
+        Vector2 bakedDashSpd = new Vector2(dashSpd * Mathf.Round(input.x), dashSpd * Mathf.Round(input.y));
         rb.velocity = bakedDashSpd;
-
     }
+    static float normal(float val)
+    {
+        if(val != 0)
+            return val / Mathf.Abs(val);
+        else return 0.0f;
+    }
+    
     /// <summary>
     /// Dashes player in direction (mobile)
     /// </summary>
@@ -222,7 +229,6 @@ public class Control : MonoBehaviour
     public static bool DashStop(GameObject gm)
     {
         Rigidbody2D rb = gm.GetComponent<Rigidbody2D>();
-        rb.velocity = rb.velocity / 3;
         return false;
     }
     /// <summary>

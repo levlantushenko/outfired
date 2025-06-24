@@ -3,10 +3,33 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem.Controls;
 using UnityEngine.SceneManagement;
 
 public class player_main : MonoBehaviour
 {
+    #region input system init
+    _InputSystem input;
+    public Joystick joy;
+    public Vector2 axis;
+    public float jump;
+    public float dash;
+    private void Awake()
+    { 
+        input = new _InputSystem();
+        input.Enable();
+
+        input.normal.Move.performed += ctx => axis = ctx.ReadValue<Vector2>();
+        input.normal.Move.canceled += ctx => axis = Vector2.zero;
+
+        input.normal.Jump.performed += ctx => jump = ctx.ReadValue<float>();
+        input.normal.Jump.canceled += ctx => jump = 0;
+
+        input.normal.Dash.performed += ctx => dash = ctx.ReadValue<float>();
+        input.normal.Dash.canceled += ctx => dash = 0;
+    }
+    #endregion
+
     [Header("movement")]
     Rigidbody2D rb;
     public Transform groundCheck;
@@ -28,25 +51,26 @@ public class player_main : MonoBehaviour
     [DoNotSerialize] public bool isDashing;
     public float dist;
     CinemachineConfiner2D conf;
-    Joystick joy;
     [Header("death")]
     public float hp;
     public float knockback;
     public GameObject deathEff;
     public float deathT;
-    
+
+
     private void Start()
     {
-        
+        joy = FindAnyObjectByType<Joystick>();
         FindAnyObjectByType<CinemachineVirtualCamera>().Follow = transform;
         conf = FindAnyObjectByType<CinemachineConfiner2D>();
-        joy = FindAnyObjectByType<FixedJoystick>();  
         rb = GetComponent<Rigidbody2D>();
     }
+    
     void Update()
     {
+        Control.Move(gameObject, speed, sc, false, axis.x);
         bool isGrounded = Physics2D.Raycast(groundCheck.position, Vector2.down, 0.1f, lay);
-            #region JumpDir capture
+        #region JumpDir capture
             if (!isWallJumping && !isGrounded)
         {
             if (Physics2D.OverlapBox(wallChecks[0].position, wallCheckBox, 0f, lay) != null)
@@ -67,22 +91,15 @@ public class player_main : MonoBehaviour
         #endregion
         if (FindAnyObjectByType<CinemachineVirtualCamera>().Follow != transform)
             FindAnyObjectByType<CinemachineVirtualCamera>().Follow = transform;
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (jump != 0)
         {
            Jump();
         }
-        if (!isWallJumping)
-        {
-            if (!Application.isMobilePlatform)
-                Control.Move(gameObject, speed, sc, false);
-            else
-                Control.Move(gameObject, speed, sc, joy, false);
-        }
 
-        
-        if (Input.GetKeyDown(KeyCode.LeftShift) && isDashAble)
+
+        if (dash != 0 && isDashAble)
         {
-            Control.Dash(gameObject, dashSpd);
+            Control.Dash(gameObject, dashSpd, axis);
             isDashAble = false;
             isDashing = true;
             Invoke("StopDash", dashDur);
@@ -90,7 +107,12 @@ public class player_main : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.A))
             GetControl();
+
+        // inputReset must be in the end of Update
+        
     }
+
+    
     public void WallJumpReset() => isWallJumping = false;
     public void GetControl()
     {
@@ -105,24 +127,18 @@ public class player_main : MonoBehaviour
         {
             WallJump();
             isWallJumping = true;
-            Invoke("WallJumpReset", 0.5f);
+            Invoke("WallJumpReset", 0.1f);
         }
     }
     public void WallJump() => Control.WallJump(gameObject, JumpWallDir, wallJumpForce);
-    public void Dash()
-    {
-        if (!isDashAble) return;
-        Control.Dash(gameObject, dashSpd, joy);
-        isDashAble = false;
-        isDashing = true;
-        Invoke("StopDash", dashDur);
-        Invoke("DashReset", dashCd);
-    }
+    
     void StopDash() { 
         Control.DashStop(gameObject);
         isDashing=false;
     }
     void DashReset() => isDashAble = true;
+
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.layer == 3)
@@ -134,7 +150,6 @@ public class player_main : MonoBehaviour
                 Death();
             else
             {
-                RaycastHit2D hit;
                 rb.velocity = (collision.transform.position - transform.position).normalized * knockback;
             }
                 
