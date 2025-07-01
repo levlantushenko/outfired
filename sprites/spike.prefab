@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6330587673565600197}
   - component: {fileID: 7328585347112748031}
   - component: {fileID: 2946827412210973623}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: spike
   m_TagString: slash
   m_Icon: {fileID: 0}
@@ -31,7 +31,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7328585347112748031
 SpriteRenderer:
@@ -117,7 +117,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.4551493}
+  m_Offset: {x: -0.0147025585, y: -0.72959787}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -128,5 +128,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.56, y: 1.6497014}
+  m_Size: {x: 2.1189218, y: 1.1008042}
   m_EdgeRadius: 0

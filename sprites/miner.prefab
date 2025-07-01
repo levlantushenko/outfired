@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3247477984173082980}
   - component: {fileID: 4067580012509442799}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: miner_3 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4566736804817817197}
   - component: {fileID: 2457724728033054329}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: miner_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -179,7 +179,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5781241685918669831}
   - component: {fileID: 7636256735890709025}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: miner_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -263,7 +263,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5645745317806236501}
   - component: {fileID: 901272293023743849}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: miner_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -347,7 +347,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6192387173635235529}
   - component: {fileID: 6292318769120299253}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: miner_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -431,7 +431,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5208024104358716903}
   - component: {fileID: 4210328927545045114}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: leg3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -516,7 +516,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3119347885316197957}
   - component: {fileID: 2315952758003540124}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: miner_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -600,7 +600,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4570822924025385469}
   - component: {fileID: 1895277722358244536}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: miner_3 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -685,7 +685,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3890905792816837712}
   - component: {fileID: 4019043816146629461}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: leg4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -770,7 +770,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8748390959432711947}
   - component: {fileID: 6858324148748477388}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: miner_3 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -855,7 +855,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6127221859679587619}
   - component: {fileID: 1345565214328232693}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: miner_3 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -940,7 +940,7 @@ GameObject:
   m_Component:
   - component: {fileID: 327939431916549808}
   - component: {fileID: 797013575868878304}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: miner_2 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1014,6 +1014,90 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &5189599975974650673
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9114644452583919235}
+  - component: {fileID: 8329070179923478971}
+  m_Layer: 0
+  m_Name: Square (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9114644452583919235
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5189599975974650673}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.055664062, y: 0.87, z: 0}
+  m_LocalScale: {x: 3, y: 0.2, z: 3}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7372002728943352438}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &8329070179923478971
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5189599975974650673}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Color: {r: 1, g: 0, b: 0.060906887, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &5935766029277000781
 GameObject:
   m_ObjectHideFlags: 0
@@ -1024,7 +1108,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5706770425352901076}
   - component: {fileID: 126071257936496995}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: leg1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1109,7 +1193,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8164725477824639782}
   - component: {fileID: 2453925246407135378}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: miner_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1183,7 +1267,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &6604597606437037996
+--- !u!1 &6934949496647968260
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1191,37 +1275,37 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2516638239507488084}
-  - component: {fileID: 4378698499172810086}
+  - component: {fileID: 3284686806288603305}
+  - component: {fileID: 4616974560054922790}
   m_Layer: 0
-  m_Name: Square
+  m_Name: hpBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2516638239507488084
+--- !u!4 &3284686806288603305
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6604597606437037996}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.26, z: 0}
-  m_LocalScale: {x: 3, y: 0.2, z: 1}
+  m_GameObject: {fileID: 6934949496647968260}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.055664062, y: 0.87, z: 0}
+  m_LocalScale: {x: 3, y: 0.2, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7372002728943352438}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &4378698499172810086
+--- !u!212 &4616974560054922790
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6604597606437037996}
+  m_GameObject: {fileID: 6934949496647968260}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -1255,9 +1339,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 1, b: 0.04074526, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1277,7 +1361,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5907472670041177687}
   - component: {fileID: 6261450863426433172}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: leg5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1365,7 +1449,7 @@ GameObject:
   - component: {fileID: 3277456388285669757}
   - component: {fileID: 5694598173845295571}
   - component: {fileID: 4375272664330528999}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: miner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1381,7 +1465,7 @@ Transform:
   m_GameObject: {fileID: 7217437945539357031}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 15.717224, y: 30.230759, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3119347885316197957}
@@ -1393,8 +1477,8 @@ Transform:
   - {fileID: 5907472670041177687}
   - {fileID: 8518765481673990739}
   - {fileID: 4622242610779903069}
-  - {fileID: 2516638239507488084}
-  - {fileID: 1116914404862991048}
+  - {fileID: 9114644452583919235}
+  - {fileID: 3284686806288603305}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1476,7 +1560,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 10
+  m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -1503,18 +1587,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46c097f58b76f3f49ae7fdece11111d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  axis: {x: 0, y: 0}
+  jump: 0
+  dash: 0
+  attack: 0
+  control: 0
   type: 0
   isControlled: 0
-  hp: 0
+  hp: 5
   controlHp: 3
   dist: 7
-  attDist: 2
+  attDist: 2.5
   groundCheck: {fileID: 0}
   lay:
     serializedVersion: 2
     m_Bits: 0
   force: 0
-  speed: 3
+  speed: 5
   sc: {fileID: 7372002728943352438}
   conf: {fileID: 0}
   slash: {fileID: 6661352027396472916, guid: 1fde41f36e7829d4fb9f76d5f453f3dc, type: 3}
@@ -1524,37 +1613,8 @@ MonoBehaviour:
   origin: {fileID: 6941273551317526572, guid: 0211b4f88929872468da9994192b4d93, type: 3}
   explForce: 50
   expl: {fileID: 4416799296767080569, guid: 17d859c2ffb2fff4d94585851621aca3, type: 3}
---- !u!1 &7512839204641196032
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1116914404862991048}
-  m_Layer: 0
-  m_Name: hp bar
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1116914404862991048
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7512839204641196032}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.491, y: 1.238, z: -0.017413292}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7372002728943352438}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  pixPerHp: 0
+  hpBar: {fileID: 6934949496647968260}
 --- !u!1 &7722439228765693652
 GameObject:
   m_ObjectHideFlags: 0
@@ -1565,7 +1625,7 @@ GameObject:
   m_Component:
   - component: {fileID: 13225172717449195}
   - component: {fileID: 3690918329114951666}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: miner_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1649,7 +1709,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1294890699212688303}
   - component: {fileID: 9034278612946998676}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: miner_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1734,7 +1794,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5047449977461825470}
   - component: {fileID: 2015551323657139949}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: leg2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1818,7 +1878,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4622242610779903069}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: gr
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1850,7 +1910,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2644929421716144087}
   - component: {fileID: 6116682965518617212}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: miner_3 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

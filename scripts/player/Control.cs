@@ -20,7 +20,7 @@ public class Control : MonoBehaviour
     /// transform that will invert scale
     /// <param name="isInverted"></param>
     /// invert SC on start?
-    public static void Move(GameObject gm, float speed, Transform SC, bool isInverted, float direction)
+    public static void Move(GameObject gm, float speed, Transform SC, bool isInverted, float direction, Vector2 originSc)
     {
         Rigidbody2D rb = gm.GetComponent<Rigidbody2D>();
         if (direction != 0)
@@ -29,16 +29,16 @@ public class Control : MonoBehaviour
                 rb.AddForce(Vector2.right * speed * 2 * direction, ForceMode2D.Force);
         }
         if(direction == 0)
-            rb.velocity /= new Vector2(1.02f, 1);
+            rb.velocity /= new Vector2(1.05f, 1);
         if (direction < 0)
         {
-            if (!isInverted) SC.localScale *= new Vector2(-1, 1);
-            else SC.localScale = new Vector3(1, 1, 1);
+            if (!isInverted) SC.localScale = originSc * new Vector2(-1, 1);
+            else SC.localScale = originSc;
         }
         if (direction > 0)
         {
-            if (!isInverted) SC.localScale = new Vector2(1, 1);
-            else SC.localScale *= new Vector2(-1, 1);
+            if (!isInverted) SC.localScale = originSc;
+            else SC.localScale = originSc * new Vector2(-1, 1);
         }
     }
     /// <summary>

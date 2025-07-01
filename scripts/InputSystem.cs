@@ -62,6 +62,15 @@ public partial class @_InputSystem: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Press"",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Control"",
+                    ""type"": ""Value"",
+                    ""id"": ""1189d6dc-8721-4ab0-879f-666587e8eedb"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -163,6 +172,17 @@ public partial class @_InputSystem: IInputActionCollection2, IDisposable
                     ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""03075caf-2a0b-4717-9574-153ee5588b63"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Control"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -175,6 +195,7 @@ public partial class @_InputSystem: IInputActionCollection2, IDisposable
         m_normal_Jump = m_normal.FindAction("Jump", throwIfNotFound: true);
         m_normal_Attack = m_normal.FindAction("Attack", throwIfNotFound: true);
         m_normal_Dash = m_normal.FindAction("Dash", throwIfNotFound: true);
+        m_normal_Control = m_normal.FindAction("Control", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -240,6 +261,7 @@ public partial class @_InputSystem: IInputActionCollection2, IDisposable
     private readonly InputAction m_normal_Jump;
     private readonly InputAction m_normal_Attack;
     private readonly InputAction m_normal_Dash;
+    private readonly InputAction m_normal_Control;
     public struct NormalActions
     {
         private @_InputSystem m_Wrapper;
@@ -248,6 +270,7 @@ public partial class @_InputSystem: IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_normal_Jump;
         public InputAction @Attack => m_Wrapper.m_normal_Attack;
         public InputAction @Dash => m_Wrapper.m_normal_Dash;
+        public InputAction @Control => m_Wrapper.m_normal_Control;
         public InputActionMap Get() { return m_Wrapper.m_normal; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -269,6 +292,9 @@ public partial class @_InputSystem: IInputActionCollection2, IDisposable
             @Dash.started += instance.OnDash;
             @Dash.performed += instance.OnDash;
             @Dash.canceled += instance.OnDash;
+            @Control.started += instance.OnControl;
+            @Control.performed += instance.OnControl;
+            @Control.canceled += instance.OnControl;
         }
 
         private void UnregisterCallbacks(INormalActions instance)
@@ -285,6 +311,9 @@ public partial class @_InputSystem: IInputActionCollection2, IDisposable
             @Dash.started -= instance.OnDash;
             @Dash.performed -= instance.OnDash;
             @Dash.canceled -= instance.OnDash;
+            @Control.started -= instance.OnControl;
+            @Control.performed -= instance.OnControl;
+            @Control.canceled -= instance.OnControl;
         }
 
         public void RemoveCallbacks(INormalActions instance)
@@ -308,5 +337,6 @@ public partial class @_InputSystem: IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
+        void OnControl(InputAction.CallbackContext context);
     }
 }

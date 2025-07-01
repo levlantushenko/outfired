@@ -448,7 +448,7 @@ Transform:
   - {fileID: 3970553361648210299}
   - {fileID: 490952460831883449}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &8584859748216562992
 Rigidbody2D:
@@ -465,7 +465,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1.75
+  m_GravityScale: 2
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -545,18 +545,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba3ae7fcd3a711742b4e15f39eccd6d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  joy: {fileID: 0}
   axis: {x: 0, y: 0}
   jump: 0
   dash: 0
+  attack: 0
+  control: 0
   groundCheck: {fileID: 5307184560833828326}
   lay:
     serializedVersion: 2
-    m_Bits: 119
-  force: 15
+    m_Bits: 115
+  force: 20
   speed: 15
   sc: {fileID: 3970553361648210299}
-  wallJumpForce: {x: 20, y: 15}
+  wallJumpForce: {x: 15, y: 15}
   JumpWallDir: 0
   wallChecks:
   - {fileID: 490952460831883449}
@@ -573,6 +574,9 @@ MonoBehaviour:
   knockback: 20
   deathEff: {fileID: 7327882760250055820, guid: 843751c67614eee4481293df4de3882c, type: 3}
   deathT: 2
+  slash: {fileID: 6661352027396472916, guid: 54f331e94f5bd724c8850e7bd52edb9a, type: 3}
+  attPos: {fileID: 7242983312264892752}
+  sword: 0
 --- !u!1 &7589030884476768273
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,21 +9,37 @@ public class Unit : MonoBehaviour
 {
     #region input system init
     _InputSystem input;
-    public float X;
-    public float Y;
-    //private void Awake()
-    //{
-    //    input = new _InputSystem();
-    //    input.Enable();
-    //    input.normal.X.performed += ctx =>
-    //    {
-    //        X = ctx.ReadValue<float>();
-    //    };
-    //    input.normal.Y.performed += ctx =>
-    //    {
-    //        Y = ctx.ReadValue<float>();
-    //    };
-    //}
+    public Vector2 axis;
+    public float jump;
+    public float dash;
+    public float attack;
+    public float control;
+    private void Start()
+    {
+        input = new _InputSystem();
+        input.Enable();
+
+        input.normal.Move.performed += ctx => axis = ctx.ReadValue<Vector2>();
+        input.normal.Move.canceled += ctx => axis = Vector2.zero;
+
+        input.normal.Jump.performed += ctx => jump = ctx.ReadValue<float>();
+        input.normal.Jump.canceled += ctx => jump = 0;
+
+        input.normal.Dash.performed += ctx => dash = ctx.ReadValue<float>();
+        input.normal.Dash.canceled += ctx => dash = 0;
+
+        input.normal.Attack.performed += ctx => attack = ctx.ReadValue<float>();
+        input.normal.Attack.canceled += ctx => attack = 0;
+
+        input.normal.Control.performed += ctx => control = ctx.ReadValue<float>();
+        input.normal.Control.canceled += ctx => control = 0;
+
+        originSc = transform.localScale;
+        anim = GetComponent<Animator>();
+        conf = FindAnyObjectByType<CinemachineConfiner2D>();
+        pixPerHp = hpBar.transform.localScale.x / hp;
+        startScale = transform.localScale;
+    }
     #endregion
     public enum enTypes
     {
@@ -47,24 +63,22 @@ public class Unit : MonoBehaviour
     public CinemachineConfiner2D conf;
     public GameObject slash;
     public Transform attPos;
-    Joystick joy = null;
     public float dashSpd;
     public float dashDur;
     public GameObject origin;
     public float explForce;
     public GameObject expl;
-
-    private void Start()
-    {
-        if(Application.isMobilePlatform)
-            joy = FindAnyObjectByType<Joystick>();
-        anim = GetComponent<Animator>();
-        conf = FindAnyObjectByType<CinemachineConfiner2D>();
-
-    }
+    Vector2 originSc;
+    [Header("HP display")]
+    public float pixPerHp;
+    public GameObject hpBar;
+    public Vector2 startScale;
+    
     private void Update()
     {
-        if(isControlled && hp <= 0)
+        hpBar.transform.localScale = new Vector3(hp * pixPerHp, hpBar.transform.localScale.y);
+        if (hp <= controlHp) hpBar.GetComponent<SpriteRenderer>().color = Color.yellow;
+        if (isControlled && hp <= 0)
         {
             hp = 1;
             Debug.Log("unit rebirthed!");
@@ -100,7 +114,7 @@ public class Unit : MonoBehaviour
             if (Vector2.Distance(transform.position, enemy.position) < dist)
             {
                 anim.SetBool("chase", true);
-                transform.localScale *= new Vector2(posDifference(transform.position.x, enemy.position.x), 1);
+                transform.localScale = new Vector2(startScale.x * posDifference(transform.position.x, enemy.position.x), 1);
                 transform.Translate(Vector3.left * transform.localScale.x * speed * Time.deltaTime);
             }
             else
@@ -110,33 +124,27 @@ public class Unit : MonoBehaviour
         }
         if (!isControlled) return;
         Animate();
-        if (!Application.isMobilePlatform)
-            Control.Move(gameObject, speed, sc, true, X);
-        else
-            Control.Move(gameObject, speed, sc, joy, true);
-        if(Input.GetKeyDown(KeyCode.Z))
+        Control.Move(gameObject, speed, sc, true, axis.x, originSc);
+        if(jump != 0)
             Jump();
-        if (Input.GetKeyDown(KeyCode.X))
+        if (attack != 0)
             Attack();
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (dash != 0)
         {
             Dash();
             Invoke("stopDash", dashDur);
         }
-        if (Input.GetKeyDown(KeyCode.A) && isControlled)
+        if (control != 0 && isControlled)
             Explode();
+        attack = 0;
+        control = 0;
     }
     public void Animate()
     {
-        if (Application.isMobilePlatform) return;
-        if (Input.GetAxis("Horizontal") != 0) anim.SetBool("chase", true);
+        if (axis.x != 0) anim.SetBool("chase", true);
         else anim.SetBool("chase", false);
     }
-    public void Animate(Joystick joy, Animator anim)
-    {
-        if (joy.Horizontal != 0) anim.SetBool("chase", true);
-        else anim.SetBool("chase", false);
-    }
+    
     float posDifference(float a, float b)
     {
         return (a - b) / Mathf.Abs(a - b);
@@ -148,7 +156,7 @@ public class Unit : MonoBehaviour
     }
     public void Jump() => Control.Jump(gameObject, groundCheck, lay, force);
     public void Attack() => Control.Attack(transform, slash, attPos, false, transform);
-    public void Dash() => Control.Dash(gameObject, dashSpd, new Vector2(X, Y));
+    public void Dash() => Control.Dash(gameObject, dashSpd, axis);
     public void StopDash() => Control.DashStop(gameObject);
 
 
@@ -164,7 +172,9 @@ public class Unit : MonoBehaviour
         if (isControlled && collision.gameObject.layer == 3)
             Control.CameraControl(collision, conf);
         if (collision.gameObject.tag == "slash")
+        {
             hp -= 1;
+        }
         if(collision.gameObject.tag == "explosion")
         {
             hp -= 5;

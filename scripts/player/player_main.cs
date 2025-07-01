@@ -1,6 +1,7 @@
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem.Controls;
@@ -10,10 +11,11 @@ public class player_main : MonoBehaviour
 {
     #region input system init
     _InputSystem input;
-    public Joystick joy;
     public Vector2 axis;
     public float jump;
     public float dash;
+    public float attack;
+    public float control;
     private void Awake()
     { 
         input = new _InputSystem();
@@ -27,6 +29,12 @@ public class player_main : MonoBehaviour
 
         input.normal.Dash.performed += ctx => dash = ctx.ReadValue<float>();
         input.normal.Dash.canceled += ctx => dash = 0;
+
+        input.normal.Attack.performed += ctx => attack = ctx.ReadValue<float>();
+        input.normal.Attack.canceled += ctx => attack = 0;
+
+        input.normal.Control.performed += ctx => control = ctx.ReadValue<float>();
+        input.normal.Control.canceled += ctx => control = 0;
     }
     #endregion
 
@@ -56,19 +64,27 @@ public class player_main : MonoBehaviour
     public float knockback;
     public GameObject deathEff;
     public float deathT;
+    [Header("attack")]
+    public GameObject slash;
+    public Transform attPos;
+    [Header("abilities")]
+    public bool sword;
 
 
     private void Start()
     {
-        joy = FindAnyObjectByType<Joystick>();
+        if (PlayerPrefs.HasKey("x") && Time.time < 2)
+            transform.position = new Vector3(PlayerPrefs.GetInt("x"), PlayerPrefs.GetInt("y"));
         FindAnyObjectByType<CinemachineVirtualCamera>().Follow = transform;
         conf = FindAnyObjectByType<CinemachineConfiner2D>();
         rb = GetComponent<Rigidbody2D>();
+        
+        checkPP();
     }
     
     void Update()
     {
-        Control.Move(gameObject, speed, sc, false, axis.x);
+        Control.Move(gameObject, speed, sc, false, axis.x, new Vector2(1, 1));
         bool isGrounded = Physics2D.Raycast(groundCheck.position, Vector2.down, 0.1f, lay);
         #region JumpDir capture
             if (!isWallJumping && !isGrounded)
@@ -105,13 +121,23 @@ public class player_main : MonoBehaviour
             Invoke("StopDash", dashDur);
             Invoke("DashReset", dashCd);
         }
-        if (Input.GetKeyDown(KeyCode.A))
+        if (control != 0)
             GetControl();
-
+        if (sword && attack != 0)
+            Control.Attack(transform, slash, attPos, false, sc);
         // inputReset must be in the end of Update
+        control = 0;
+        attack = 0;
         
     }
-
+    public void checkPP()
+    {
+        string abs = "";
+        if (PlayerPrefs.HasKey("abilities"))
+            abs = PlayerPrefs.GetString("abilities");
+        if (abs.Contains("sword"))
+            sword = true;
+    }
     
     public void WallJumpReset() => isWallJumping = false;
     public void GetControl()
@@ -142,7 +168,11 @@ public class player_main : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.layer == 3)
+        {
             Control.CameraControl(collision, conf);
+            PlayerPrefs.SetInt("x", (int)collision.transform.GetChild(0).position.x);
+            PlayerPrefs.SetInt("y", (int)collision.transform.GetChild(0).position.y);
+        }
         else if(collision.gameObject.tag == "slash")
         {
             hp -= 1;
@@ -168,5 +198,9 @@ public class player_main : MonoBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawWireCube(wallChecks[0].position, wallCheckBox);
         Gizmos.DrawWireCube(wallChecks[1].position, wallCheckBox);
+    }
+    private void OnApplicationQuit()
+    {
+        PlayerPrefs.DeleteKey("x");
     }
 }
