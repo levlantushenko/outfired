@@ -10,6 +10,8 @@ public class rocket : MonoBehaviour
     public float spinSpeed;
     bool isSpinning = true;
     public Vector3 offset;
+    public GameObject eff;
+    public LayerMask lay;
 
     public IEnumerator Start()
     {
@@ -27,10 +29,16 @@ public class rocket : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (isSpinning)
             transform.Translate(Vector2.right * startVel * Time.deltaTime);
         else
             transform.Translate(Vector2.right * speed * Time.deltaTime);
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.layer == 2 || collision.gameObject.layer == 3) return;
+        Instantiate(eff, transform.position, Quaternion.identity);
+        Destroy(eff, 1);
+        Destroy(gameObject);
     }
 }

@@ -6,6 +6,7 @@ using UnityEngine;
 public class barricade : MonoBehaviour
 {
     public float hp;
+    public float speed;
     public Animator anim;
     //phase 1 attacks
     [Header("laser beam")]
@@ -23,13 +24,38 @@ public class barricade : MonoBehaviour
     public Transform[] points;
     public float headSpeed;
     public float stayTime;
+    Vector2 startScale;
+    private void Start()
+    {
+        startScale = transform.localScale;
+    }
 
     bool isAttacking = false;
-    
+    float posDifference(float a, float b)
+    {
+        return (a - b) / Mathf.Abs(a - b);
+    }
     void Update()
     {
+        Transform pl = FindAnyObjectByType<player_main>().transform;
+        if (!anim.GetCurrentAnimatorStateInfo(0).IsName("laserBeam"))
+        {
+            transform.localScale = new Vector2(startScale.x * posDifference(transform.position.x, pl.position.x), 1);
+            transform.Translate(Vector3.left * transform.localScale.x * speed * Time.deltaTime);
+        }
         if (!isAttacking)
-            StartCoroutine(RocketAttack());
+        {
+            switch(Mathf.Round(Random.Range(0, 2)))
+            {
+                case 0:
+                    StartCoroutine(RocketAttack());
+                    break;
+                case 1:
+                    StartCoroutine(LaserAttack());
+                    break;
+            }
+
+        }
     }
     public IEnumerator RocketAttack()
     {
@@ -43,6 +69,13 @@ public class barricade : MonoBehaviour
         }
         yield return new WaitForSeconds(3);
         isAttacking =false;
+    }
+    public IEnumerator LaserAttack()
+    {
+        isAttacking = true;
+        anim.SetTrigger("laser");
+        yield return new WaitForSeconds(5);
+        isAttacking = false;
     }
     private void OnDrawGizmos()
     {
