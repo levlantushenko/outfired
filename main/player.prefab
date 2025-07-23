@@ -418,9 +418,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8168851206926914676}
   - component: {fileID: 8584859748216562992}
-  - component: {fileID: 4108189645304623391}
   - component: {fileID: 8935335239747378095}
   - component: {fileID: 7513696568805012493}
+  - component: {fileID: 2051717438766015609}
   m_Layer: 0
   m_Name: player
   m_TagString: Player
@@ -448,7 +448,7 @@ Transform:
   - {fileID: 3970553361648210299}
   - {fileID: 490952460831883449}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &8584859748216562992
 Rigidbody2D:
@@ -477,27 +477,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!95 &4108189645304623391
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6941273551317526572}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4ab854585a55ff34380c3c3b74a7fe87, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!58 &8935335239747378095
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -550,6 +529,7 @@ MonoBehaviour:
   dash: 0
   attack: 0
   control: 0
+  fallLimit: -20
   groundCheck: {fileID: 5307184560833828326}
   lay:
     serializedVersion: 2
@@ -577,6 +557,29 @@ MonoBehaviour:
   slash: {fileID: 6661352027396472916, guid: 54f331e94f5bd724c8850e7bd52edb9a, type: 3}
   attPos: {fileID: 7242983312264892752}
   sword: 0
+  recharged: 1
+  rechT: 0.2
+--- !u!95 &2051717438766015609
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6941273551317526572}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4ab854585a55ff34380c3c3b74a7fe87, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7589030884476768273
 GameObject:
   m_ObjectHideFlags: 0

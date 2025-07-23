@@ -120,9 +120,20 @@
                 },
                 {
                     "name": "",
+                    "id": "e06c2cfc-2e23-446e-bce0-c8f177ef4b5c",
+                    "path": "<AndroidJoystick>/stick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "226330c5-d85e-4161-97b3-76d7177af8d7",
                     "path": "<Keyboard>/z",
-                    "interactions": "Press",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Jump",

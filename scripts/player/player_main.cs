@@ -5,7 +5,9 @@ using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem.Controls;
+using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
+using UnityEngine.Timeline;
 
 public class player_main : MonoBehaviour
 {
@@ -20,7 +22,7 @@ public class player_main : MonoBehaviour
     { 
         input = new _InputSystem();
         input.Enable();
-
+        #region standart input read
         input.normal.Move.performed += ctx => axis = ctx.ReadValue<Vector2>();
         input.normal.Move.canceled += ctx => axis = Vector2.zero;
 
@@ -35,10 +37,15 @@ public class player_main : MonoBehaviour
 
         input.normal.Control.performed += ctx => control = ctx.ReadValue<float>();
         input.normal.Control.canceled += ctx => control = 0;
+        #endregion
+        
+        
+
     }
     #endregion
 
     [Header("movement")]
+    public float fallLimit;
     Rigidbody2D rb;
     public Transform groundCheck;
     public LayerMask lay;
@@ -69,12 +76,16 @@ public class player_main : MonoBehaviour
     public Transform attPos;
     [Header("abilities")]
     public bool sword;
-
+    public bool recharged;
+    public float rechT;
 
     private void Start()
     {
-        if (PlayerPrefs.HasKey("x") && Time.time < 2)
+        if (PlayerPrefs.HasKey("x"))
+        {
+            FindAnyObjectByType<PlayableDirector>().gameObject.SetActive(false);
             transform.position = new Vector3(PlayerPrefs.GetInt("x"), PlayerPrefs.GetInt("y"));
+        }
         FindAnyObjectByType<CinemachineVirtualCamera>().Follow = transform;
         conf = FindAnyObjectByType<CinemachineConfiner2D>();
         rb = GetComponent<Rigidbody2D>();
@@ -122,13 +133,28 @@ public class player_main : MonoBehaviour
             Invoke("DashReset", dashCd);
         }
         if (control != 0)
+        {
+            InputRead.control = 0;
             GetControl();
-        if (sword && attack != 0)
+        }
+        if (sword && attack != 0 && recharged)
+        {
             Control.Attack(transform, slash, attPos, false, sc);
+            StartCoroutine(SlashRech());
+        }
+        if (Mathf.Round(axis.y) < 0)
+            rb.AddForce(Vector2.down * rb.gravityScale * 2, ForceMode2D.Force);
+        rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, fallLimit, Mathf.Infinity));
         // inputReset must be in the end of Update
         control = 0;
         attack = 0;
         
+    }
+    IEnumerator SlashRech()
+    {
+        recharged = false;
+        yield return new WaitForSeconds(rechT);
+        recharged = true;
     }
     public void checkPP()
     {

@@ -8,8 +8,8 @@ public class mobile : MonoBehaviour
     public Joystick joy;
     private void Awake()
     {
-        //if (!Application.isMobilePlatform)
-        //    gameObject.SetActive(false);
+        if (!Application.isMobilePlatform)
+            gameObject.SetActive(false);
     }
     //void Update()
     //{

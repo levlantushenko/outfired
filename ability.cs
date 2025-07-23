@@ -18,6 +18,7 @@ public class ability : MonoBehaviour
                 PlayerPrefs.SetString("abilities", PlayerPrefs.GetString("abilities") + _name);
                 player_main pl = FindAnyObjectByType<player_main>();
                 pl.checkPP();
+                Destroy(gameObject);
             }
         }
     }

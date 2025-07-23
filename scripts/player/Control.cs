@@ -99,12 +99,6 @@ public class Control : MonoBehaviour
             jump = true;
             
         }
-
-        if (Input.GetKeyUp(KeyCode.Z) && rb.velocity.y > 0)
-        {
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.3f);
-            jump = false;
-        }
     }
     /// <summary>
     /// player attack method
@@ -167,7 +161,7 @@ public class Control : MonoBehaviour
                 enemy = enemies[i];
             }
         }
-        enemy.Invoke("BombTime", 0.5f);
+        enemy.Invoke("BombTime", 1f);
         enemy.isControlled = true;
         cam.Follow = enemy.transform;
         Destroy(tr.gameObject);
@@ -257,9 +251,9 @@ public class Control : MonoBehaviour
     /// explosion force
     /// <param name="expl"></param>
     /// explosion effect
-    public static void Explode(GameObject origin, Transform tr, float force, GameObject expl)
+    public static void Explode(GameObject origin, Transform tr, float force, GameObject expl, Vector2 axis)
     {
-        Vector2 bakedForce = new Vector2(Input.GetAxis("Horizontal") * force, Input.GetAxis("Vertical") * force);
+        Vector2 bakedForce = axis * force;
         GameObject obj = Instantiate(origin, tr.position, tr.rotation);
         GameObject _expl = Instantiate(expl, tr.position, tr.rotation);
         Destroy(tr.gameObject);

@@ -1615,6 +1615,8 @@ MonoBehaviour:
   expl: {fileID: 4416799296767080569, guid: 17d859c2ffb2fff4d94585851621aca3, type: 3}
   pixPerHp: 0
   hpBar: {fileID: 6934949496647968260}
+  startScale: {x: 0, y: 0}
+  knockback: 1
 --- !u!1 &7722439228765693652
 GameObject:
   m_ObjectHideFlags: 0

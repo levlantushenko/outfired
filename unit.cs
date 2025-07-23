@@ -39,6 +39,8 @@ public class Unit : MonoBehaviour
         conf = FindAnyObjectByType<CinemachineConfiner2D>();
         pixPerHp = hpBar.transform.localScale.x / hp;
         startScale = transform.localScale;
+
+        rb = GetComponent<Rigidbody2D>();
     }
     #endregion
     public enum enTypes
@@ -69,13 +71,18 @@ public class Unit : MonoBehaviour
     public float explForce;
     public GameObject expl;
     Vector2 originSc;
+    Rigidbody2D rb;
     [Header("HP display")]
     public float pixPerHp;
     public GameObject hpBar;
     public Vector2 startScale;
-    
+    public float knockback;
+
+    float HPold;
+    Transform _enemy;
     private void Update()
     {
+        HPold = hp;
         hpBar.transform.localScale = new Vector3(hp * pixPerHp, hpBar.transform.localScale.y);
         if (hp <= controlHp) hpBar.GetComponent<SpriteRenderer>().color = Color.yellow;
         if (isControlled && hp <= 0)
@@ -106,6 +113,7 @@ public class Unit : MonoBehaviour
                     if (units[i].isControlled && units[i].type != type)
                     {
                         enemy = units[i].transform;
+                        _enemy = enemy;
                     }
                 }
             }
@@ -128,14 +136,17 @@ public class Unit : MonoBehaviour
         if(jump != 0)
             Jump();
         if (attack != 0)
-            Attack();
+            anim.SetTrigger("attack");
         if (dash != 0)
         {
             Dash();
             Invoke("stopDash", dashDur);
         }
-        if (control != 0 && isControlled)
+        if (control == 1)
+        {
             Explode();
+            Debug.Log("explosion");
+        }
         attack = 0;
         control = 0;
     }
@@ -152,7 +163,7 @@ public class Unit : MonoBehaviour
     bool explodable = false;
     public void BombTime() => explodable = true;
     public void Explode() { 
-        if (explodable) Control.Explode(origin, transform, explForce, expl);
+        if(explodable) Control.Explode(origin, transform, explForce, expl, axis);
     }
     public void Jump() => Control.Jump(gameObject, groundCheck, lay, force);
     public void Attack() => Control.Attack(transform, slash, attPos, false, transform);
@@ -174,10 +185,19 @@ public class Unit : MonoBehaviour
         if (collision.gameObject.tag == "slash")
         {
             hp -= 1;
+            StartCoroutine(Hit());
+            rb.velocity = new Vector2(knockback * posDifference(transform.position.x, _enemy.position.x), 0);
         }
         if(collision.gameObject.tag == "explosion")
         {
             hp -= 5;
         }
+    }
+    
+    IEnumerator Hit()
+    {
+        Time.timeScale = 0;
+        yield return new WaitForSecondsRealtime(0.1f);
+        Time.timeScale = 1;
     }
 }
