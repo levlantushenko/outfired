@@ -2,16 +2,16 @@ using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class barricade : MonoBehaviour
 {
     public float hp;
+    float startHp;
+    bool isAngry = false;
     public float speed;
     public Animator anim;
     //phase 1 attacks
-    [Header("laser beam")]
-    public float laserTime;
-    public GameObject laser;
     [Header("rocket attack")]
     public GameObject rocket;
     public Transform rocketLauncher;
@@ -25,9 +25,15 @@ public class barricade : MonoBehaviour
     public float headSpeed;
     public float stayTime;
     Vector2 startScale;
+    [Header("HP display")]
+    public float pixPerHp;
+    public GameObject hpBar;
     private void Start()
     {
+        startHp = hp;
         startScale = transform.localScale;
+        pixPerHp = hpBar.transform.localScale.x / hp;
+        Invoke("end", 180);
     }
 
     bool isAttacking = false;
@@ -35,8 +41,13 @@ public class barricade : MonoBehaviour
     {
         return (a - b) / Mathf.Abs(a - b);
     }
+    bool dead = false;
     void Update()
     {
+        if (dead) return;
+        if (!isAngry && hp <= startHp / 2)
+            Anger();
+        hpBar.transform.localScale = new Vector3(hp * pixPerHp, hpBar.transform.localScale.y);
         Transform pl = FindAnyObjectByType<player_main>().transform;
         if (!anim.GetCurrentAnimatorStateInfo(0).IsName("laserBeam"))
         {
@@ -45,7 +56,7 @@ public class barricade : MonoBehaviour
         }
         if (!isAttacking)
         {
-            switch(Mathf.Round(Random.Range(0, 2)))
+            switch (Mathf.Round(Random.Range(0, 2)))
             {
                 case 0:
                     StartCoroutine(RocketAttack());
@@ -56,29 +67,67 @@ public class barricade : MonoBehaviour
             }
 
         }
+        if (hp <= 0)
+        {
+            dead = true;
+            anim.SetTrigger("die");
+            CancelInvoke("end");
+            end();
+        }
     }
+    void end() => GameObject.Find("roof fall").GetComponent<PlayableDirector>()?.Play();
+
+    public void Anger()
+    {
+        
+        rocketAmount *= 2;
+        rocketRech /= 2;
+        laserTime = 3;
+        rocketSpeed *= 2;
+        isAngry = true;
+    }
+    float rocketTime = 3;
+    public float rocketSpeed;
     public IEnumerator RocketAttack()
     {
         isAttacking = true;
         float degrees = startDgr - dgrDelta * rocketAmount / 2;
         for(int i = 0; i <= rocketAmount; i++)
         {
-            Instantiate(rocket, rocketLauncher.position, Quaternion.Euler(0, 0, degrees));
+            rocket _rocket = Instantiate(rocket, rocketLauncher.position, Quaternion.Euler(0, 0, degrees)).GetComponent<rocket>();
+            _rocket.speed = rocketSpeed;
             degrees += dgrDelta;
             yield return new WaitForSeconds(rocketRech);
         }
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(rocketTime);
         isAttacking =false;
     }
+    float laserTime = 5;
     public IEnumerator LaserAttack()
     {
         isAttacking = true;
         anim.SetTrigger("laser");
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(laserTime);
         isAttacking = false;
     }
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "slash" && !collision.name.Contains("rocket"))
+        {
+            collision.gameObject.GetComponent<Collider2D>().enabled = false;
+            hp -= 1;
+            StartCoroutine(Hit());
+        }
+    }
+
+    IEnumerator Hit()
+    {
+        Time.timeScale = 0;
+        yield return new WaitForSecondsRealtime(0.1f);
+        Time.timeScale = 1;
     }
 }

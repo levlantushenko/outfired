@@ -29,7 +29,7 @@ public class Control : MonoBehaviour
                 rb.AddForce(Vector2.right * speed * 2 * direction, ForceMode2D.Force);
         }
         if(direction == 0)
-            rb.velocity /= new Vector2(1.05f, 1);
+            rb.velocity /= new Vector2(1.1f, 1);
         if (direction < 0)
         {
             if (!isInverted) SC.localScale = originSc * new Vector2(-1, 1);
@@ -98,7 +98,7 @@ public class Control : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, force);
             jump = true;
             
-        }
+        }   
     }
     /// <summary>
     /// player attack method

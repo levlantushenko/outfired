@@ -81,9 +81,9 @@ public class player_main : MonoBehaviour
 
     private void Start()
     {
-        if (PlayerPrefs.HasKey("x"))
+        if (PlayerPrefs.HasKey("x") && PlayerPrefs.HasKey("Dead"))
         {
-            FindAnyObjectByType<PlayableDirector>().gameObject.SetActive(false);
+            PlayerPrefs.DeleteKey("Dead");
             transform.position = new Vector3(PlayerPrefs.GetInt("x"), PlayerPrefs.GetInt("y"));
         }
         FindAnyObjectByType<CinemachineVirtualCamera>().Follow = transform;
@@ -214,6 +214,7 @@ public class player_main : MonoBehaviour
     void Death()
     {
         Instantiate(deathEff, transform.position, transform.rotation);
+        PlayerPrefs.SetInt("Dead", 0);
         Invoke("SceneReset", deathT);
         gameObject.SetActive(false);
     }

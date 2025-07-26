@@ -184,6 +184,7 @@ public class Unit : MonoBehaviour
             Control.CameraControl(collision, conf);
         if (collision.gameObject.tag == "slash")
         {
+            Destroy(collision.gameObject);   
             hp -= 1;
             StartCoroutine(Hit());
             rb.velocity = new Vector2(knockback * posDifference(transform.position.x, _enemy.position.x), 0);
@@ -197,7 +198,7 @@ public class Unit : MonoBehaviour
     IEnumerator Hit()
     {
         Time.timeScale = 0;
-        yield return new WaitForSecondsRealtime(0.1f);
+        yield return new WaitForSecondsRealtime(0.2f);
         Time.timeScale = 1;
     }
 }
