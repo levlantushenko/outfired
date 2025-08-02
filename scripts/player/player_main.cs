@@ -213,6 +213,7 @@ public class player_main : MonoBehaviour
     }
     void Death()
     {
+        PlayerPrefs.SetInt("died", 0);
         Instantiate(deathEff, transform.position, transform.rotation);
         PlayerPrefs.SetInt("Dead", 0);
         Invoke("SceneReset", deathT);
@@ -229,5 +230,6 @@ public class player_main : MonoBehaviour
     private void OnApplicationQuit()
     {
         PlayerPrefs.DeleteKey("x");
+        PlayerPrefs.DeleteKey("died");
     }
 }

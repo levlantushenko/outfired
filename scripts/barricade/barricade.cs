@@ -3,12 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.UI;
 
 public class barricade : MonoBehaviour
 {
     public float hp;
-    float startHp;
-    bool isAngry = false;
+    public float lowHp;
+    public float startHp;
+    public bool isAngry = false;
     public float speed;
     public Animator anim;
     //phase 1 attacks
@@ -45,6 +47,7 @@ public class barricade : MonoBehaviour
     void Update()
     {
         if (dead) return;
+        if (hp <= lowHp) hpBar.GetComponent<Image>().color = Color.yellow;
         if (!isAngry && hp <= startHp / 2)
             Anger();
         hpBar.transform.localScale = new Vector3(hp * pixPerHp, hpBar.transform.localScale.y);
@@ -121,6 +124,7 @@ public class barricade : MonoBehaviour
             collision.gameObject.GetComponent<Collider2D>().enabled = false;
             hp -= 1;
             StartCoroutine(Hit());
+            achievments.pacifist = false;
         }
     }
 

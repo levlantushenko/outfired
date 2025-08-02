@@ -41,6 +41,10 @@ public class Unit : MonoBehaviour
         startScale = transform.localScale;
 
         rb = GetComponent<Rigidbody2D>();
+
+        if (PlayerPrefs.HasKey(name + " hp"))
+            hp = PlayerPrefs.GetInt(name + " hp");
+        else PlayerPrefs.SetInt(name + " hp", (int)hp);
     }
     #endregion
     public enum enTypes
@@ -184,21 +188,26 @@ public class Unit : MonoBehaviour
             Control.CameraControl(collision, conf);
         if (collision.gameObject.tag == "slash")
         {
-            Destroy(collision.gameObject);   
+            collision.gameObject.GetComponent<Collider2D>().enabled = false;   
             hp -= 1;
             StartCoroutine(Hit());
             rb.velocity = new Vector2(knockback * posDifference(transform.position.x, _enemy.position.x), 0);
+            achievments.pacifist = false;
         }
         if(collision.gameObject.tag == "explosion")
         {
             hp -= 5;
+            PlayerPrefs.SetInt(name + " hp", (int)hp);
+            achievments.pacifist = false;
         }
     }
     
     IEnumerator Hit()
     {
         Time.timeScale = 0;
+        PlayerPrefs.SetInt(name + " hp", (int)hp);
         yield return new WaitForSecondsRealtime(0.2f);
         Time.timeScale = 1;
     }
+    
 }
