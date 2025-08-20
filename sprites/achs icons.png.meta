@@ -241,7 +241,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: achs icons_5
+      name: achs icons_6
       rect:
         serializedVersion: 2
         x: 238
@@ -255,8 +255,71 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 68457f7b10e876a4b9a5081ada7052ef
-      internalID: -164344811
+      spriteID: 5e6b915fd4b5bc24b9807abf073ae0f1
+      internalID: -1341284277
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: achs icons_7
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 314
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4d31efb0f64000e42a46a836252d55d7
+      internalID: -919304965
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: achs icons_5
+      rect:
+        serializedVersion: 2
+        x: 351
+        y: 192
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a329664d8278caf47a78335cfaaa88a3
+      internalID: 963530526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: achs icons_8
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 439
+        width: 214
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2d4c7ec3242f7947bfa0950c4d22492
+      internalID: 1120287934
       vertices: []
       indices: 
       edges: []
@@ -277,7 +340,10 @@ TextureImporter:
       achs icons_2: 671363815
       achs icons_3: -186015615
       achs icons_4: -1036162830
-      achs icons_5: -164344811
+      achs icons_5: 963530526
+      achs icons_6: -1341284277
+      achs icons_7: -919304965
+      achs icons_8: 1120287934
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

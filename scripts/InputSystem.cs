@@ -71,6 +71,15 @@ public partial class @_InputSystem: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Press"",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""ffe81f4f-2d29-4610-9737-97737e27ba7c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -238,6 +247,28 @@ public partial class @_InputSystem: IInputActionCollection2, IDisposable
                     ""action"": ""Control"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""125b281f-d341-48bb-b1c9-f6893e231d4a"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3bdbaab8-e790-49cb-b290-bedc15743611"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -251,6 +282,7 @@ public partial class @_InputSystem: IInputActionCollection2, IDisposable
         m_normal_Attack = m_normal.FindAction("Attack", throwIfNotFound: true);
         m_normal_Dash = m_normal.FindAction("Dash", throwIfNotFound: true);
         m_normal_Control = m_normal.FindAction("Control", throwIfNotFound: true);
+        m_normal_pause = m_normal.FindAction("pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -317,6 +349,7 @@ public partial class @_InputSystem: IInputActionCollection2, IDisposable
     private readonly InputAction m_normal_Attack;
     private readonly InputAction m_normal_Dash;
     private readonly InputAction m_normal_Control;
+    private readonly InputAction m_normal_pause;
     public struct NormalActions
     {
         private @_InputSystem m_Wrapper;
@@ -326,6 +359,7 @@ public partial class @_InputSystem: IInputActionCollection2, IDisposable
         public InputAction @Attack => m_Wrapper.m_normal_Attack;
         public InputAction @Dash => m_Wrapper.m_normal_Dash;
         public InputAction @Control => m_Wrapper.m_normal_Control;
+        public InputAction @pause => m_Wrapper.m_normal_pause;
         public InputActionMap Get() { return m_Wrapper.m_normal; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -350,6 +384,9 @@ public partial class @_InputSystem: IInputActionCollection2, IDisposable
             @Control.started += instance.OnControl;
             @Control.performed += instance.OnControl;
             @Control.canceled += instance.OnControl;
+            @pause.started += instance.OnPause;
+            @pause.performed += instance.OnPause;
+            @pause.canceled += instance.OnPause;
         }
 
         private void UnregisterCallbacks(INormalActions instance)
@@ -369,6 +406,9 @@ public partial class @_InputSystem: IInputActionCollection2, IDisposable
             @Control.started -= instance.OnControl;
             @Control.performed -= instance.OnControl;
             @Control.canceled -= instance.OnControl;
+            @pause.started -= instance.OnPause;
+            @pause.performed -= instance.OnPause;
+            @pause.canceled -= instance.OnPause;
         }
 
         public void RemoveCallbacks(INormalActions instance)
@@ -393,5 +433,6 @@ public partial class @_InputSystem: IInputActionCollection2, IDisposable
         void OnAttack(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
         void OnControl(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }

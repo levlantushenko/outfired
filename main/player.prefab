@@ -546,10 +546,11 @@ MonoBehaviour:
   wallFallSpd: -4
   isWallJumping: 0
   dashSpd: 30
-  dashDur: 0.1
-  dashCd: 1
+  dashDur: 0.3
+  dashCd: 2
   isDashing: 0
   dist: 5
+  highSpeedEff: {fileID: 5853779144740509060, guid: 152ba217ea8af9144ba62c7692ddd101, type: 3}
   hp: 1
   knockback: 20
   deathEff: {fileID: 7327882760250055820, guid: 843751c67614eee4481293df4de3882c, type: 3}

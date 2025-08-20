@@ -26,7 +26,7 @@ public class Control : MonoBehaviour
         if (direction != 0)
         {
             if (Mathf.Abs(rb.velocity.x) < speed)
-                rb.AddForce(Vector2.right * speed * 2 * direction, ForceMode2D.Force);
+                rb.AddForce(Vector2.right * speed * 2 * direction * rb.mass, ForceMode2D.Force);
         }
         if(direction == 0)
             rb.velocity /= new Vector2(1.1f, 1);
@@ -57,11 +57,12 @@ public class Control : MonoBehaviour
     public static void Move(GameObject gm, float speed, Transform SC, Joystick joy, bool isInverted)
     {
         Rigidbody2D rb = gm.GetComponent<Rigidbody2D>();
+        
         if (joy.Horizontal != 0 && Mathf.Abs(rb.velocity.x) < speed)
         {
             Debug.Log("moving!");
             if (rb.velocity.x < speed)
-                rb.AddForce(Vector2.right * joy.Horizontal * speed * 2, ForceMode2D.Force);
+                rb.AddForce(Vector2.right * joy.Horizontal * speed * 2 * rb.mass, ForceMode2D.Force);
         }
         else
             rb.velocity /= new Vector2(1.02f, 1);
@@ -94,10 +95,8 @@ public class Control : MonoBehaviour
         Rigidbody2D rb = gm.GetComponent<Rigidbody2D>();
         if (Physics2D.Raycast(groundCheck.position, Vector2.down, 0.1f, lay))
         {
-
             rb.velocity = new Vector2(rb.velocity.x, force);
             jump = true;
-            
         }   
     }
     /// <summary>
@@ -163,6 +162,7 @@ public class Control : MonoBehaviour
         }
         enemy.Invoke("BombTime", 1f);
         enemy.isControlled = true;
+        PlayerPrefs.SetInt(enemy.name + " hp", 0);
         cam.Follow = enemy.transform;
         Destroy(tr.gameObject);
         Debug.Log("we took control!");
@@ -196,6 +196,10 @@ public class Control : MonoBehaviour
     {
         Rigidbody2D rb = gm.GetComponent<Rigidbody2D>();
         Vector2 bakedDashSpd = new Vector2(dashSpd * Mathf.Round(input.x), dashSpd * Mathf.Round(input.y));
+        if (bakedDashSpd.x != 0 && bakedDashSpd.y != 0)
+            bakedDashSpd /= 2f;
+        if (Mathf.Abs(rb.velocity.x) > Mathf.Abs(bakedDashSpd.x) && bakedDashSpd.x != 0)
+            bakedDashSpd.x = Mathf.Abs(rb.velocity.x) * 1.1f;
         rb.velocity = bakedDashSpd;
     }
     static float normal(float val)
@@ -237,7 +241,7 @@ public class Control : MonoBehaviour
         if (collision.gameObject.layer == 3)
         {
             Debug.Log("now starring : " + collision.name);
-            cam.m_BoundingShape2D = collision.gameObject.GetComponent<PolygonCollider2D>();
+            cam.m_BoundingShape2D = collision.gameObject.GetComponent<Collider2D>();
         }
     }
     /// <summary>
@@ -274,6 +278,9 @@ public class Control : MonoBehaviour
     public static void WallJump(GameObject gm, float direction, Vector2 force)
     {
         Rigidbody2D rb = gm.GetComponent<Rigidbody2D>();
-        rb.velocity = new Vector2(direction * force.x, force.y);
+        if (rb.velocity.y < force.y * 1.5f)
+            rb.velocity = new Vector2(direction * force.x, force.y);
+        else
+            rb.velocity = new Vector2(direction * force.x, rb.velocity.y + force.y / 10);
     }
 }

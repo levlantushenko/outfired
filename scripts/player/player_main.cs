@@ -38,13 +38,12 @@ public class player_main : MonoBehaviour
         input.normal.Control.performed += ctx => control = ctx.ReadValue<float>();
         input.normal.Control.canceled += ctx => control = 0;
         #endregion
-        
-        
 
     }
     #endregion
 
-    [Header("movement")]
+    [Header("----- movement -----")]
+    [Space]
     public float fallLimit;
     Rigidbody2D rb;
     public Transform groundCheck;
@@ -52,29 +51,41 @@ public class player_main : MonoBehaviour
     public float force;
     public float speed;
     public Transform sc;
+    [Space]
+    [Header("----- wall jump -----")]
+    [Space]
     public Vector2 wallJumpForce;
     public float JumpWallDir;
     public Transform[] wallChecks;
     public Vector2 wallCheckBox;
     public float wallFallSpd;
     public bool isWallJumping = false;
-    [Header("dash")]
+    [Space]
+    [Header("----- dash -----")]
+    [Space]
     public float dashSpd;
     public float dashDur;
     public float dashCd;
-    bool isDashAble = true;
+    [DoNotSerialize] public bool isDashAble = true;
     [DoNotSerialize] public bool isDashing;
     public float dist;
+    public GameObject highSpeedEff;
     CinemachineConfiner2D conf;
-    [Header("death")]
+    [Space]
+    [Header("----- death -----")]
+    [Space]
     public float hp;
     public float knockback;
     public GameObject deathEff;
     public float deathT;
-    [Header("attack")]
+    [Space]
+    [Header("----- attack -----")]
+    [Space]
     public GameObject slash;
     public Transform attPos;
-    [Header("abilities")]
+    [Space]
+    [Header("----- abilities -----")]
+    [Space]
     public bool sword;
     public bool recharged;
     public float rechT;
@@ -85,28 +96,39 @@ public class player_main : MonoBehaviour
         {
             PlayerPrefs.DeleteKey("Dead");
             transform.position = new Vector3(PlayerPrefs.GetInt("x"), PlayerPrefs.GetInt("y"));
+            PlayableDirector[] directors = FindObjectsOfType<PlayableDirector>();
+            foreach(var obj in directors)
+                if(obj.playOnAwake)
+                    obj.gameObject.SetActive(false);
         }
         FindAnyObjectByType<CinemachineVirtualCamera>().Follow = transform;
         conf = FindAnyObjectByType<CinemachineConfiner2D>();
         rb = GetComponent<Rigidbody2D>();
         
+        startG = rb.gravityScale;
         checkPP();
     }
-    
+    float startG;
     void Update()
     {
-        Control.Move(gameObject, speed, sc, false, axis.x, new Vector2(1, 1));
+        if (!isDashing)
+        {
+            Control.Move(gameObject, speed, sc, false, axis.x, new Vector2(1, 1));
+            rb.gravityScale = startG;
+        }else
+            rb.gravityScale = 0;
         bool isGrounded = Physics2D.Raycast(groundCheck.position, Vector2.down, 0.1f, lay);
         #region JumpDir capture
             if (!isWallJumping && !isGrounded)
         {
-            if (Physics2D.OverlapBox(wallChecks[0].position, wallCheckBox, 0f, lay) != null)
+            Collider2D left = Physics2D.OverlapBox(wallChecks[0].position, wallCheckBox, 0f, lay);
+            Collider2D right = Physics2D.OverlapBox(wallChecks[1].position, wallCheckBox, 0f, lay);
+            if (left != null && right == null)
             {
-                Debug.Log("Is Touching " + Physics2D.OverlapBox(wallChecks[0].position, wallCheckBox, 0f, lay).name);
                 JumpWallDir = 1;
                 if (rb.velocity.y < wallFallSpd)
                     rb.velocity = new Vector2(rb.velocity.x, wallFallSpd);
-            } else if(Physics2D.OverlapBox(wallChecks[1].position, wallCheckBox, 0f, lay) != null){
+            } else if(right != null && left == null){
                 JumpWallDir = -1;
                 if (rb.velocity.y < wallFallSpd)
                     rb.velocity = new Vector2(rb.velocity.x, wallFallSpd);
@@ -145,10 +167,34 @@ public class player_main : MonoBehaviour
         if (Mathf.Round(axis.y) < 0)
             rb.AddForce(Vector2.down * rb.gravityScale * 2, ForceMode2D.Force);
         rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, fallLimit, Mathf.Infinity));
+        float vel = GetComponent<Rigidbody2D>().velocity.magnitude;
+        float speedMult = 1;
+        if (vel > dashSpd * speedMult || vel < dashSpd * speedMult * -1)
+        {
+            fast = true;
+            if (!speedChecked)
+                StartCoroutine(HighSpeed());
+        }else
+            fast = false;
         // inputReset must be in the end of Update
         control = 0;
         attack = 0;
         
+    }
+    bool fast;
+    bool speedChecked = false;
+    IEnumerator HighSpeed()
+    {
+        speedChecked = true;
+        GameObject eff = Instantiate(highSpeedEff, transform.position, transform.rotation);
+        Vector2 dir = rb.velocity;
+        float z = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        eff.transform.rotation = Quaternion.Euler(0, 0, z);
+        yield return new WaitForSeconds(0.17f);
+        if (fast)
+            StartCoroutine(HighSpeed());
+        else
+            speedChecked = false;
     }
     IEnumerator SlashRech()
     {
@@ -174,7 +220,10 @@ public class player_main : MonoBehaviour
     public void Jump()
     {
         if (JumpWallDir == 0)
-            Control.Jump(gameObject, groundCheck, lay, force);
+            if(isDashing)
+                Control.Jump(gameObject, groundCheck, lay, force / 2);
+            else
+                Control.Jump(gameObject, groundCheck, lay, force);
         else
         {
             WallJump();
@@ -215,6 +264,7 @@ public class player_main : MonoBehaviour
     {
         PlayerPrefs.SetInt("died", 0);
         Instantiate(deathEff, transform.position, transform.rotation);
+        PlayerPrefs.SetInt("time", (int)Time.timeAsDouble);
         PlayerPrefs.SetInt("Dead", 0);
         Invoke("SceneReset", deathT);
         gameObject.SetActive(false);
@@ -231,5 +281,6 @@ public class player_main : MonoBehaviour
     {
         PlayerPrefs.DeleteKey("x");
         PlayerPrefs.DeleteKey("died");
+        PlayerPrefs.DeleteKey("time");
     }
 }

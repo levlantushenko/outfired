@@ -30,15 +30,18 @@ public class barricade : MonoBehaviour
     [Header("HP display")]
     public float pixPerHp;
     public GameObject hpBar;
-    private void Start()
+    private IEnumerator Start()
     {
         startHp = hp;
         startScale = transform.localScale;
         pixPerHp = hpBar.transform.localScale.x / hp;
-        Invoke("end", 180);
+        Invoke("end", 60);
+        yield return new WaitForSeconds(3);
+        isAttacking = true;
+        StartCoroutine(RocketAttack());
     }
 
-    bool isAttacking = false;
+    bool isAttacking = true;
     float posDifference(float a, float b)
     {
         return (a - b) / Mathf.Abs(a - b);

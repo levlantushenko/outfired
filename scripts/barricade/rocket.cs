@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class rocket : MonoBehaviour
@@ -11,7 +12,7 @@ public class rocket : MonoBehaviour
     bool isSpinning = true;
     public Vector3 offset;
     public GameObject eff;
-    public LayerMask lay;
+    public int[] lay;
 
     public IEnumerator Start()
     {
@@ -36,9 +37,9 @@ public class rocket : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.layer == 2 || collision.gameObject.layer == 3) return;
+        Debug.Log(collision.gameObject.layer + " : " + collision.name);
+        if(!lay.Contains(collision.gameObject.layer)) return;
         Instantiate(eff, transform.position, Quaternion.identity);
-        Destroy(eff, 1);
         Destroy(gameObject);
     }
 }

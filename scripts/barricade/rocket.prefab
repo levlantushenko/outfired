@@ -149,6 +149,7 @@ GameObject:
   - component: {fileID: 959205028143874144}
   - component: {fileID: 5315635651163474997}
   - component: {fileID: -62241642874659569}
+  - component: {fileID: -7336004462537766499}
   m_Layer: 2
   m_Name: rocket
   m_TagString: slash
@@ -242,9 +243,7 @@ MonoBehaviour:
   spinSpeed: 180
   offset: {x: 0, y: 90, z: 0}
   eff: {fileID: 4416799296767080569, guid: a552ffa8c07c16d4ba0d9dd469687e27, type: 3}
-  lay:
-    serializedVersion: 2
-    m_Bits: 115
+  lay: 00000000
 --- !u!61 &5315635651163474997
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -317,3 +316,16 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &-7336004462537766499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5113329729450072910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93f37d939ed507b4c8a8d5bbb2803089, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  t: 15
