@@ -28,9 +28,12 @@ public class menu : MonoBehaviour
         if (PlayerPrefs.HasKey("perfect"))
             achs[4].SetActive(true);
         else achs[4].SetActive(false);
+        if (PlayerPrefs.HasKey("speedrun"))
+            achs[5].SetActive(true);
+        else achs[5].SetActive(false);
         if (PlayerPrefs.HasKey("master"))
-            achs[4].SetActive(true);
-        else achs[4].SetActive(false);
+            achs[6].SetActive(true);
+        else achs[6].SetActive(false);
     }
     public void Play()
     {

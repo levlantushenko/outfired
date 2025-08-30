@@ -27,16 +27,22 @@ public class tp_cannon : MonoBehaviour
     public float dist;
     Transform obj;
     public GameObject eff;
-
+    AudioSource src;
+    private void Start()
+    {
+        src = GetComponent<AudioSource>();
+    }
+    bool shooting = false;
     void Update()
     {
         if(obj == null)
-            obj = FindAnyObjectByType<player_main>().transform;
+            obj = FindAnyObjectByType<player_main>(FindObjectsInactive.Exclude).transform;
         if (obj == null) return;
         if (Vector2.Distance(transform.position, obj.position) < dist)
         {
-            if (jump != 0)
+            if (jump != 0 && !shooting)
             {
+                shooting = true;
                 Step1();
             }
         }
@@ -49,9 +55,12 @@ public class tp_cannon : MonoBehaviour
     }
     void Step2()
     {
+        src.Play();
         obj.gameObject.SetActive(true);
         obj.GetComponent<Rigidbody2D>().velocity = force;
         Instantiate(eff, transform.position, transform.rotation);
+        shooting = false;
+
     }
     private void OnDrawGizmos()
     {

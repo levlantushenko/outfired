@@ -47,7 +47,7 @@ public class achievments : MonoBehaviour
                 if (!PlayerPrefs.HasKey("died"))
                     perfect = true;
 
-                if (mobile.time < 240)
+                if (_interface.time < 240)
                     speedrun = true;
 
                 if (mercy)

@@ -41,7 +41,12 @@ public class player_main : MonoBehaviour
 
     }
     #endregion
-
+    [Header("Sounds")]
+    [Space]
+    public AudioClip dashSd;
+    public AudioClip attackSd;
+    AudioSource sound;
+    [Space]
     [Header("----- movement -----")]
     [Space]
     public float fallLimit;
@@ -92,6 +97,8 @@ public class player_main : MonoBehaviour
 
     private void Start()
     {
+        
+        sound = GetComponent<AudioSource>();
         if (PlayerPrefs.HasKey("x") && PlayerPrefs.HasKey("Dead"))
         {
             PlayerPrefs.DeleteKey("Dead");
@@ -161,6 +168,8 @@ public class player_main : MonoBehaviour
         }
         if (sword && attack != 0 && recharged)
         {
+            sound.clip = attackSd;
+            sound.Play();
             Control.Attack(transform, slash, attPos, false, sc);
             StartCoroutine(SlashRech());
         }

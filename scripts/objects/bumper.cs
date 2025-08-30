@@ -6,6 +6,7 @@ public class bumper : MonoBehaviour
 {
     [SerializeField] float force;
     [SerializeField] float t;
+    public AudioClip clip;
 
     private void Start()
     {
@@ -35,6 +36,8 @@ public class bumper : MonoBehaviour
         pl.isDashing = true;
         pl.isDashAble = true;
         Invoke("plDashReset", 0.3f);
+        GetComponent<AudioSource>().clip = clip;
+        GetComponent<AudioSource>().Play();
     }
     bool rech = true;
     public void recharge() => rech = true;

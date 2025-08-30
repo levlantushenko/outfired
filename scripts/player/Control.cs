@@ -197,9 +197,9 @@ public class Control : MonoBehaviour
         Rigidbody2D rb = gm.GetComponent<Rigidbody2D>();
         Vector2 bakedDashSpd = new Vector2(dashSpd * Mathf.Round(input.x), dashSpd * Mathf.Round(input.y));
         if (bakedDashSpd.x != 0 && bakedDashSpd.y != 0)
-            bakedDashSpd /= 2f;
+            bakedDashSpd /= 1.5f;
         if (Mathf.Abs(rb.velocity.x) > Mathf.Abs(bakedDashSpd.x) && bakedDashSpd.x != 0)
-            bakedDashSpd.x = Mathf.Abs(rb.velocity.x) * 1.1f;
+            bakedDashSpd.x = Mathf.Abs(rb.velocity.x) * 1.1f * normal(bakedDashSpd.x);
         rb.velocity = bakedDashSpd;
     }
     static float normal(float val)
@@ -208,6 +208,7 @@ public class Control : MonoBehaviour
             return val / Mathf.Abs(val);
         else return 0.0f;
     }
+    
     
     /// <summary>
     /// Dashes player in direction (mobile)

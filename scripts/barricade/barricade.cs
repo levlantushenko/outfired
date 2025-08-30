@@ -7,6 +7,10 @@ using UnityEngine.UI;
 
 public class barricade : MonoBehaviour
 {
+    [Header("Sounds")]
+    public AudioClip laserSd;
+    public AudioClip rocketSd;
+    AudioSource source;
     public float hp;
     public float lowHp;
     public float startHp;
@@ -32,6 +36,7 @@ public class barricade : MonoBehaviour
     public GameObject hpBar;
     private IEnumerator Start()
     {
+        source = GetComponent<AudioSource>();
         startHp = hp;
         startScale = transform.localScale;
         pixPerHp = hpBar.transform.localScale.x / hp;
@@ -96,10 +101,12 @@ public class barricade : MonoBehaviour
     public float rocketSpeed;
     public IEnumerator RocketAttack()
     {
+        source.clip = rocketSd;
         isAttacking = true;
         float degrees = startDgr - dgrDelta * rocketAmount / 2;
         for(int i = 0; i <= rocketAmount; i++)
         {
+            source.Play();
             rocket _rocket = Instantiate(rocket, rocketLauncher.position, Quaternion.Euler(0, 0, degrees)).GetComponent<rocket>();
             _rocket.speed = rocketSpeed;
             degrees += dgrDelta;
@@ -111,6 +118,8 @@ public class barricade : MonoBehaviour
     float laserTime = 5;
     public IEnumerator LaserAttack()
     {
+        source.clip = laserSd;
+        source.Play();
         isAttacking = true;
         anim.SetTrigger("laser");
         yield return new WaitForSeconds(laserTime);
