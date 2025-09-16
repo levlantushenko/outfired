@@ -1,4 +1,4 @@
-using Cinemachine;
+ using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
@@ -56,6 +56,7 @@ public class player_main : MonoBehaviour
     public float force;
     public float speed;
     public Transform sc;
+    public float coyotT;
     [Space]
     [Header("----- wall jump -----")]
     [Space]
@@ -116,6 +117,7 @@ public class player_main : MonoBehaviour
         checkPP();
     }
     float startG;
+    bool isGrounded;
     void Update()
     {
         if (!isDashing)
@@ -124,7 +126,14 @@ public class player_main : MonoBehaviour
             rb.gravityScale = startG;
         }else
             rb.gravityScale = 0;
-        bool isGrounded = Physics2D.Raycast(groundCheck.position, Vector2.down, 0.1f, lay);
+
+        if (Physics2D.Raycast(groundCheck.position, Vector2.down, 0.1f, lay))
+            isGrounded = true;
+        else if (isGrounded && !coyotChecked)
+        {
+            StartCoroutine(CoyotTime());
+        }
+
         #region JumpDir capture
             if (!isWallJumping && !isGrounded)
         {
@@ -139,7 +148,6 @@ public class player_main : MonoBehaviour
                 JumpWallDir = -1;
                 if (rb.velocity.y < wallFallSpd)
                     rb.velocity = new Vector2(rb.velocity.x, wallFallSpd);
-                Debug.Log("Is Touching " + Physics2D.OverlapBox(wallChecks[1].position, wallCheckBox, 0f, lay).name);
             } 
             else
                 JumpWallDir = 0;
@@ -192,6 +200,14 @@ public class player_main : MonoBehaviour
     }
     bool fast;
     bool speedChecked = false;
+    bool coyotChecked;
+    IEnumerator CoyotTime()
+    {
+        coyotChecked = true;
+        yield return new WaitForSeconds(coyotT);
+        isGrounded = false;
+        coyotChecked = false;
+    }
     IEnumerator HighSpeed()
     {
         speedChecked = true;
@@ -224,15 +240,22 @@ public class player_main : MonoBehaviour
     public void GetControl()
     {
         Control.getControl(transform, dist, conf.GetComponent<CinemachineVirtualCamera>());
-        Debug.Log("player : void caused!");
+
     }
     public void Jump()
     {
-        if (JumpWallDir == 0)
-            if(isDashing)
-                Control.Jump(gameObject, groundCheck, lay, force / 2);
-            else
-                Control.Jump(gameObject, groundCheck, lay, force);
+        if (JumpWallDir == 0) {
+            if (isGrounded)
+            {
+                StopCoroutine(CoyotTime());
+                isGrounded = false;
+                if(isDashing)
+                    Control.Jump(gameObject, groundCheck, lay, force / 2);
+                else
+                    Control.Jump(gameObject, groundCheck, lay, force);
+            }
+        
+        }
         else
         {
             WallJump();

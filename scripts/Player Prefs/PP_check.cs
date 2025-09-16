@@ -19,6 +19,7 @@ public class PP_check : MonoBehaviour
     }
     public void Check(string cur)
     {
+        if (!PlayerPrefs.HasKey(cur)) return;
         if(PlayerPrefs.GetInt(cur) == val)
         {
             GetComponent<Animator>().SetBool(trigger, true);

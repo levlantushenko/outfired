@@ -40,7 +40,8 @@ Material:
     - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
     - _opacity: 0.4
-    - _scale: 1
+    - _scale: 2
+    - _t: 0.5
     m_Colors:
     - _color: {r: 32, g: 32, b: 32, a: 0}
     - _speed: {r: 0, g: -5, b: 0, a: 0}

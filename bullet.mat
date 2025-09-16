@@ -41,6 +41,7 @@ Material:
     - _BUILTIN_QueueOffset: 0
     - _opacity: 0.5
     - _scale: 1
+    - _t: 0.5
     m_Colors:
     - _color: {r: 0, g: 0, b: 0, a: 1}
     - _speed: {r: 0, g: -2, b: 0, a: 0}

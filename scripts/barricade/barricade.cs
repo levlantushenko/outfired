@@ -8,6 +8,8 @@ using UnityEngine.UI;
 public class barricade : MonoBehaviour
 {
     [Header("Sounds")]
+    public AudioSource world;
+    public AudioClip main;
     public AudioClip laserSd;
     public AudioClip rocketSd;
     AudioSource source;
@@ -36,6 +38,8 @@ public class barricade : MonoBehaviour
     public GameObject hpBar;
     private IEnumerator Start()
     {
+        world.clip = main;
+        world.Play();
         source = GetComponent<AudioSource>();
         startHp = hp;
         startScale = transform.localScale;

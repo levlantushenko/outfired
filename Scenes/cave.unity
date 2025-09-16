@@ -452,7 +452,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!320 &27899092
 PlayableDirector:
   m_ObjectHideFlags: 0
@@ -15847,7 +15847,7 @@ GameObject:
   - component: {fileID: 1447642247}
   - component: {fileID: 1447642246}
   m_Layer: 0
-  m_Name: cave depths
+  m_Name: main music
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15863,7 +15863,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: beeb64ab5d2653d4cbe6f1c9bb14a157, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 9addbb6b3a2fcdd4da0a5bfeda694560, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -16873,7 +16873,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1541269201}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.9, y: -4.3, z: -10}
+  m_LocalPosition: {x: -19.7, y: -9.2, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -22605,6 +22605,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3130638211398652666, guid: 79a7672faa8aa27488b5e108c14471e1, type: 3}
+      propertyPath: main
+      value: 
+      objectReference: {fileID: 8300000, guid: 55fe44dfd86a29d4c91ecfab929c64cc, type: 3}
+    - target: {fileID: 3130638211398652666, guid: 79a7672faa8aa27488b5e108c14471e1, type: 3}
+      propertyPath: world
+      value: 
+      objectReference: {fileID: 1447642246}
+    - target: {fileID: 3130638211398652666, guid: 79a7672faa8aa27488b5e108c14471e1, type: 3}
       propertyPath: laserSd
       value: 
       objectReference: {fileID: 8300000, guid: e7dbd473671d4614481fffaa16de1342, type: 3}
@@ -22768,11 +22776,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8168851206926914676, guid: 0211b4f88929872468da9994192b4d93, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -12.9
+      value: -19.7
       objectReference: {fileID: 0}
     - target: {fileID: 8168851206926914676, guid: 0211b4f88929872468da9994192b4d93, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.3
+      value: -9.2
       objectReference: {fileID: 0}
     - target: {fileID: 8168851206926914676, guid: 0211b4f88929872468da9994192b4d93, type: 3}
       propertyPath: m_LocalPosition.z
@@ -22825,11 +22833,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7646191749666392648, guid: da399345d727e4d4295a6751d022f25f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -12.9
+      value: -13.123813
       objectReference: {fileID: 0}
     - target: {fileID: 7646191749666392648, guid: da399345d727e4d4295a6751d022f25f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.3
+      value: -5.35486
       objectReference: {fileID: 0}
     - target: {fileID: 7646191749666392648, guid: da399345d727e4d4295a6751d022f25f, type: 3}
       propertyPath: m_LocalPosition.z

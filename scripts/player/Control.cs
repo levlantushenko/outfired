@@ -90,14 +90,8 @@ public class Control : MonoBehaviour
     /// jump force
     public static void Jump(GameObject gm, Transform groundCheck, LayerMask lay, float force)
     {
-        bool jump;
-        float space;
         Rigidbody2D rb = gm.GetComponent<Rigidbody2D>();
-        if (Physics2D.Raycast(groundCheck.position, Vector2.down, 0.1f, lay))
-        {
-            rb.velocity = new Vector2(rb.velocity.x, force);
-            jump = true;
-        }   
+        rb.velocity = new Vector2(rb.velocity.x, force);
     }
     /// <summary>
     /// player attack method
@@ -202,7 +196,7 @@ public class Control : MonoBehaviour
             bakedDashSpd.x = Mathf.Abs(rb.velocity.x) * 1.1f * normal(bakedDashSpd.x);
         rb.velocity = bakedDashSpd;
     }
-    static float normal(float val)
+    public static float normal(float val)
     {
         if(val != 0)
             return val / Mathf.Abs(val);
@@ -279,9 +273,19 @@ public class Control : MonoBehaviour
     public static void WallJump(GameObject gm, float direction, Vector2 force)
     {
         Rigidbody2D rb = gm.GetComponent<Rigidbody2D>();
-        if (rb.velocity.y < force.y * 1.5f)
-            rb.velocity = new Vector2(direction * force.x, force.y);
+        if(normal(rb.velocity.x) * -1 != direction)
+        {
+            if (rb.velocity.y < force.y * 1.5f)
+                rb.velocity = new Vector2(direction * force.x, force.y);
+            else
+                rb.velocity = new Vector2(direction * force.x, rb.velocity.y + force.y / 10);
+        }
         else
-            rb.velocity = new Vector2(direction * force.x, rb.velocity.y + force.y / 10);
+        {
+            if (rb.velocity.y < force.y * 1.5f)
+                rb.velocity = new Vector2(rb.velocity.x + direction * force.x, force.y);
+            else
+                rb.velocity = new Vector2(rb.velocity.x + direction * force.x, rb.velocity.y + force.y / 10);
+        }
     }
 }

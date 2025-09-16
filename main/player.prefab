@@ -449,7 +449,7 @@ Transform:
   - {fileID: 3970553361648210299}
   - {fileID: 490952460831883449}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &8584859748216562992
 Rigidbody2D:
@@ -540,6 +540,7 @@ MonoBehaviour:
   force: 20
   speed: 15
   sc: {fileID: 3970553361648210299}
+  coyotT: 0.2
   wallJumpForce: {x: 15, y: 15}
   JumpWallDir: 0
   wallChecks:
@@ -563,7 +564,7 @@ MonoBehaviour:
   attPos: {fileID: 7242983312264892752}
   sword: 0
   recharged: 1
-  rechT: 0.2
+  rechT: 0.5
 --- !u!95 &2051717438766015609
 Animator:
   serializedVersion: 5
