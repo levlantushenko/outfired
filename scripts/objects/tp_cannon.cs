@@ -28,6 +28,7 @@ public class tp_cannon : MonoBehaviour
     Transform obj;
     public GameObject eff;
     AudioSource src;
+    public float stun = 3;
     private void Start()
     {
         src = GetComponent<AudioSource>();
@@ -43,25 +44,25 @@ public class tp_cannon : MonoBehaviour
             if (jump != 0 && !shooting)
             {
                 shooting = true;
-                Step1();
+                StartCoroutine(Shoot());
             }
         }
     }
-    void Step1()
+    IEnumerator Shoot()
     {
         obj.position = transform.position;
         obj.gameObject.SetActive(false);
-        Invoke("Step2", 1);
-    }
-    void Step2()
-    {
+        //step 2
+        yield return new WaitForSeconds(1);
         src.Play();
         obj.gameObject.SetActive(true);
         obj.GetComponent<Rigidbody2D>().velocity = force;
         obj.GetComponent<player_main>().isDashAble = true;
         Instantiate(eff, transform.position, transform.rotation);
         shooting = false;
-
+        obj.GetComponent<player_main>().isDashing = true;
+        yield return new WaitForSeconds(stun);
+        obj.GetComponent<player_main>().isDashing = false;
     }
     private void OnDrawGizmos()
     {

@@ -172,7 +172,7 @@ public class player_main : MonoBehaviour
         {
            Jump();
         }
-
+        if (JumpWallDir != 0) isDashAble = true;
 
         if (dash != 0 && isDashAble)
         {
