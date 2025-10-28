@@ -1563,7 +1563,7 @@
     "m_DefaultRefNameVersion": 1,
     "m_RefNameGeneratedByDisplayName": "color",
     "m_DefaultReferenceName": "_color",
-    "m_OverrideReferenceName": "",
+    "m_OverrideReferenceName": "_MainColor",
     "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,
     "m_CustomSlotLabel": "",

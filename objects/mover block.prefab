@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -877992928, guid: 5f5d6143d064711429a2377248a201d7, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0.97198963, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -103,11 +103,12 @@ MonoBehaviour:
   dashReq: 1
   inversed: 0
   lerp: 1
-  speed: 10
+  speed: 15
   stops: {fileID: 0}
   cur: 0
   lerpT: 10
   arrow: {fileID: 6730219597530635020}
+  waitT: 0.2
 --- !u!50 &2062337943361647114
 Rigidbody2D:
   serializedVersion: 4
@@ -123,7 +124,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -133,7 +134,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &1420454270302755118
 BoxCollider2D:

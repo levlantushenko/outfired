@@ -14,6 +14,7 @@ public class _interface : MonoBehaviour
     public Button menu;
     private void Awake()
     {
+        PlayerPrefs.DeleteKey("died");
         menu.onClick.AddListener(clearSessionSaves);
         if (!Application.isMobilePlatform)
             panels[0].SetActive(false);

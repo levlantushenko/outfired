@@ -49,6 +49,7 @@ public class player_main : MonoBehaviour
     [Space]
     [Header("----- movement -----")]
     [Space]
+    public float slowSpeed;
     public float fallLimit;
     Rigidbody2D rb;
     public Transform groundCheck;
@@ -77,6 +78,8 @@ public class player_main : MonoBehaviour
     public float dist;
     public GameObject highSpeedEff;
     CinemachineConfiner2D conf;
+    public TrailRenderer trail;
+    public Gradient[] trailCols;
     [Space]
     [Header("----- death -----")]
     [Space]
@@ -120,6 +123,10 @@ public class player_main : MonoBehaviour
     bool isGrounded;
     void Update()
     {
+        if(isDashAble)
+            trail.colorGradient = trailCols[0];
+        else
+            trail.colorGradient = trailCols[1];
         if (!isDashing)
         {
             Control.Move(gameObject, speed, sc, false, axis.x, new Vector2(1, 1));
@@ -128,7 +135,12 @@ public class player_main : MonoBehaviour
             rb.gravityScale = 0;
 
         if (Physics2D.Raycast(groundCheck.position, Vector2.down, 0.1f, lay))
+        {
             isGrounded = true;
+            isDashAble = true;
+        }
+        //if (!isDashing && Mathf.Abs(rb.velocity.x) > Mathf.Abs(speed * 1.5f))
+        //    rb.velocity = new Vector2(Mathf.MoveTowards(rb.velocity.x, Control.normal(speed), slowSpeed), rb.velocity.y);
         else if (isGrounded && !coyotChecked)
         {
             StartCoroutine(CoyotTime());
@@ -139,14 +151,15 @@ public class player_main : MonoBehaviour
         {
             Collider2D left = Physics2D.OverlapBox(wallChecks[0].position, wallCheckBox, 0f, lay);
             Collider2D right = Physics2D.OverlapBox(wallChecks[1].position, wallCheckBox, 0f, lay);
-            if (left != null && right == null)
+            if (left != null && right == null && !left.gameObject.CompareTag("slash"))
             {
                 JumpWallDir = 1;
-                if (rb.velocity.y < wallFallSpd)
+                if (rb.velocity.y < wallFallSpd && !isDashing && axis.y >= -0.5)
                     rb.velocity = new Vector2(rb.velocity.x, wallFallSpd);
-            } else if(right != null && left == null){
+            } else if(right != null && left == null && !right.gameObject.CompareTag("slash"))
+            {
                 JumpWallDir = -1;
-                if (rb.velocity.y < wallFallSpd)
+                if (rb.velocity.y < wallFallSpd && !isDashing && axis.y >= -0.5)
                     rb.velocity = new Vector2(rb.velocity.x, wallFallSpd);
             } 
             else
@@ -196,7 +209,7 @@ public class player_main : MonoBehaviour
         // inputReset must be in the end of Update
         control = 0;
         attack = 0;
-        
+        dash = 0;
     }
     bool fast;
     bool speedChecked = false;
@@ -247,10 +260,13 @@ public class player_main : MonoBehaviour
         if (JumpWallDir == 0) {
             if (isGrounded)
             {
-                StopCoroutine(CoyotTime());
+                StopCoroutine(CoyotTime()); 
                 isGrounded = false;
-                if(isDashing)
+                if (isDashing)
+                {
                     Control.Jump(gameObject, groundCheck, lay, force / 2);
+                    rb.velocity *= new Vector2(1.1f, 1);
+                }
                 else
                     Control.Jump(gameObject, groundCheck, lay, force);
             }
@@ -258,6 +274,7 @@ public class player_main : MonoBehaviour
         }
         else
         {
+            Debug.Log("Wall jump");
             WallJump();
             isWallJumping = true;
             Invoke("WallJumpReset", 0.1f);
@@ -290,6 +307,10 @@ public class player_main : MonoBehaviour
                 rb.velocity = (collision.transform.position - transform.position).normalized * knockback;
             }
                 
+        }else if(collision.gameObject.tag == "refill" && !isDashAble)
+        {
+            isDashAble=true;
+            collision.gameObject.SetActive(false);
         }
     }
     void Death()

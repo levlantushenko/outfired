@@ -9,6 +9,11 @@ public class menu : MonoBehaviour
 
     private void Start()
     {
+        PlayerPrefs.SetInt("complete", 0);
+        PlayerPrefs.SetInt("mercy", 0);
+        PlayerPrefs.SetInt("pacifist", 0);
+        PlayerPrefs.SetInt("genocide", 0);
+        PlayerPrefs.SetInt("perfect", 0);
         if (PlayerPrefs.HasKey("complete"))
             achs[0].SetActive(true);
         else achs[0].SetActive(false);

@@ -58,6 +58,7 @@ public class tp_cannon : MonoBehaviour
         src.Play();
         obj.gameObject.SetActive(true);
         obj.GetComponent<Rigidbody2D>().velocity = force;
+        obj.GetComponent<player_main>().isDashAble = true;
         Instantiate(eff, transform.position, transform.rotation);
         shooting = false;
 

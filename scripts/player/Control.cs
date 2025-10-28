@@ -26,10 +26,10 @@ public class Control : MonoBehaviour
         if (direction != 0)
         {
             if (Mathf.Abs(rb.velocity.x) < speed)
-                rb.AddForce(Vector2.right * speed * 2 * direction * rb.mass, ForceMode2D.Force);
+                rb.velocity = new Vector2(Mathf.Lerp(rb.velocity.x, speed * direction, 0.3f), rb.velocity.y);
         }
         if(direction == 0)
-            rb.velocity /= new Vector2(1.1f, 1);
+            rb.velocity /= new Vector2(1.2f, 1);
         if (direction < 0)
         {
             if (!isInverted) SC.localScale = originSc * new Vector2(-1, 1);
@@ -287,5 +287,9 @@ public class Control : MonoBehaviour
             else
                 rb.velocity = new Vector2(rb.velocity.x + direction * force.x, rb.velocity.y + force.y / 10);
         }
+        WallJumpEvent?.Invoke();
     }
+    public static event Action WallJumpEvent;
+    
+
 }

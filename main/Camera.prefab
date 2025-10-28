@@ -2166,6 +2166,7 @@ MonoBehaviour:
   panels:
   - {fileID: 8950594372408432374}
   - {fileID: 3072826675467839446}
+  menu: {fileID: 6730487298718827587}
   tmp: {fileID: 7505116055949795159}
 --- !u!1 &6272870171179122659
 GameObject:

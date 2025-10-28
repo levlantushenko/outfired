@@ -5,20 +5,52 @@ using UnityEngine;
 public class movingDoor : MonoBehaviour
 {
     public float doorWaitT;
-    public float flyT;
+    public float speed;
     public Transform point;
     public Transform door;
     bool pressed;
+    Collider2D doorColl;
+    Collider2D pl;
+    private void Start()
+    {
+        doorColl = door.GetComponent<Collider2D>();
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(!collision.gameObject.CompareTag("Player") || pressed) return;
+        pl = collision;
         StartCoroutine(move());
     }
+    bool check;
+    bool moved;
     private void Update()
     {
         if(!pressed) return;
-        door.position = Vector2.Lerp(door.position, point.position, flyT * Time.deltaTime);
-
+        if(!moved)
+            door.position = Vector2.Lerp(door.position, point.position, speed * Time.deltaTime);
+        if(Vector2.Distance(door.position, point.position) <= speed / 16 && !moved)
+        {
+            moved = true;
+            door.position = point.position;
+        }
+            
+        if (check) return;
+        if (doorColl.IsTouching(pl))
+        {
+            Debug.Log("Adding force");
+            pl.transform.parent = door;
+            Control.WallJumpEvent += AddForce;
+        }
+        else
+        {
+            Control.WallJumpEvent -= AddForce;
+            pl.transform.parent = null;
+        }
+    }
+    void AddForce()
+    {
+        Rigidbody2D rb = pl.GetComponent<Rigidbody2D>();
+        rb.AddForce(Vector2.right * Control.normal(rb.velocity.x) * speed * 1.5f);
     }
     IEnumerator move()
     {
