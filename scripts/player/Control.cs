@@ -26,10 +26,10 @@ public class Control : MonoBehaviour
         if (direction != 0)
         {
             if (Mathf.Abs(rb.velocity.x) < speed)
-                rb.velocity = new Vector2(Mathf.Lerp(rb.velocity.x, speed * direction, 0.3f), rb.velocity.y);
+                rb.velocity = new Vector2(speed * direction, rb.velocity.y);
         }
-        if(direction == 0)
-            rb.velocity /= new Vector2(1.2f, 1);
+        if (direction == 0)
+            rb.velocity /= new Vector2(1.1f, 1f);
         if (direction < 0)
         {
             if (!isInverted) SC.localScale = originSc * new Vector2(-1, 1);
@@ -114,14 +114,13 @@ public class Control : MonoBehaviour
             _slash.transform.localScale = new Vector3(SC.localScale.x / Mathf.Abs(SC.localScale.x) * _slash.transform.localScale.x,
                 _slash.transform.localScale.y, 1);
             _slash.transform.parent = tr;
-            Destroy(_slash, 0.3f);
+            _slash.name = $"{tr.name} {_slash.name}";
         }
         else
         {
             GameObject _bullet = Instantiate(att, attPos.position, attPos.rotation);
             _bullet.GetComponent<Rigidbody2D>().velocity = new Vector2(5 * SC.localScale.x / Mathf.Abs(SC.localScale.y),
                 0);
-            Destroy(_bullet, 3f);
         }
     }
     [Header("Control")]

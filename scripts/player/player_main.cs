@@ -139,8 +139,8 @@ public class player_main : MonoBehaviour
             isGrounded = true;
             isDashAble = true;
         }
-        //if (!isDashing && Mathf.Abs(rb.velocity.x) > Mathf.Abs(speed * 1.5f))
-        //    rb.velocity = new Vector2(Mathf.MoveTowards(rb.velocity.x, Control.normal(speed), slowSpeed), rb.velocity.y);
+        if (!isDashing && Mathf.Abs(rb.velocity.x) > Mathf.Abs(speed * 1.5f))
+            rb.velocity = new Vector2(Mathf.MoveTowards(rb.velocity.x, Control.normal(speed), slowSpeed), rb.velocity.y);
         else if (isGrounded && !coyotChecked)
         {
             StartCoroutine(CoyotTime());
@@ -291,13 +291,14 @@ public class player_main : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.layer == 3)
+        if(collision.gameObject == gameObject) return;
+        if (collision.gameObject.layer == 3)
         {
             Control.CameraControl(collision, conf);
             PlayerPrefs.SetInt("x", (int)collision.transform.GetChild(0).position.x);
             PlayerPrefs.SetInt("y", (int)collision.transform.GetChild(0).position.y);
         }
-        else if(collision.gameObject.tag == "slash")
+        else if(collision.gameObject.tag == "slash" && !collision.gameObject.name.Contains("pl"))
         {
             hp -= 1;
             if (hp <= 0)
