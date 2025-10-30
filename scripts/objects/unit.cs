@@ -50,6 +50,8 @@ public class Unit : MonoBehaviour
         else PlayerPrefs.SetInt(name + " hp", (int)hp);
     }
     #endregion
+
+    public static GameObject hitEff;
     public enum enTypes
     {
         Miner
@@ -193,6 +195,11 @@ public class Unit : MonoBehaviour
             Control.CameraControl(collision, conf);
         if (collision.gameObject.tag == "slash")
         {
+            GameObject eff = Instantiate(hitEff, transform.position, transform.rotation);
+            float effDir = Control.normal(transform.position.x - collision.transform.position.x);
+            eff.transform.localScale = new Vector2(effDir, 1);
+            Destroy(eff, 1f);
+
             collision.gameObject.GetComponent<Collider2D>().enabled = false;   
             hp -= 1;
             StartCoroutine(Hit());

@@ -291,7 +291,6 @@ public class player_main : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject == gameObject) return;
         if (collision.gameObject.layer == 3)
         {
             Control.CameraControl(collision, conf);

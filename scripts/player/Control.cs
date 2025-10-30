@@ -29,7 +29,7 @@ public class Control : MonoBehaviour
                 rb.velocity = new Vector2(speed * direction, rb.velocity.y);
         }
         if (direction == 0)
-            rb.velocity /= new Vector2(1.1f, 1f);
+            rb.velocity /= new Vector2(1.3f, 1f);
         if (direction < 0)
         {
             if (!isInverted) SC.localScale = originSc * new Vector2(-1, 1);
@@ -195,6 +195,12 @@ public class Control : MonoBehaviour
             bakedDashSpd.x = Mathf.Abs(rb.velocity.x) * 1.1f * normal(bakedDashSpd.x);
         rb.velocity = bakedDashSpd;
     }
+    /// <summary>
+    /// returns value of the given in float as 1 or -1
+    /// </summary>
+    /// <param name="val"></param>
+    /// value
+    /// <returns></returns>
     public static float normal(float val)
     {
         if(val != 0)
