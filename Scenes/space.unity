@@ -1705,6 +1705,7 @@ MonoBehaviour:
   force: {x: 0, y: 60}
   dist: 3
   eff: {fileID: 1843218513924877536, guid: 3630c3405e26c534eb2bec69ee6c7864, type: 3}
+  stun: 0
 --- !u!212 &638263013
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3334,7 +3335,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1223755420
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5815,11 +5816,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7646191749666392648, guid: da399345d727e4d4295a6751d022f25f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9.956339
+      value: -10.258039
       objectReference: {fileID: 0}
     - target: {fileID: 7646191749666392648, guid: da399345d727e4d4295a6751d022f25f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 217.83243
+      value: 217.8273
       objectReference: {fileID: 0}
     - target: {fileID: 7646191749666392648, guid: da399345d727e4d4295a6751d022f25f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -5864,6 +5865,10 @@ PrefabInstance:
     - target: {fileID: 8528069302293056519, guid: da399345d727e4d4295a6751d022f25f, type: 3}
       propertyPath: m_Name
       value: Camera
+      objectReference: {fileID: 0}
+    - target: {fileID: 8528069302293056519, guid: da399345d727e4d4295a6751d022f25f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:

@@ -1,13 +1,9 @@
- using Cinemachine;
+using Cinemachine;
 using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
-using UnityEngine.InputSystem.Controls;
 using UnityEngine.Playables;
-using UnityEngine.SceneManagement;
-using UnityEngine.Timeline;
 
 public class player_main : MonoBehaviour
 {
@@ -33,7 +29,7 @@ public class player_main : MonoBehaviour
         input.normal.Dash.canceled += ctx => dash = 0;
 
         input.normal.Attack.performed += ctx => attack = ctx.ReadValue<float>();
-        input.normal.Attack.canceled += ctx => attack = 0;
+        //input.normal.Attack.canceled += ctx => attack = 0;
 
         input.normal.Control.performed += ctx => control = ctx.ReadValue<float>();
         input.normal.Control.canceled += ctx => control = 0;
@@ -90,6 +86,13 @@ public class player_main : MonoBehaviour
     [Space]
     [Header("----- attack -----")]
     [Space]
+    [Tooltip("all player slashes container" +
+        "\n 0 - broadsword" +
+        "\n 1 - rapiere" +
+        "\n 2 - claws")
+    ]
+    public GameObject[] slashes;
+    [Tooltip("current slash")]
     public GameObject slash;
     public Transform attPos;
     [Space]
@@ -208,7 +211,6 @@ public class player_main : MonoBehaviour
             fast = false;
         // inputReset must be in the end of Update
         control = 0;
-        attack = 0;
         dash = 0;
     }
     bool fast;
@@ -221,6 +223,7 @@ public class player_main : MonoBehaviour
         isGrounded = false;
         coyotChecked = false;
     }
+
     IEnumerator HighSpeed()
     {
         speedChecked = true;
@@ -237,16 +240,19 @@ public class player_main : MonoBehaviour
     IEnumerator SlashRech()
     {
         recharged = false;
+        attack = 0;
         yield return new WaitForSeconds(rechT);
         recharged = true;
     }
     public void checkPP()
     {
-        string abs = "";
-        if (PlayerPrefs.HasKey("abilities"))
-            abs = PlayerPrefs.GetString("abilities");
-        if (abs.Contains("sword"))
-            sword = true;
+        int sword = -1;
+        if (PlayerPrefs.HasKey("sword"))
+            sword = PlayerPrefs.GetInt("sword");
+        if(sword != -1)
+            slash = slashes[sword];
+        Debug.Log(sword);
+        rechT = slash.GetComponent<slash>().attSpeed;
     }
     
     public void WallJumpReset() => isWallJumping = false;
@@ -289,7 +295,7 @@ public class player_main : MonoBehaviour
     void DashReset() => isDashAble = true;
 
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private IEnumerator OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.layer == 3)
         {
@@ -299,19 +305,30 @@ public class player_main : MonoBehaviour
         }
         else if(collision.gameObject.tag == "slash" && !collision.gameObject.name.Contains("pl"))
         {
-            hp -= 1;
+            collision.gameObject.GetComponent<Collider2D>().enabled = false;
+            hp -= collision.gameObject.GetComponent<slash>().damage;
             if (hp <= 0)
                 Death();
             else
             {
                 rb.velocity = (collision.transform.position - transform.position).normalized * knockback;
+                Time.timeScale = 0;
+                yield return new WaitForSecondsRealtime(0.1f);
+                Time.timeScale = 1;
+                isDashing = true;
+                yield return new WaitForSeconds(0.1f);
+                isDashing = false;
             }
-                
-        }else if(collision.gameObject.tag == "refill" && !isDashAble)
+            yield return new WaitForSeconds(1f);
+            collision.gameObject.GetComponent<Collider2D>().enabled = true;
+
+        }
+        else if(collision.gameObject.tag == "refill" && !isDashAble)
         {
             isDashAble=true;
             collision.gameObject.SetActive(false);
         }
+        yield return null;
     }
     void Death()
     {

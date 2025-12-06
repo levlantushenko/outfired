@@ -1592,6 +1592,7 @@ MonoBehaviour:
   dash: 0
   attack: 0
   control: 0
+  hitEff: {fileID: 997874520771320888, guid: 84a588eaec037e041866f140bb874ffe, type: 3}
   type: 0
   isControlled: 0
   hp: 5

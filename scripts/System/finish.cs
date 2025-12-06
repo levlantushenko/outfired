@@ -5,11 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class finish : MonoBehaviour
 {
-    public string scene;
+    public string act;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
-            SceneManager.LoadScene(scene);
+        {
+            PlayerPrefs.SetInt(act, 0);
+            SceneManager.LoadScene("menu");
+        }
     }
 }

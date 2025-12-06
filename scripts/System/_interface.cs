@@ -16,10 +16,13 @@ public class _interface : MonoBehaviour
     {
         PlayerPrefs.DeleteKey("died");
         menu.onClick.AddListener(clearSessionSaves);
+
         if (!Application.isMobilePlatform)
             panels[0].SetActive(false);
+
         if (PlayerPrefs.HasKey("timer"))
             tmp.transform.parent.gameObject.SetActive(PlayerPrefs.GetInt("timer") == 0);
+
         input = new _InputSystem();
         input.Enable();
         input.normal.pause.performed += ctx => pause = ctx.ReadValue<float>();

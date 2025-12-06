@@ -80,6 +80,15 @@ public partial class @_InputSystem: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Menu"",
+                    ""type"": ""Value"",
+                    ""id"": ""148b08bb-30f3-4117-a6ba-e3803fb7a4d9"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -269,6 +278,107 @@ public partial class @_InputSystem: IInputActionCollection2, IDisposable
                     ""action"": ""pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0b235a05-976b-4a5b-a4bd-b46fa8ff497d"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Menu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3a5b3029-e60a-4ecd-8aaa-1df76a285653"",
+                    ""path"": ""<Gamepad>/dpad"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Menu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""menu"",
+            ""id"": ""c98f15de-3937-4d82-8143-43dcaad4da0d"",
+            ""actions"": [
+                {
+                    ""name"": ""Joystick"",
+                    ""type"": ""Value"",
+                    ""id"": ""611b3de7-e6bf-4a32-b751-e4fcd55fd0c9"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Submit"",
+                    ""type"": ""Button"",
+                    ""id"": ""a429ab15-4573-498b-8527-fb4013f544f9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Cancel"",
+                    ""type"": ""Button"",
+                    ""id"": ""a5f9780d-78e6-4eda-b858-c2d668ae467a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""ce832aa3-9868-4bf4-9dd6-a3853eeb6060"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Joystick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b1d5e928-5164-4918-8430-2bbd38363835"",
+                    ""path"": ""<Gamepad>/dpad"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Joystick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0a7fffdc-9b3f-430f-8a5a-e4bbee6ef5b2"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f4bf4318-391f-4285-826d-4838e55e7fca"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -283,6 +393,12 @@ public partial class @_InputSystem: IInputActionCollection2, IDisposable
         m_normal_Dash = m_normal.FindAction("Dash", throwIfNotFound: true);
         m_normal_Control = m_normal.FindAction("Control", throwIfNotFound: true);
         m_normal_pause = m_normal.FindAction("pause", throwIfNotFound: true);
+        m_normal_Menu = m_normal.FindAction("Menu", throwIfNotFound: true);
+        // menu
+        m_menu = asset.FindActionMap("menu", throwIfNotFound: true);
+        m_menu_Joystick = m_menu.FindAction("Joystick", throwIfNotFound: true);
+        m_menu_Submit = m_menu.FindAction("Submit", throwIfNotFound: true);
+        m_menu_Cancel = m_menu.FindAction("Cancel", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -350,6 +466,7 @@ public partial class @_InputSystem: IInputActionCollection2, IDisposable
     private readonly InputAction m_normal_Dash;
     private readonly InputAction m_normal_Control;
     private readonly InputAction m_normal_pause;
+    private readonly InputAction m_normal_Menu;
     public struct NormalActions
     {
         private @_InputSystem m_Wrapper;
@@ -360,6 +477,7 @@ public partial class @_InputSystem: IInputActionCollection2, IDisposable
         public InputAction @Dash => m_Wrapper.m_normal_Dash;
         public InputAction @Control => m_Wrapper.m_normal_Control;
         public InputAction @pause => m_Wrapper.m_normal_pause;
+        public InputAction @Menu => m_Wrapper.m_normal_Menu;
         public InputActionMap Get() { return m_Wrapper.m_normal; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -387,6 +505,9 @@ public partial class @_InputSystem: IInputActionCollection2, IDisposable
             @pause.started += instance.OnPause;
             @pause.performed += instance.OnPause;
             @pause.canceled += instance.OnPause;
+            @Menu.started += instance.OnMenu;
+            @Menu.performed += instance.OnMenu;
+            @Menu.canceled += instance.OnMenu;
         }
 
         private void UnregisterCallbacks(INormalActions instance)
@@ -409,6 +530,9 @@ public partial class @_InputSystem: IInputActionCollection2, IDisposable
             @pause.started -= instance.OnPause;
             @pause.performed -= instance.OnPause;
             @pause.canceled -= instance.OnPause;
+            @Menu.started -= instance.OnMenu;
+            @Menu.performed -= instance.OnMenu;
+            @Menu.canceled -= instance.OnMenu;
         }
 
         public void RemoveCallbacks(INormalActions instance)
@@ -426,6 +550,68 @@ public partial class @_InputSystem: IInputActionCollection2, IDisposable
         }
     }
     public NormalActions @normal => new NormalActions(this);
+
+    // menu
+    private readonly InputActionMap m_menu;
+    private List<IMenuActions> m_MenuActionsCallbackInterfaces = new List<IMenuActions>();
+    private readonly InputAction m_menu_Joystick;
+    private readonly InputAction m_menu_Submit;
+    private readonly InputAction m_menu_Cancel;
+    public struct MenuActions
+    {
+        private @_InputSystem m_Wrapper;
+        public MenuActions(@_InputSystem wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Joystick => m_Wrapper.m_menu_Joystick;
+        public InputAction @Submit => m_Wrapper.m_menu_Submit;
+        public InputAction @Cancel => m_Wrapper.m_menu_Cancel;
+        public InputActionMap Get() { return m_Wrapper.m_menu; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(MenuActions set) { return set.Get(); }
+        public void AddCallbacks(IMenuActions instance)
+        {
+            if (instance == null || m_Wrapper.m_MenuActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_MenuActionsCallbackInterfaces.Add(instance);
+            @Joystick.started += instance.OnJoystick;
+            @Joystick.performed += instance.OnJoystick;
+            @Joystick.canceled += instance.OnJoystick;
+            @Submit.started += instance.OnSubmit;
+            @Submit.performed += instance.OnSubmit;
+            @Submit.canceled += instance.OnSubmit;
+            @Cancel.started += instance.OnCancel;
+            @Cancel.performed += instance.OnCancel;
+            @Cancel.canceled += instance.OnCancel;
+        }
+
+        private void UnregisterCallbacks(IMenuActions instance)
+        {
+            @Joystick.started -= instance.OnJoystick;
+            @Joystick.performed -= instance.OnJoystick;
+            @Joystick.canceled -= instance.OnJoystick;
+            @Submit.started -= instance.OnSubmit;
+            @Submit.performed -= instance.OnSubmit;
+            @Submit.canceled -= instance.OnSubmit;
+            @Cancel.started -= instance.OnCancel;
+            @Cancel.performed -= instance.OnCancel;
+            @Cancel.canceled -= instance.OnCancel;
+        }
+
+        public void RemoveCallbacks(IMenuActions instance)
+        {
+            if (m_Wrapper.m_MenuActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IMenuActions instance)
+        {
+            foreach (var item in m_Wrapper.m_MenuActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_MenuActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public MenuActions @menu => new MenuActions(this);
     public interface INormalActions
     {
         void OnMove(InputAction.CallbackContext context);
@@ -434,5 +620,12 @@ public partial class @_InputSystem: IInputActionCollection2, IDisposable
         void OnDash(InputAction.CallbackContext context);
         void OnControl(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnMenu(InputAction.CallbackContext context);
+    }
+    public interface IMenuActions
+    {
+        void OnJoystick(InputAction.CallbackContext context);
+        void OnSubmit(InputAction.CallbackContext context);
+        void OnCancel(InputAction.CallbackContext context);
     }
 }

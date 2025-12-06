@@ -38,6 +38,8 @@ public class barricade : MonoBehaviour
     public GameObject hpBar;
     private IEnumerator Start()
     {
+        Joystick joy = new Joystick();
+        
         world.clip = main;
         world.Play();
         source = GetComponent<AudioSource>();

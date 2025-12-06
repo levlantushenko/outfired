@@ -51,7 +51,7 @@ public class Unit : MonoBehaviour
     }
     #endregion
 
-    public static GameObject hitEff;
+    public GameObject hitEff;
     public enum enTypes
     {
         Miner
@@ -197,13 +197,13 @@ public class Unit : MonoBehaviour
         {
             GameObject eff = Instantiate(hitEff, transform.position, transform.rotation);
             float effDir = Control.normal(transform.position.x - collision.transform.position.x);
-            eff.transform.localScale = new Vector2(effDir, 1);
+            eff.transform.localScale = Vector3.one;
+            eff.transform.eulerAngles = new Vector3(0, 90 * effDir, 0);
             Destroy(eff, 1f);
 
             collision.gameObject.GetComponent<Collider2D>().enabled = false;   
-            hp -= 1;
+            hp -= collision.gameObject.GetComponent<slash>().damage;
             StartCoroutine(Hit());
-            rb.velocity = new Vector2(knockback * posDifference(transform.position.x, _enemy.position.x), 0);
             achievments.pacifist = false;
         }
         if(collision.gameObject.tag == "explosion")
@@ -217,8 +217,8 @@ public class Unit : MonoBehaviour
     IEnumerator Hit()
     {
         Time.timeScale = 0;
-        if (isControlled) PlayerPrefs.SetInt(name + " hp", (int)hp);
-        yield return new WaitForSecondsRealtime(0.2f);
+        if (!isControlled) PlayerPrefs.SetInt(name + " hp", (int)hp);
+        yield return new WaitForSecondsRealtime(0.1f);
         Time.timeScale = 1;
     }
 

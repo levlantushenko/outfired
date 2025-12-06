@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Localization.Plugins.XLIFF.V20;
 using UnityEngine;
 
 public class mover : MonoBehaviour
@@ -25,17 +24,8 @@ public class mover : MonoBehaviour
     dir fin;
     private IEnumerator OnCollisionEnter2D(Collision2D collision)
     {
-        
-        if (collision.gameObject.tag != "Player")
-        {
-            if (!collision.gameObject.name.Contains("spikes"))
-            {
-                Debug.Log($"stopping, due to {collision.gameObject.name}");
-                arrow.GetComponent<SpriteRenderer>().color = Color.gray;
-                isMoving = false;
-                yield break;
-            }
-        }
+
+        if (collision.gameObject.tag != "Player") yield break;
         dir direction;
         Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
         collision.gameObject.transform.parent = transform;
@@ -79,27 +69,18 @@ public class mover : MonoBehaviour
         }
         else
         {
+            collision.gameObject.transform.parent = transform;
             arrow.GetComponent<SpriteRenderer>().color = Color.cyan;
             yield return new WaitForSeconds(waitT);
             isMoving = true; 
         }
         
     }
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag != "Player")
-        {
-            
-                Debug.Log($"stopping, due to {collision.gameObject.name}");
-                arrow.GetComponent<SpriteRenderer>().color = Color.gray;
-                isMoving = false;
-            
-        }
-    }
     private IEnumerator OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.tag != "Player") yield return null;
+        if (collision.gameObject.tag != "Player") yield break;
         collision.gameObject.transform.parent = null;
+        yield return null;
     }
     enum dir
     {

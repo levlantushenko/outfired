@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1793164970488606222}
   - component: {fileID: 4514609813760765491}
   - component: {fileID: 7543009216830778633}
+  - component: {fileID: 4649537593504897070}
   m_Layer: 2
   m_Name: miner slash
   m_TagString: slash
@@ -141,3 +142,17 @@ PolygonCollider2D:
       - {x: 0.5496919, y: -0.14391261}
       - {x: 0.6255446, y: -0.010838302}
   m_UseDelaunayMesh: 0
+--- !u!114 &4649537593504897070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6661352027396472916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efe85915046f2b04eb7adee5e77fab5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  attSpeed: 0

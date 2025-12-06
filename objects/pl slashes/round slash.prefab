@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3060330024019789711}
   - component: {fileID: 8184518540768543824}
   - component: {fileID: 704124634214000497}
+  - component: {fileID: 286937594690480630}
   m_Layer: 2
   m_Name: round slash
   m_TagString: slash
@@ -201,3 +202,17 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &286937594690480630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6661352027396472916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efe85915046f2b04eb7adee5e77fab5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  attSpeed: 0.6

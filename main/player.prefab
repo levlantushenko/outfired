@@ -719,13 +719,17 @@ MonoBehaviour:
     m_ColorSpace: -1
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  hp: 1
+  hp: 3
   knockback: 20
   deathEff: {fileID: 7327882760250055820, guid: 843751c67614eee4481293df4de3882c, type: 3}
   deathT: 2
-  slash: {fileID: 6661352027396472916, guid: 54f331e94f5bd724c8850e7bd52edb9a, type: 3}
+  slashes:
+  - {fileID: 6661352027396472916, guid: 54f331e94f5bd724c8850e7bd52edb9a, type: 3}
+  - {fileID: 7030307518614238867, guid: 493677086281ecb47912b969c2b4e96a, type: 3}
+  - {fileID: 7010554425687495850, guid: 530fc0b921af0c642a0861a0405fad4e, type: 3}
+  slash: {fileID: 0}
   attPos: {fileID: 7242983312264892752}
-  sword: 0
+  sword: 1
   recharged: 1
   rechT: 0.5
 --- !u!95 &2051717438766015609

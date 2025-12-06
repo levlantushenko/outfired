@@ -4,10 +4,11 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class diver : MonoBehaviour
 {
-    Vector3 pl;
+    Transform pl;
     Animator anim;
     [Header("--- main ---")]
     [Space(2)]
@@ -43,13 +44,35 @@ public class diver : MonoBehaviour
     public float platRegenT;
     public float fallSpd;
     public float jumpDelay;
+    [Space(2)]
+    [Header("--- water attack ---")]
+    [Space(2)]
+    public GameObject waterAttack;
+    public GameObject waterWarn;
+    public Vector2 waterAttRange;
+    public float waterAttDelay;
+    public float waterWarnDelay;
+    public float waterDur;
+    [Space(2)]
+    [Header("--- sounds ---")]
+    [Space(2)]
+    public AudioClip[] attackSfx;
+    public AudioClip deathSfx;
+    public AudioClip stunSfx;
+    public AudioSource music;
 
+    AudioSource source;
     Collider2D fallEffColl;
+    Vector2 startPos;
     void Start()
     {
+        splashEff.transform.GetChild(0).GetComponent<Collider2D>().enabled = false;
+        music.Play();
+        source = GetComponent<AudioSource>();
+        startPos = transform.position;
         fallEffColl = fallEff.GetComponentInChildren<Collider2D>();
         anim = GetComponent<Animator>();
-        pl = FindAnyObjectByType<player_main>().transform.position;
+        pl = FindAnyObjectByType<player_main>().transform;
         defHeight = transform.position.y;
     }
     bool isAttacking = false;
@@ -58,11 +81,17 @@ public class diver : MonoBehaviour
     {
         splashEff.transform.position = new Vector2(transform.position.x, splashEff.transform.position.y);
         if (isAttacking) return;
-        int attack = Random.Range(0, 3);
+        int attack;
+        
+        attack = Random.Range(0, 3);
+        
         switch (attack)
         {
             case 0:
-                StartCoroutine(dive());
+                if(hp > rageHp)
+                    StartCoroutine(dive());
+                else
+                    StartCoroutine(splash());
                 break;
             case 1:
                 StartCoroutine(slash());
@@ -82,9 +111,36 @@ public class diver : MonoBehaviour
     //  yield return new WaitForNextFrameUnit();
     //}
     //-- use this structure to create a pocket update, that will work while condition is complied
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag != "slash" || collision.gameObject.name.Contains("diver")) return;
+        Debug.Log("collide");
+        GameObject eff = Instantiate(hitEff, transform.position, Quaternion.Euler(0, -90, 0));
+        float effDir = Control.normal(transform.position.x - collision.transform.position.x);
+        eff.transform.localScale = Vector3.one;
+        eff.transform.eulerAngles = new Vector3(0, 90 * effDir, 0);
+        Destroy(eff, 1f);
+
+        hp--;
+        if(hp == rageHp)
+        {
+            Debug.Log("rage");
+            StopAllCoroutines();
+            StartCoroutine(rage());
+        } else if (stunPoints.Contains(hp))
+        {
+            Debug.Log("stun");
+            StopAllCoroutines();
+            StartCoroutine(stun());
+        }else if (hp <= 0)
+        {
+            StopAllCoroutines();
+            StartCoroutine(death());
+        }
+    }
     IEnumerator dive()
     {
-        if (pl.x < transform.position.x)
+        if (pl.position.x < transform.position.x)
         {
             transform.localScale = new Vector2(-1.5f, 3);
         }
@@ -94,18 +150,26 @@ public class diver : MonoBehaviour
         }
         anim.SetTrigger("dive");
         isDiving = true;
+
+        source.clip = attackSfx[Random.Range(0, attackSfx.Length)];
+        source.Play();
+
         Transform pointTr = points[Random.Range(0, points.Length)];
         while(!pointTr.gameObject.activeInHierarchy)
             pointTr = points[Random.Range(0, points.Length)];
         Vector2 point = pointTr.position;
+
         //dive
+
         while(Mathf.Abs(transform.position.y - (point.y + diveVerOffset)) > 0.1f)
         {
             transform.position = new Vector2(transform.position.x, Mathf.Lerp(transform.position.y, point.y + diveVerOffset, 5 * Time.deltaTime));
             yield return new WaitForNextFrameUnit();
         }
         yield return new WaitForSeconds(0.2f);
+
         //swimming
+
         diveEff.SetActive(true);
 
         while (transform.position.x != point.x)
@@ -115,18 +179,30 @@ public class diver : MonoBehaviour
         }
 
         yield return new WaitForSeconds(splashDelay);
+
         //splashing
+
         diveEff.SetActive(false);
         splashEff.SetActive(true);
         anim.SetTrigger("splash");
+
+        source.clip = attackSfx[Random.Range(0, attackSfx.Length)];
+        source.Play();
+
+        splashEff.transform.GetChild(0).GetComponent<Collider2D>().enabled = true;
+        
         while (Mathf.Abs(transform.position.y - defHeight) > 0.1f)
         {
             transform.position = new Vector2(transform.position.x, Mathf.Lerp(transform.position.y, defHeight, 5f * Time.deltaTime));
             yield return new WaitForNextFrameUnit();
         }
+        yield return new WaitForSeconds(0.1f);
+
         //ending splash
+
         splashEff.SetActive(false);
-        if (pl.x < transform.position.x)
+        splashEff.transform.GetChild(0).GetComponent<Collider2D>().enabled = false;
+        if (pl.position.x < transform.position.x)
         {
             transform.localScale = new Vector2(-1.5f, 3);
         }
@@ -139,12 +215,95 @@ public class diver : MonoBehaviour
         isAttacking = false;
     }
 
+    IEnumerator splash()
+    {
+        int length = Random.Range((int)waterAttRange.x, (int)waterAttRange.y);
+
+        if (pl.position.x < transform.position.x)
+        {
+            transform.localScale = new Vector2(-1.5f, 3);
+        }
+        else
+        {
+            transform.localScale = new Vector2(1.5f, 3);
+        }
+        anim.SetTrigger("dive");
+        isDiving = true;
+        diveEff.SetActive(false);
+
+        source.clip = attackSfx[Random.Range(0, attackSfx.Length)];
+        source.Play();
+
+        Transform pointTr = points[Random.Range(0, points.Length)];
+        while (!pointTr.gameObject.activeInHierarchy)
+            pointTr = points[Random.Range(0, points.Length)];
+        Vector2 point = pointTr.position;
+        //dive
+        while (Mathf.Abs(transform.position.y - (point.y + diveVerOffset)) > 0.1f)
+        {
+            transform.position = new Vector2(transform.position.x, Mathf.Lerp(transform.position.y, point.y + diveVerOffset, 5 * Time.deltaTime));
+            yield return new WaitForNextFrameUnit();
+        }
+        yield return new WaitForSeconds(0.2f);
+        //swimming
+        diveEff.SetActive(true);
+
+        for(int i = 0; i<length; i++)
+        {
+            //warning
+            waterWarn.SetActive(true);
+            waterWarn.transform.position = new Vector2(pl.position.x, waterWarn.transform.position.y);
+
+            yield return new WaitForSeconds(waterAttDelay);
+            waterAttack.transform.position = new Vector2(waterWarn.transform.position.x, waterAttack.transform.position.y);
+            waterAttack.SetActive(true);
+            waterWarn.SetActive(false);
+
+            yield return new WaitForSeconds(waterDur);
+
+            waterAttack.SetActive(false);
+        }
+        diveEff.SetActive(true);
+        transform.position = new Vector2(point.x, transform.position.y);
+        
+        yield return new WaitForSeconds(splashDelay);
+
+        //splashing
+        diveEff.SetActive(false);
+        splashEff.SetActive(true);
+        anim.SetTrigger("splash");
+
+        source.clip = attackSfx[Random.Range(0, attackSfx.Length)];
+        source.Play();
+
+        while (Mathf.Abs(transform.position.y - defHeight) > 0.1f)
+        {
+            transform.position = new Vector2(transform.position.x, Mathf.Lerp(transform.position.y, defHeight, 5f * Time.deltaTime));
+            yield return new WaitForNextFrameUnit();
+        }
+        splashEff.transform.GetChild(0).GetComponent<Collider2D>().enabled = true;
+        yield return new WaitForSeconds(0.1f);
+        //ending splash
+        splashEff.SetActive(false);
+        splashEff.transform.GetChild(0).GetComponent<Collider2D>().enabled = false;
+        if (pl.position.x < transform.position.x)
+        {
+            transform.localScale = new Vector2(-1.5f, 3);
+        }
+        else
+        {
+            transform.localScale = new Vector2(1.5f, 3);
+        }
+        yield return new WaitForSeconds(afterWait);
+
+        isAttacking = false;
+    }
     IEnumerator slash()
     {
         //interrupting if any of the platforms is disabled
         for(int i = 0; i<points.Length; i++)
         {
-            if (points[i].gameObject.activeSelf)
+            if (points[i].gameObject.activeInHierarchy)
             {
                 isAttacking = false;
                 StopCoroutine(slash());
@@ -156,7 +315,7 @@ public class diver : MonoBehaviour
         anim.SetTrigger("slash");
         float pointX;
 
-        if (pl.x < transform.position.x)
+        if (pl.position.x < transform.position.x)
         {
             pointX = points[0].transform.position.x;
             transform.localScale = new Vector2(-1.5f, 3);
@@ -171,7 +330,10 @@ public class diver : MonoBehaviour
         //ramming
         anim.speed = 0;
 
-        while(transform.position.x != pointX)
+        source.clip = attackSfx[Random.Range(0, attackSfx.Length)];
+        source.Play();
+
+        while (transform.position.x != pointX)
         {
             transform.position = new Vector2(Mathf.MoveTowards(transform.position.x, pointX, slashSpd * Time.deltaTime),
                 transform.position.y);
@@ -188,6 +350,9 @@ public class diver : MonoBehaviour
 
     IEnumerator jump()
     {
+        source.clip = attackSfx[Random.Range(0, attackSfx.Length)];
+        source.Play();
+
         Transform point = points[Random.Range(0, points.Length)];
         while (!point.gameObject.activeInHierarchy)
             point = points[Random.Range(0, points.Length)];
@@ -226,6 +391,10 @@ public class diver : MonoBehaviour
                     yield return new WaitForNextFrameUnit();
                 }
                 fallEff.SetActive(true);
+
+                source.clip = attackSfx[Random.Range(0, attackSfx.Length)];
+                source.Play();
+
                 yield return new WaitForSeconds(0.1f);
                 fallEffColl.enabled = false;
                 yield return new WaitForSeconds(0.9f);
@@ -237,40 +406,16 @@ public class diver : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag != "slash" || collision.gameObject.name.Contains("diver")) return;
-        Debug.Log("collide");
-        GameObject eff = Instantiate(hitEff, transform.position, Quaternion.Euler(0, -90, 0));
-        float effDir = Control.normal(transform.position.x - collision.transform.position.x);
-        eff.transform.localScale = Vector3.one;
-        eff.transform.eulerAngles = new Vector3(0, 90 * effDir, 0);
-        Destroy(eff, 1f);
-
-        hp--;
-        if(hp == rageHp)
-        {
-            Debug.Log("rage");
-            StopAllCoroutines();
-            StartCoroutine(rage());
-        } else if (stunPoints.Contains(hp))
-        {
-            Debug.Log("stun");
-            StopAllCoroutines();
-            StartCoroutine(stun());
-        }else if (hp <= 0)
-        {
-            StopAllCoroutines();
-            anim.SetTrigger("death");
-            GetComponent<diver>().enabled = false;
-        }
-    }
     IEnumerator rage()
     {
         diveEff.SetActive(false);
         fallEff.SetActive(false);
         hitEff.SetActive(false);
         splashEff.SetActive(false);
+
+        source.clip = deathSfx;
+        source.loop = true;
+        source.Play();
 
         isAttacking = true;
         anim.SetTrigger("rage");
@@ -283,8 +428,8 @@ public class diver : MonoBehaviour
 
         yield return new WaitForSeconds(3);
         //rage mode
-
-
+        source.Stop();
+        source.loop = false;
         jumpDelay /= rageImprovement;
         splashDelay /= rageImprovement;
         diveSpeed *= rageImprovement;
@@ -295,9 +440,16 @@ public class diver : MonoBehaviour
         diveDelay /= rageImprovement;
         platRegenT *= rageImprovement;
         isAttacking = false;
+        while(1.05 - music.pitch > 0.001)
+        {
+            music.pitch = Mathf.Lerp(music.pitch, 1.05f, 10);
+        }
     }
     IEnumerator stun()
     {
+        source.clip = stunSfx;
+        source.Play();
+
         diveEff.SetActive(false);
         fallEff.SetActive(false);
         hitEff.SetActive(false);
@@ -314,6 +466,22 @@ public class diver : MonoBehaviour
 
         yield return new WaitForSeconds(stunT);
         StartCoroutine(dive());
+    }
+    IEnumerator death()
+    {
+        PlayerPrefs.SetInt("diver", 0);
+        anim.SetTrigger("death");
+        GameObject.Find("diver gate").GetComponent<PlayableDirector>().Play();
+        GetComponent<diver>().enabled = false;
+        GetComponent<Collider2D>().enabled = false;
+        while(Vector2.Distance(transform.position, startPos) > 0.1f)
+        {
+            transform.position = Vector2.Lerp(transform.position, startPos, 5 * Time.deltaTime);
+            yield return new WaitForNextFrameUnit();
+        }
+        source.clip = deathSfx;
+        source.Play();
+        source.loop = true;
     }
     
 }

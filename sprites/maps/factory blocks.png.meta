@@ -181,7 +181,7 @@ TextureImporter:
       name: factory blocks_2
       rect:
         serializedVersion: 2
-        x: 128
+        x: 130
         y: 448
         width: 64
         height: 64
@@ -244,7 +244,7 @@ TextureImporter:
       name: factory blocks_6
       rect:
         serializedVersion: 2
-        x: 128
+        x: 130
         y: 383
         width: 64
         height: 64
@@ -307,8 +307,8 @@ TextureImporter:
       name: factory blocks_10
       rect:
         serializedVersion: 2
-        x: 128
-        y: 318
+        x: 130
+        y: 319
         width: 64
         height: 64
       alignment: 0

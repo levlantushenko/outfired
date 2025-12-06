@@ -21,7 +21,7 @@ public class door : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.tag != "Player") return;
-        if(jump == 1)
+        if(jump != 0)
             GetComponent<Animator>().SetTrigger("enter");
     }
 }
