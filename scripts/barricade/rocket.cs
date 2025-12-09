@@ -38,7 +38,8 @@ public class rocket : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log(collision.gameObject.layer + " : " + collision.name);
-        if(!lay.Contains(collision.gameObject.layer)) return;
+        if(collision.gameObject.layer == 3 || collision.gameObject.name.Contains("striker")) return;
+        
         Instantiate(eff, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }

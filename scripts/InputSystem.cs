@@ -89,6 +89,15 @@ public partial class @_InputSystem: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Press"",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""talk"",
+                    ""type"": ""Value"",
+                    ""id"": ""3ab1eb2b-fd6d-499a-86fc-70423df45dea"",
+                    ""expectedControlType"": ""Integer"",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -300,6 +309,28 @@ public partial class @_InputSystem: IInputActionCollection2, IDisposable
                     ""action"": ""Menu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cc24c50c-a734-44e1-826c-f0b9f6517ad0"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""talk"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""058ca319-2020-444c-857a-b5411928b24a"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""talk"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -394,6 +425,7 @@ public partial class @_InputSystem: IInputActionCollection2, IDisposable
         m_normal_Control = m_normal.FindAction("Control", throwIfNotFound: true);
         m_normal_pause = m_normal.FindAction("pause", throwIfNotFound: true);
         m_normal_Menu = m_normal.FindAction("Menu", throwIfNotFound: true);
+        m_normal_talk = m_normal.FindAction("talk", throwIfNotFound: true);
         // menu
         m_menu = asset.FindActionMap("menu", throwIfNotFound: true);
         m_menu_Joystick = m_menu.FindAction("Joystick", throwIfNotFound: true);
@@ -467,6 +499,7 @@ public partial class @_InputSystem: IInputActionCollection2, IDisposable
     private readonly InputAction m_normal_Control;
     private readonly InputAction m_normal_pause;
     private readonly InputAction m_normal_Menu;
+    private readonly InputAction m_normal_talk;
     public struct NormalActions
     {
         private @_InputSystem m_Wrapper;
@@ -478,6 +511,7 @@ public partial class @_InputSystem: IInputActionCollection2, IDisposable
         public InputAction @Control => m_Wrapper.m_normal_Control;
         public InputAction @pause => m_Wrapper.m_normal_pause;
         public InputAction @Menu => m_Wrapper.m_normal_Menu;
+        public InputAction @talk => m_Wrapper.m_normal_talk;
         public InputActionMap Get() { return m_Wrapper.m_normal; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -508,6 +542,9 @@ public partial class @_InputSystem: IInputActionCollection2, IDisposable
             @Menu.started += instance.OnMenu;
             @Menu.performed += instance.OnMenu;
             @Menu.canceled += instance.OnMenu;
+            @talk.started += instance.OnTalk;
+            @talk.performed += instance.OnTalk;
+            @talk.canceled += instance.OnTalk;
         }
 
         private void UnregisterCallbacks(INormalActions instance)
@@ -533,6 +570,9 @@ public partial class @_InputSystem: IInputActionCollection2, IDisposable
             @Menu.started -= instance.OnMenu;
             @Menu.performed -= instance.OnMenu;
             @Menu.canceled -= instance.OnMenu;
+            @talk.started -= instance.OnTalk;
+            @talk.performed -= instance.OnTalk;
+            @talk.canceled -= instance.OnTalk;
         }
 
         public void RemoveCallbacks(INormalActions instance)
@@ -621,6 +661,7 @@ public partial class @_InputSystem: IInputActionCollection2, IDisposable
         void OnControl(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
         void OnMenu(InputAction.CallbackContext context);
+        void OnTalk(InputAction.CallbackContext context);
     }
     public interface IMenuActions
     {

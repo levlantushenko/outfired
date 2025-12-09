@@ -1,15 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class enemy : MonoBehaviour
 {
     public float hp;
     public GameObject hitEff;
-
+    [DoNotSerialize] public GameObject collException;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "slash")
+        if (collision.gameObject.tag == "slash" && collision.gameObject != collException)
         {
             GameObject eff = Instantiate(hitEff, transform.position, transform.rotation);
             float effDir = Control.normal(transform.position.x - collision.transform.position.x);
@@ -27,5 +28,6 @@ public class enemy : MonoBehaviour
             PlayerPrefs.SetInt(name + " hp", (int)hp);
             achievments.pacifist = false;
         }
+        if (hp <= 0) Destroy(gameObject);
     }
 }

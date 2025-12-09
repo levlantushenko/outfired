@@ -139,7 +139,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3483598546794631720}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.84, y: 0.12, z: 0}
+  m_LocalPosition: {x: 2.3400002, y: 0.12, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -325,8 +325,9 @@ GameObject:
   - component: {fileID: 6618676453884829003}
   - component: {fileID: 6803202905437935297}
   - component: {fileID: 4154764857057366500}
+  - component: {fileID: 6514525373819484889}
   m_Layer: 0
-  m_Name: striker_0
+  m_Name: striker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -351,7 +352,7 @@ Transform:
   - {fileID: 5905277262909285858}
   - {fileID: 5850698654863344050}
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6803202905437935297
 SpriteRenderer:
@@ -420,8 +421,8 @@ MonoBehaviour:
   rocket: {fileID: 7844308643003684567, guid: 0616d7bc368baf243bac0e53372b67bb, type: 3}
   dist: 25.9
   eff: {fileID: 8981206909068572352}
-  cooldown: 1
-  aimT: 0.5
+  cooldown: 2
+  aimT: 1
   fireArea: {fileID: 5905277262909285858}
   areaScale: {x: 25.54, y: 14.83}
   filter:
@@ -441,6 +442,51 @@ MonoBehaviour:
   angleLimit: 20
   hp: 1
   hitEff: {fileID: 997874520771320888, guid: 84a588eaec037e041866f140bb874ffe, type: 3}
+--- !u!61 &6514525373819484889
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8741768721858883699}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 1.1592722, y: -0.03439331}
+  m_SpriteTilingProperty:
+    border: {x: 0.14, y: 5.7999997, z: 7.46, w: 1.0799999}
+    pivot: {x: 0.013442114, y: 0.7285159}
+    oldSize: {x: 10.24, y: 10.24}
+    newSize: {x: 10.24, y: 10.24}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 2.5938396, y: 3.5113792}
+  m_EdgeRadius: 0
 --- !u!1 &8981206909068572352
 GameObject:
   m_ObjectHideFlags: 0
