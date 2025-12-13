@@ -101,10 +101,11 @@ public class player_main : MonoBehaviour
     public bool sword;
     public bool recharged;
     public float rechT;
+    Animator anim;
 
     private void Start()
     {
-        
+        anim = GetComponent<Animator>();
         sound = GetComponent<AudioSource>();
         if (PlayerPrefs.HasKey("x") && PlayerPrefs.HasKey("Dead"))
         {
@@ -126,6 +127,8 @@ public class player_main : MonoBehaviour
     bool isGrounded;
     void Update()
     {
+        
+        anim.SetBool("dash", isDashing);
         if(isDashAble)
             trail.colorGradient = trailCols[0];
         else
@@ -141,6 +144,31 @@ public class player_main : MonoBehaviour
         {
             isGrounded = true;
             isDashAble = true;
+            anim.SetBool("fall", false);
+            anim.SetBool("rise", false);
+            if (rb.velocity.x != 0)
+            {
+                anim.SetBool("run", true);
+            }else
+                anim.SetBool("run", false);
+        }
+        else
+        {
+            anim.SetBool("run", false);
+            if(JumpWallDir == 0)
+            {
+                if(rb.velocity.y < 0)
+                {
+                    anim.SetBool("fall", true);
+                    anim.SetBool("rise", false);
+                }
+                else if(rb.velocity.y > 0)
+                {
+                    anim.SetBool("rise", true);
+                    anim.SetBool("fall", false);
+                }
+            }
+
         }
         if (!isDashing && Mathf.Abs(rb.velocity.x) > Mathf.Abs(speed * 1.5f))
             rb.velocity = new Vector2(Mathf.MoveTowards(rb.velocity.x, Control.normal(speed), slowSpeed), rb.velocity.y);
@@ -159,16 +187,25 @@ public class player_main : MonoBehaviour
                 JumpWallDir = 1;
                 if (rb.velocity.y < wallFallSpd && !isDashing && axis.y >= -0.5)
                     rb.velocity = new Vector2(rb.velocity.x, wallFallSpd);
+                anim.SetBool("climb", true);
+                sc.localScale = new Vector3(1, 1, 1);
             } else if(right != null && left == null && !right.gameObject.CompareTag("slash"))
             {
                 JumpWallDir = -1;
                 if (rb.velocity.y < wallFallSpd && !isDashing && axis.y >= -0.5)
                     rb.velocity = new Vector2(rb.velocity.x, wallFallSpd);
-            } 
+                anim.SetBool("climb", true);
+                sc.localScale = new Vector3(-1, 1, 1);
+            }
             else
+            {
                 JumpWallDir = 0;
+                anim.SetBool("climb", false);
+            }
         }
         #endregion
+
+        
         if (FindAnyObjectByType<CinemachineVirtualCamera>().Follow != transform)
             FindAnyObjectByType<CinemachineVirtualCamera>().Follow = transform;
         if (jump != 0)
