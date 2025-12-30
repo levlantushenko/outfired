@@ -43,18 +43,18 @@ public class movingDoor : MonoBehaviour
         {
             Debug.Log("Adding force");
             pl.transform.parent = door;
-            Control.WallJumpEvent += AddForce;
+            _Control.WallJumpEvent += AddForce;
         }
         else
         {
-            Control.WallJumpEvent -= AddForce;
+            _Control.WallJumpEvent -= AddForce;
             pl.transform.parent = null;
         }
     }
     void AddForce()
     {
         Rigidbody2D rb = pl.GetComponent<Rigidbody2D>();
-        rb.AddForce(Vector2.right * Control.normal(rb.velocity.x) * speed * 1.5f);
+        rb.AddForce(Vector2.right * _Control.normal(rb.velocity.x) * speed * 1.5f);
     }
     IEnumerator move()
     {

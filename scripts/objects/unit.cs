@@ -141,7 +141,7 @@ public class Unit : MonoBehaviour
         }
         if (!isControlled) return;
         Animate();
-        Control.Move(gameObject, speed, sc, true, axis.x, originSc);
+        _Control.Move(gameObject, speed, sc, true, axis.x, originSc);
         if(jump != 0)
             Jump();
         if (attack != 0)
@@ -174,12 +174,12 @@ public class Unit : MonoBehaviour
     public void Explode() {
         if (!explodable) return;
         PlayerPrefs.SetInt(name + " hp", 0);
-        Control.Explode(origin, transform, explForce, expl, axis);
+        _Control.Explode(origin, transform, explForce, expl, axis);
     }
-    public void Jump() => Control.Jump(gameObject, groundCheck, lay, force);
-    public void Attack() => Control.Attack(transform, slash, attPos, false, transform);
-    public void Dash() => Control.Dash(gameObject, dashSpd, axis);
-    public void StopDash() => Control.DashStop(gameObject);
+    public void Jump() => _Control.Jump(gameObject, groundCheck, lay, force);
+    public void Attack() => _Control.Attack(transform, slash, attPos, false, transform);
+    public void Dash() => _Control.Dash(gameObject, dashSpd, axis);
+    public void StopDash() => _Control.DashStop(gameObject);
 
 
     private void OnDrawGizmos()
@@ -192,11 +192,11 @@ public class Unit : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (isControlled && collision.gameObject.layer == 3)
-            Control.CameraControl(collision, conf);
+            _Control.CameraControl(collision, conf);
         if (collision.gameObject.tag == "slash")
         {
             GameObject eff = Instantiate(hitEff, transform.position, transform.rotation);
-            float effDir = Control.normal(transform.position.x - collision.transform.position.x);
+            float effDir = _Control.normal(transform.position.x - collision.transform.position.x);
             eff.transform.localScale = Vector3.one;
             eff.transform.eulerAngles = new Vector3(0, 90 * effDir, 0);
             Destroy(eff, 1f);

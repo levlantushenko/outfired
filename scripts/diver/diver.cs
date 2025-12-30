@@ -116,7 +116,7 @@ public class diver : MonoBehaviour
         if (collision.gameObject.tag != "slash" || collision.gameObject.name.Contains("diver")) return;
         Debug.Log("collide");
         GameObject eff = Instantiate(hitEff, transform.position, Quaternion.Euler(0, -90, 0));
-        float effDir = Control.normal(transform.position.x - collision.transform.position.x);
+        float effDir = _Control.normal(transform.position.x - collision.transform.position.x);
         eff.transform.localScale = Vector3.one;
         eff.transform.eulerAngles = new Vector3(0, 90 * effDir, 0);
         Destroy(eff, 1f);

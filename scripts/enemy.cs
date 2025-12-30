@@ -13,7 +13,7 @@ public class enemy : MonoBehaviour
         if (collision.gameObject.tag == "slash" && collision.gameObject != collException)
         {
             GameObject eff = Instantiate(hitEff, transform.position, transform.rotation);
-            float effDir = Control.normal(transform.position.x - collision.transform.position.x);
+            float effDir = _Control.normal(transform.position.x - collision.transform.position.x);
             eff.transform.localScale = Vector3.one;
             eff.transform.eulerAngles = new Vector3(0, 90 * effDir, 0);
             Destroy(eff, 1f);

@@ -219,7 +219,7 @@ public class player_main : MonoBehaviour
 
         if (dash != 0 && isDashAble)
         {
-            Control.Dash(gameObject, dashSpd, axis);
+            _Control.Dash(gameObject, dashSpd, axis);
             isDashAble = false;
             isDashing = true;
             Invoke("StopDash", dashDur);
@@ -234,7 +234,7 @@ public class player_main : MonoBehaviour
         {
             sound.clip = attackSd;
             sound.Play();
-            Control.Attack(transform, slash, attPos, false, sc);
+            _Control.Attack(transform, slash, attPos, false, sc);
             StartCoroutine(SlashRech());
         }
         if (Mathf.Round(axis.y) < 0)
@@ -320,7 +320,7 @@ public class player_main : MonoBehaviour
     public void WallJumpReset() => isWallJumping = false;
     public void GetControl()
     {
-        Control.getControl(transform, dist, conf.GetComponent<CinemachineVirtualCamera>());
+        _Control.getControl(transform, dist, conf.GetComponent<CinemachineVirtualCamera>());
 
     }
     public void Jump()
@@ -332,11 +332,11 @@ public class player_main : MonoBehaviour
                 isGrounded = false;
                 if (isDashing)
                 {
-                    Control.Jump(gameObject, groundCheck, lay, force / 2);
+                    _Control.Jump(gameObject, groundCheck, lay, force / 2);
                     rb.velocity *= new Vector2(1.1f, 1);
                 }
                 else
-                    Control.Jump(gameObject, groundCheck, lay, force);
+                    _Control.Jump(gameObject, groundCheck, lay, force);
             }
         
         }
@@ -348,10 +348,10 @@ public class player_main : MonoBehaviour
             Invoke("WallJumpReset", 0.1f);
         }
     }
-    public void WallJump() => Control.WallJump(gameObject, JumpWallDir, wallJumpForce);
+    public void WallJump() => _Control.WallJump(gameObject, JumpWallDir, wallJumpForce);
     
     void StopDash() { 
-        Control.DashStop(gameObject);
+        _Control.DashStop(gameObject);
         isDashing=false;
     }
     void DashReset() => isDashAble = true;
@@ -364,7 +364,7 @@ public class player_main : MonoBehaviour
     {
         if (collision.gameObject.layer == 3)
         {
-            Control.CameraControl(collision, conf);
+            _Control.CameraControl(collision, conf);
             PlayerPrefs.SetInt("x", (int)collision.transform.GetChild(0).position.x);
             PlayerPrefs.SetInt("y", (int)collision.transform.GetChild(0).position.y);
         }

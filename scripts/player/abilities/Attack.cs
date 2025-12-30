@@ -1,0 +1,36 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+public class Attack : MonoBehaviour
+{
+    public GameObject attObj;
+    public Transform attPos;
+    float rech = 1;
+
+    void Start()
+    {
+        rech = attObj.GetComponent<slash>().attSpeed;
+    }
+    bool charged = true;
+    float att;
+    // Update is called once per frame
+    void Update()
+    {
+        if (Keyboard.current.xKey.wasPressedThisFrame)
+            att = 1;
+        if(att==1 && charged)
+            StartCoroutine(attack());
+            
+    }
+    IEnumerator attack()
+    {
+        att = 0;
+        Transform cur = Instantiate(attObj, attPos).transform;
+        cur.position = attPos.position;
+        charged = false;
+        yield return new WaitForSeconds(rech);
+        charged=true;
+    }
+}

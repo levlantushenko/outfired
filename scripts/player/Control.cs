@@ -6,9 +6,13 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 
-public class Control : MonoBehaviour
+public class _Control : MonoBehaviour
 {
+    
+    
     /// <summary>
     /// moves player with speed
     /// </summary>
@@ -20,6 +24,7 @@ public class Control : MonoBehaviour
     /// transform that will invert scale
     /// <param name="isInverted"></param>
     /// invert SC on start?
+    
     public static void Move(GameObject gm, float speed, Transform SC, bool isInverted, float direction, Vector2 originSc)
     {
         Rigidbody2D rb = gm.GetComponent<Rigidbody2D>();
