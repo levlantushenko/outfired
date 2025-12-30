@@ -74,6 +74,7 @@ public class WallJump : MonoBehaviour
         dash.isDashing = true;
         yield return new WaitForSeconds(muteT);
         dash.isDashing = false;
+        anim.SetBool("dash", false);
     }
     private void OnDrawGizmos()
     {

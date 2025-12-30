@@ -35,8 +35,8 @@ public class bumper : MonoBehaviour
             rech = false;
             Invoke("recharge", 0.5f);
             pl = FindAnyObjectByType<player_main>().GetComponent<player_main>();
-            pl.isDashing = true;
-            pl.isDashAble = true;
+            pl._dash.isDashing = true;
+            pl._dash.isDashable = true;
             Invoke("plDashReset", stunT);
             GetComponent<AudioSource>().clip = clip;
             GetComponent<AudioSource>().Play();
@@ -44,5 +44,5 @@ public class bumper : MonoBehaviour
     }
     bool rech = true;
     public void recharge() => rech = true;
-    public void plDashReset() => pl.isDashing = false;
+    public void plDashReset() => pl._dash.isDashing = false;
 }

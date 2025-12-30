@@ -55,14 +55,14 @@ public class tp_cannon : MonoBehaviour
         //step 2
         yield return new WaitForSeconds(1);
         src.Play();
-        obj.GetComponent<player_main>().isDashing = true;
+        obj.GetComponent<Dash>().isDashing = true;
         obj.gameObject.SetActive(true);
         obj.GetComponent<Rigidbody2D>().velocity = force;
-        obj.GetComponent<player_main>().isDashAble = true;
+        obj.GetComponent<Dash>().isDashable = true;
         Instantiate(eff, transform.position, transform.rotation);
         shooting = false;
         yield return new WaitForSeconds(stun);
-        obj.GetComponent<player_main>().isDashing = false;
+        obj.GetComponent<Dash>().isDashing = false;
     }
     private void OnDrawGizmos()
     {

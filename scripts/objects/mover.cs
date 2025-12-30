@@ -36,11 +36,11 @@ public class mover : MonoBehaviour
             direction = GetDirection(collision.gameObject);
         if (dashReq)
         {
-            if (collision.gameObject.GetComponent<player_main>().isDashing)
+            if (collision.gameObject.GetComponent<Dash>().isDashing)
             {
                 isMoving = false;
-                collision.gameObject.GetComponent<player_main>().isDashing = false;
-                collision.gameObject.GetComponent<player_main>().isDashAble = true;
+                collision.gameObject.GetComponent<Dash>().isDashing = false;
+                collision.gameObject.GetComponent<Dash>().isDashable = true;
                 Debug.Log("moving");
                 isMoving = false;
                 arrow.GetComponent<SpriteRenderer>().color = Color.cyan;
