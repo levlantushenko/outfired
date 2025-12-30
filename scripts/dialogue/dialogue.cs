@@ -26,6 +26,7 @@ public class dialogue : MonoBehaviour
     {
         
     }
+
     public IEnumerator Say(string[] _text)
     {
         parent.SetActive(true);

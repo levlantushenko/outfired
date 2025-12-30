@@ -12,4 +12,6 @@ public class dialogue_trigger : dialogue
             StartCoroutine(Say(lines));
         }
     }
+    public void Tell() => StartCoroutine(Say(lines));
+
 }

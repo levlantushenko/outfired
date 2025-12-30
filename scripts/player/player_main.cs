@@ -45,15 +45,24 @@ public class player_main : MonoBehaviour
     [Space]
     [Header("----- movement -----")]
     [Space]
-    public float slowSpeed;
-    public float fallLimit;
     Rigidbody2D rb;
     public Transform groundCheck;
     public LayerMask lay;
-    public float force;
+
     public float speed;
+    public float acceleration;
+    public float finalSpd;
+
     public Transform sc;
     public float coyotT;
+    [Space]
+    [Header("----- jump -----")]
+    [Space]
+    public float force;
+    public float g;
+    public float stillT;
+    public float fallLimit;
+    public float speedY;
     [Space]
     [Header("----- wall jump -----")]
     [Space]
@@ -123,94 +132,88 @@ public class player_main : MonoBehaviour
         startG = rb.gravityScale;
         checkPP();
     }
+
     float startG;
     bool isGrounded;
+    bool isJumping;
+    public int jumpStep = 3;
+
     void Update()
     {
-        
-        anim.SetBool("dash", isDashing);
-        if(isDashAble)
-            trail.colorGradient = trailCols[0];
-        else
-            trail.colorGradient = trailCols[1];
-        if (!isDashing)
-        {
-            Control.Move(gameObject, speed, sc, false, axis.x, new Vector2(1, 1));
-            rb.gravityScale = startG;
-        }else
-            rb.gravityScale = 0;
-
-        if (Physics2D.Raycast(groundCheck.position, Vector2.down, 0.1f, lay))
-        {
-            isGrounded = true;
-            isDashAble = true;
-            anim.SetBool("fall", false);
-            anim.SetBool("rise", false);
-            if (rb.velocity.x != 0)
-            {
-                anim.SetBool("run", true);
-            }else
-                anim.SetBool("run", false);
-        }
-        else
-        {
-            anim.SetBool("run", false);
-            if(JumpWallDir == 0)
-            {
-                if(rb.velocity.y < 0)
-                {
-                    anim.SetBool("fall", true);
-                    anim.SetBool("rise", false);
-                }
-                else if(rb.velocity.y > 0)
-                {
-                    anim.SetBool("rise", true);
-                    anim.SetBool("fall", false);
-                }
-            }
-
-        }
-        if (!isDashing && Mathf.Abs(rb.velocity.x) > Mathf.Abs(speed * 1.5f))
-            rb.velocity = new Vector2(Mathf.MoveTowards(rb.velocity.x, Control.normal(speed), slowSpeed), rb.velocity.y);
-        else if (isGrounded && !coyotChecked)
-        {
-            StartCoroutine(CoyotTime());
-        }
-
+        Collider2D left = Physics2D.OverlapBox(wallChecks[0].position, wallCheckBox, 0f, lay); ;
+        Collider2D right = Physics2D.OverlapBox(wallChecks[1].position, wallCheckBox, 0f, lay); ;
         #region JumpDir capture
             if (!isWallJumping && !isGrounded)
         {
-            Collider2D left = Physics2D.OverlapBox(wallChecks[0].position, wallCheckBox, 0f, lay);
-            Collider2D right = Physics2D.OverlapBox(wallChecks[1].position, wallCheckBox, 0f, lay);
             if (left != null && right == null && !left.gameObject.CompareTag("slash"))
             {
                 JumpWallDir = 1;
                 if (rb.velocity.y < wallFallSpd && !isDashing && axis.y >= -0.5)
                     rb.velocity = new Vector2(rb.velocity.x, wallFallSpd);
-                anim.SetBool("climb", true);
+
                 sc.localScale = new Vector3(1, 1, 1);
             } else if(right != null && left == null && !right.gameObject.CompareTag("slash"))
             {
                 JumpWallDir = -1;
                 if (rb.velocity.y < wallFallSpd && !isDashing && axis.y >= -0.5)
                     rb.velocity = new Vector2(rb.velocity.x, wallFallSpd);
-                anim.SetBool("climb", true);
                 sc.localScale = new Vector3(-1, 1, 1);
             }
             else
             {
                 JumpWallDir = 0;
-                anim.SetBool("climb", false);
             }
         }
         #endregion
+
+        #region animations
+
+        if (isDashing) anim.SetTrigger("dash");
+        if (left != null || right != null)
+        {
+            if (!isGrounded) anim.SetTrigger("climb");
+        }
+        if (axis.x != 0 && isGrounded) anim.SetTrigger("run");
+        if (rb.velocity.y > 2 && !isGrounded) anim.SetTrigger("rise");
+        if (rb.velocity.y < 2 && !isGrounded) anim.SetTrigger("fall");
+        if (isGrounded && axis.x == 0) anim.SetTrigger("idle");
+        #endregion
+
+        if(axis.x != 0) sc.localScale = new Vector2(axis.x, 1);
+        if (isDashAble)
+            trail.colorGradient = trailCols[0];
+        else
+            trail.colorGradient = trailCols[1];
+        if (!isDashing)
+        {
+            finalSpd = Mathf.MoveTowards(rb.velocity.x, speed * axis.x, acceleration * Time.deltaTime);
+            rb.gravityScale = startG;
+            rb.velocity = new Vector2(finalSpd, rb.velocity.y);
+        }else
+            rb.gravityScale = 0;
+
+        if (Physics2D.Raycast(groundCheck.position, Vector2.down, 0.01f, lay) && jumpStep != 0)
+        { 
+            jumpStep = 0;
+            isGrounded = true;
+            isDashAble = true;
+        }
+        #region jump
+
+
+        #endregion
+
+         if (!isGrounded && !coyotChecked)
+        {
+            StartCoroutine(CoyotTime());
+        }
 
         
         if (FindAnyObjectByType<CinemachineVirtualCamera>().Follow != transform)
             FindAnyObjectByType<CinemachineVirtualCamera>().Follow = transform;
         if (jump != 0)
         {
-           Jump();
+           JumpStart();
         }
         if (JumpWallDir != 0) isDashAble = true;
 
@@ -247,9 +250,31 @@ public class player_main : MonoBehaviour
         }else
             fast = false;
         // inputReset must be in the end of Update
+        if(jumpStep != 2 && jumpStep != 0 && !isGrounded)
+            speedY = Mathf.MoveTowards(speedY, fallLimit, g * Time.deltaTime);
+        rb.velocity = new Vector2(rb.velocity.x, speedY);
         control = 0;
         dash = 0;
     }
+    public void JumpStart()
+    {
+        if (jump != 0 && isGrounded)
+        {
+            speedY = force;
+            jumpStep = 1;
+            isGrounded = false;
+        }
+        if(jumpStep == 1)
+            speedY = Mathf.MoveTowards(speedY, 0, g * Time.deltaTime);
+
+        if (speedY == 0 && jumpStep == 1)
+        {
+            jumpStep = 2;
+            Invoke("jumpStep3", stillT);
+        }
+    }
+    
+    void jumpStep3() => jumpStep = 0;
     bool fast;
     bool speedChecked = false;
     bool coyotChecked;
@@ -331,7 +356,10 @@ public class player_main : MonoBehaviour
     }
     void DashReset() => isDashAble = true;
 
-
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        jumpStep = 0;
+    }
     private IEnumerator OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.layer == 3)

@@ -55,12 +55,12 @@ public class tp_cannon : MonoBehaviour
         //step 2
         yield return new WaitForSeconds(1);
         src.Play();
+        obj.GetComponent<player_main>().isDashing = true;
         obj.gameObject.SetActive(true);
         obj.GetComponent<Rigidbody2D>().velocity = force;
         obj.GetComponent<player_main>().isDashAble = true;
         Instantiate(eff, transform.position, transform.rotation);
         shooting = false;
-        obj.GetComponent<player_main>().isDashing = true;
         yield return new WaitForSeconds(stun);
         obj.GetComponent<player_main>().isDashing = false;
     }
