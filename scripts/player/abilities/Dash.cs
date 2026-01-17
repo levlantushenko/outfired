@@ -41,8 +41,8 @@ public class Dash : MonoBehaviour
         }
         else
         {
-            hor = Mathf.Abs(Gamepad.current.leftStick.value.x);
-            ver = Mathf.Abs(Gamepad.current.leftStick.value.y);
+            hor = normal(Mathf.Abs(Gamepad.current.leftStick.value.x * 2));
+            ver = normal(Mathf.Abs(Gamepad.current.leftStick.value.y * 2));
         }
         
 

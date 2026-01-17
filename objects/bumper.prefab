@@ -101,7 +101,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   force: 40
   t: 5
+  stunT: 1
   clip: {fileID: 8300000, guid: 8f516479055d5e2449afd4e0e38d7d66, type: 3}
+  eff: {fileID: 7802057313507150428, guid: e638cdfdc033b3b4ea7156bb9aeccb8f, type: 3}
 --- !u!61 &5083958195488756852
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -160,7 +162,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
-  m_Pitch: 1
+  m_Pitch: 2
   Loop: 0
   Mute: 0
   Spatialize: 0

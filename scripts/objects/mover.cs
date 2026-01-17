@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class mover : MonoBehaviour
@@ -20,8 +21,8 @@ public class mover : MonoBehaviour
     public GameObject arrow;
     public float waitT;
     
-    bool isMoving = false;
-    dir fin;
+    [DoNotSerialize] public bool isMoving = false;
+    [DoNotSerialize] public dir fin;
     private IEnumerator OnCollisionEnter2D(Collision2D collision)
     {
 
@@ -82,7 +83,7 @@ public class mover : MonoBehaviour
         collision.gameObject.transform.parent = null;
         yield return null;
     }
-    enum dir
+    public enum dir
     {
         none,
         top,

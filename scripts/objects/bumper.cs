@@ -9,6 +9,7 @@ public class bumper : MonoBehaviour
     [SerializeField] float t;
     [SerializeField] float stunT = 1;
     public AudioClip clip;
+    public GameObject eff;
 
     private void Start()
     {
@@ -30,6 +31,7 @@ public class bumper : MonoBehaviour
         if (!rech) return;
         if(collision.gameObject.name == "player")
         {
+            Instantiate(eff, transform.position, transform.rotation);
             pl = collision.gameObject.GetComponent<player_main>();
             Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
             rb.velocity = (Vector2)(collision.transform.position - transform.position).normalized * force + rb.velocity * new Vector2(-1, 0);
