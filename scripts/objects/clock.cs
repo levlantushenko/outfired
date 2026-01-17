@@ -7,13 +7,16 @@ public class clock : MonoBehaviour
 {
     public float t;
     public Color final;
-
+    public GameObject eff;
     private IEnumerator OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            GetComponent<SpriteRenderer>().color = final;
+            transform.GetChild(0).GetComponent<SpriteRenderer>().color = final;
+            Instantiate(eff, transform.position, transform.rotation);
+
             yield return new WaitForSeconds(t);
+
             collision.gameObject.transform.position = transform.position;
             gameObject.SetActive(false);
         }

@@ -12,10 +12,21 @@ public class _interface : MonoBehaviour
     float pause;
     public GameObject[] panels;
     public Button menu;
+    public Button retry;
     private void Awake()
     {
         PlayerPrefs.DeleteKey("died");
         menu.onClick.AddListener(clearSessionSaves);
+        retry.onClick.AddListener( () =>
+        {
+            if (Application.isMobilePlatform)
+                panels[0].SetActive(!panels[0].activeInHierarchy);
+
+            panels[1].SetActive(!panels[1].activeInHierarchy);
+            Time.timeScale = 1;
+
+            GameObject.Find("player").GetComponent<player_main>().Death();
+        });
 
         if (!Application.isMobilePlatform)
             panels[0].SetActive(false);
@@ -80,4 +91,5 @@ public class _interface : MonoBehaviour
         PlayerPrefs.DeleteKey("died");
         PlayerPrefs.DeleteKey("time");
     }
+    
 }

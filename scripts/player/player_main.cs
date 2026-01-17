@@ -36,6 +36,7 @@ public class player_main : MonoBehaviour
     public GameObject highSpeedEff;
     public float dist;
     [DoNotSerialize] public Dash _dash;
+    public GameObject refillEff;
 
     private void Start()
     {
@@ -134,10 +135,11 @@ public class player_main : MonoBehaviour
         {
             _dash.isDashable = true;
             collision.gameObject.SetActive(false);
+            Instantiate(refillEff, collision.transform.position, Quaternion.identity);
         }
         yield return null;
     }
-    void Death()
+    public void Death()
     {
         PlayerPrefs.SetInt("died", 0);
         Instantiate(deathEff, transform.position, transform.rotation);

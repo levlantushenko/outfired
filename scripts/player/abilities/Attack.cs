@@ -29,6 +29,7 @@ public class Attack : MonoBehaviour
         att = 0;
         Transform cur = Instantiate(attObj, attPos).transform;
         cur.position = attPos.position;
+        cur.name = $"pl {cur.name}";
         charged = false;
         yield return new WaitForSeconds(rech);
         charged=true;

@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Localization.Plugins.XLIFF.V20;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -16,6 +15,7 @@ public class WallJump : MonoBehaviour
     public LayerMask lay;
     public float wallFallSpd;
     public Vector2 force;
+    Transform groundCheck;
 
     Rigidbody2D rb;
     Dash dash;
@@ -23,6 +23,7 @@ public class WallJump : MonoBehaviour
     Animator anim;
     void Start()
     {
+        groundCheck = GetComponent<Jump>().groundCheck;
         rb = GetComponent<Rigidbody2D>();
         dash = GetComponent<Dash>();
         g = rb.gravityScale;
@@ -57,8 +58,9 @@ public class WallJump : MonoBehaviour
             JumpWallDir = 0;
             anim.SetBool("climb", false);
         }
-        if (Keyboard.current.zKey.wasPressedThisFrame && JumpWallDir != 0)
-            StartCoroutine(Jump());
+        if (!Physics2D.Raycast(groundCheck.position, Vector2.down, 0.2f, lay) &&
+            Keyboard.current.zKey.wasPressedThisFrame && JumpWallDir != 0)
+                StartCoroutine(Jump());
 
     }
     IEnumerator Jump()

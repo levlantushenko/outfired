@@ -36,6 +36,7 @@ public class Jump : MonoBehaviour
     {
         if (Keyboard.current.zKey.wasPressedThisFrame)
         {
+            Debug.Log("jump");
             CancelInvoke("pressSaveCancel");
             jump = 1;
         }

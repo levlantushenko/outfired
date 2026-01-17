@@ -114,16 +114,16 @@ public class mover : MonoBehaviour
             switch (fin)
             {
                 case dir.top:
-                    rb.velocity = transform.up * bakedSpeed * Time.deltaTime; 
+                    transform.Translate(Vector2.up * bakedSpeed * Time.deltaTime);
                     break;
                 case dir.right:
-                    rb.velocity = transform.right * bakedSpeed * Time.deltaTime;
+                    transform.Translate(Vector2.right * bakedSpeed * Time.deltaTime);
                     break;
                 case dir.down:
-                    rb.velocity = -transform.up * bakedSpeed * Time.deltaTime;
+                    transform.Translate(Vector2.down * bakedSpeed * Time.deltaTime);
                     break;
                 case dir.left:
-                    rb.velocity = -transform.right * bakedSpeed * Time.deltaTime;
+                    transform.Translate(Vector2.left * bakedSpeed * Time.deltaTime); 
                     break;
             }
         else

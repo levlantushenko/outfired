@@ -51,17 +51,28 @@ public class tp_cannon : MonoBehaviour
     IEnumerator Shoot()
     {
         obj.position = transform.position;
+        obj.GetComponent<Dash>().isDashing = false;
+        yield return new WaitForEndOfFrame();
         obj.gameObject.SetActive(false);
-        //step 2
         yield return new WaitForSeconds(1);
         src.Play();
         obj.GetComponent<Dash>().isDashing = true;
         obj.gameObject.SetActive(true);
         obj.GetComponent<Rigidbody2D>().velocity = force;
         obj.GetComponent<Dash>().isDashable = true;
+
+        float g = obj.GetComponent<Rigidbody2D>().gravityScale;
+        obj.GetComponent<Rigidbody2D>().gravityScale = 0;
+
         Instantiate(eff, transform.position, transform.rotation);
         shooting = false;
+        obj.GetComponent<Animator>().SetBool("dash", true);
+
+        //step 2
         yield return new WaitForSeconds(stun);
+
+        obj.GetComponent<Animator>().SetBool("dash", false);
+        obj.GetComponent<Rigidbody2D>().gravityScale = g;
         obj.GetComponent<Dash>().isDashing = false;
     }
     private void OnDrawGizmos()

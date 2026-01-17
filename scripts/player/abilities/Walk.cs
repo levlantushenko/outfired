@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -14,7 +12,7 @@ public class Walk : MonoBehaviour
     public float acceleration;
     public Transform groundCheck;
     public LayerMask lay;
-
+    float checkLength;
     Rigidbody2D rb;
 
     bool isDashing = false;
@@ -23,6 +21,7 @@ public class Walk : MonoBehaviour
     Dash dash;
     private void Start()
     {
+        checkLength = GetComponent<Jump>().checkLength;
         rb = GetComponent<Rigidbody2D>();
         dashAble = GetComponent<Dash>()? true : false;
         anim = GetComponent<Animator>();
@@ -36,11 +35,26 @@ public class Walk : MonoBehaviour
 
         if (dashAble)
             isDashing = dash.isDashing;
-        if (!isDashing) { 
-            hor = GetAxis(Keyboard.current.rightArrowKey, Keyboard.current.leftArrowKey);
-            rb.velocity = new Vector2(Mathf.MoveTowards(rb.velocity.x, max * hor, acceleration * Time.deltaTime), rb.velocity.y);
-            if (hor != 0) transform.localScale = new Vector2(hor, 1);
-            if(isGrounded)
+        if (!isDashing) {
+            if (!Application.isMobilePlatform && Gamepad.all.Count == 0)
+                hor = GetAxis(Keyboard.current.rightArrowKey, Keyboard.current.leftArrowKey);
+            else
+                hor = Gamepad.current.leftStick.value.x;
+
+            float newXspeed = Mathf.MoveTowards(rb.velocity.x, max * hor, acceleration * Time.deltaTime);
+
+            if(normal(rb.velocity.x) != normal(hor) || isGrounded)
+                rb.velocity = new Vector2(newXspeed, rb.velocity.y);
+
+            else if(Mathf.Abs(rb.velocity.x) < max)
+                rb.velocity = new Vector2(newXspeed, rb.velocity.y);
+
+            if (hor > 0) 
+                transform.localScale = new Vector2(1, 1);
+            else if (hor < 0)
+                transform.localScale = new Vector2(-1, 1);
+            
+            if (isGrounded)
                 anim.SetBool("run", hor != 0);
             else
                 anim.SetBool("run", false);
@@ -56,6 +70,12 @@ public class Walk : MonoBehaviour
             return 1;
         else if (negative.isPressed)
             return -1;
+        else return 0;
+    }
+    public float normal(float val)
+    {
+        if(val!=0)
+            return val / Math.Abs(val);
         else return 0;
     }
 }

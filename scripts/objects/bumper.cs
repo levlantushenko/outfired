@@ -13,6 +13,7 @@ public class bumper : MonoBehaviour
     private void Start()
     {
         startSc = transform.localScale;
+
     }
     Vector2 startSc;
    
@@ -24,13 +25,14 @@ public class bumper : MonoBehaviour
             transform.localScale = Vector2.MoveTowards(transform.localScale, startSc, t * Time.deltaTime);
     }
     player_main pl;
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (!rech) return;
-        if(collision.gameObject.name.Contains("pl") && collision.gameObject.CompareTag("slash"))
+        if(collision.gameObject.name == "player")
         {
+            pl = collision.gameObject.GetComponent<player_main>();
             Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
-            rb.velocity = (Vector2)(collision.transform.position - transform.position).normalized * force + rb.velocity * -1;
+            rb.velocity = (Vector2)(collision.transform.position - transform.position).normalized * force + rb.velocity * new Vector2(-1, 0);
             transform.localScale *= 1.5f;
             rech = false;
             Invoke("recharge", 0.5f);

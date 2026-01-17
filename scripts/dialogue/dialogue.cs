@@ -16,11 +16,12 @@ public class dialogue : MonoBehaviour
         inp = new _InputSystem();
         inp.Enable();
         inp.normal.talk.performed += ctx => input = ctx.ReadValue<float>();
+        textMesh = GameObject.Find("talkText").GetComponent<TextMeshProUGUI>();
+        parent = textMesh.transform.parent.gameObject;
     }
     void Start()
     {
-        
-        parent = textMesh.transform.parent.gameObject;
+        parent.SetActive(false);
     }
     private void LateUpdate()
     {

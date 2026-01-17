@@ -43,11 +43,9 @@ public class movingDoor : MonoBehaviour
         {
             Debug.Log("Adding force");
             pl.transform.parent = door;
-            _Control.WallJumpEvent += AddForce;
         }
         else
         {
-            _Control.WallJumpEvent -= AddForce;
             pl.transform.parent = null;
         }
     }

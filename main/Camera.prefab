@@ -2266,6 +2266,7 @@ MonoBehaviour:
   - {fileID: 8950594372408432374}
   - {fileID: 3072826675467839446}
   menu: {fileID: 6730487298718827587}
+  retry: {fileID: 0}
   tmp: {fileID: 7505116055949795159}
 --- !u!1 &6272870171179122659
 GameObject:
@@ -4235,7 +4236,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MovementRange: 50
   m_DynamicOriginRange: 100
-  m_ControlPath: <AndroidJoystick>/stick
+  m_ControlPath: <Gamepad>/leftStick
   m_Behaviour: 0
   m_UseIsolatedInputActions: 0
   m_PointerDownAction:
