@@ -52,6 +52,7 @@ public class tp_cannon : MonoBehaviour
     {
         obj.position = transform.position;
         obj.GetComponent<Dash>().isDashing = false;
+        obj.GetComponent<Animator>().SetBool("dash", false);
         yield return new WaitForEndOfFrame();
         obj.gameObject.SetActive(false);
         yield return new WaitForSeconds(1);

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 630854007427537004}
   - component: {fileID: 1826142095122227169}
   - component: {fileID: 218616209364360479}
+  - component: {fileID: 9087433256775796419}
   m_Layer: 2
   m_Name: refill
   m_TagString: refill
@@ -25,14 +26,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2867363801625270944}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -80.45, y: -15.0204, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 3.9622, y: 3.9622, z: 1.9811}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 102770226859524640}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 32
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1826142095122227169
 BoxCollider2D:
@@ -100,6 +101,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &9087433256775796419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2867363801625270944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38412fee3644af0488399e2aae5d0287, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dashes: 1
+  freezeT: 0.1
+  refillEff: {fileID: 2778060650968791050, guid: eff7c0779246f0f46a978d188a747510, type: 3}
 --- !u!1 &4720499217794937226
 GameObject:
   m_ObjectHideFlags: 0

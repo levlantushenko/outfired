@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -39,12 +40,17 @@ public class Dash : MonoBehaviour
             hor = GetAxis(Keyboard.current.rightArrowKey, Keyboard.current.leftArrowKey);
             ver = GetAxis(Keyboard.current.upArrowKey, Keyboard.current.downArrowKey);
         }
+        else if (Application.isMobilePlatform)
+        {
+            hor = Mathf.Round((Gamepad.current.leftStick.value.x / 50) * 2) / 2;
+            ver = Mathf.Round((Gamepad.current.leftStick.value.y / 50) * 2) / 2;
+        }
         else
         {
-            hor = normal(Mathf.Abs(Gamepad.current.leftStick.value.x * 2));
-            ver = normal(Mathf.Abs(Gamepad.current.leftStick.value.y * 2));
+            hor = Mathf.Round(Gamepad.current.leftStick.value.x * 2) / 2;
+            ver = Mathf.Round(Gamepad.current.leftStick.value.y * 2) / 2;
         }
-        
+
 
         if (Keyboard.current.leftShiftKey.wasPressedThisFrame && isDashable)
             StartCoroutine(_Dash());
@@ -89,7 +95,7 @@ public class Dash : MonoBehaviour
     public float normal(float val)
     {
         if (val != 0)
-            return val / Math.Abs(val);
+            return val / Mathf.Abs(val);
         else return 0;
     }
 }

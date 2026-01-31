@@ -36,7 +36,7 @@ public class player_main : MonoBehaviour
     public GameObject highSpeedEff;
     public float dist;
     [DoNotSerialize] public Dash _dash;
-    public GameObject refillEff;
+    
 
     private void Start()
     {
@@ -131,12 +131,7 @@ public class player_main : MonoBehaviour
             collision.gameObject.GetComponent<Collider2D>().enabled = true;
 
         }
-        else if(collision.gameObject.tag == "refill" && !_dash.isDashable)
-        {
-            _dash.isDashable = true;
-            collision.gameObject.SetActive(false);
-            Instantiate(refillEff, collision.transform.position, Quaternion.identity);
-        }
+        
         yield return null;
     }
     public void Death()
