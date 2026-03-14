@@ -9,7 +9,7 @@ using UnityEngine.Playables;
 public class player_main : MonoBehaviour
 {
     private void Awake()
-    { 
+    {
         checkPP();
     }
 
@@ -36,7 +36,12 @@ public class player_main : MonoBehaviour
     public GameObject highSpeedEff;
     public float dist;
     [DoNotSerialize] public Dash _dash;
-    
+
+    public float crystSpotDist;
+    public GameObject crystCollect;
+    public float crystKnockback;
+    Transform crystal;
+
 
     private void Start()
     {
@@ -55,19 +60,28 @@ public class player_main : MonoBehaviour
         }
         FindAnyObjectByType<CinemachineVirtualCamera>().Follow = transform;
         conf = FindAnyObjectByType<CinemachineConfiner2D>();
+        conf.transform.position = (Vector2)transform.position;
+        crystal = GameObject.Find("Crystal").transform;
 
     }
 
     void Update()
     {
-        if (FindAnyObjectByType<CinemachineVirtualCamera>().Follow != transform)
+        if (Vector2.Distance(transform.position, crystal.position) > crystSpotDist)
             FindAnyObjectByType<CinemachineVirtualCamera>().Follow = transform;
-        
-        if (Keyboard.current.aKey.wasPressedThisFrame)
+        else
+            FindAnyObjectByType<CinemachineVirtualCamera>().Follow = crystal;
+
+        RaycastHit2D obstacle = Physics2D.Raycast(transform.position, rb.velocity.normalized, rb.velocity.magnitude);
+        if (Physics2D.RaycastAll(transform.position, rb.velocity.normalized, rb.velocity.magnitude) != null)
         {
-            GetControl();
+            StartCoroutine(HighSpeedReact(obstacle));
         }
         
+        
+        if (Keyboard.current.aKey.wasPressedThisFrame || Gamepad.current.buttonNorth.wasPressedThisFrame)
+            GetControl();
+
         float vel = GetComponent<Rigidbody2D>().velocity.magnitude;
         float speedMult = 1;
         if (vel > dashSpd * speedMult || vel < dashSpd * speedMult * -1)
@@ -83,7 +97,11 @@ public class player_main : MonoBehaviour
     bool fast;
     bool speedChecked = false;
     
-
+    IEnumerator HighSpeedReact(RaycastHit2D obst)
+    {
+        yield return new WaitForEndOfFrame();
+        transform.position = obst.point;
+    }
     IEnumerator HighSpeed()
     {
         speedChecked = true;
@@ -131,7 +149,19 @@ public class player_main : MonoBehaviour
             collision.gameObject.GetComponent<Collider2D>().enabled = true;
 
         }
-        
+        else if(collision.gameObject == crystal.gameObject)
+        {
+            if (!_dash.dashImitate)
+            {
+                rb.velocity = crystKnockback * (transform.position - crystal.position);
+            }
+            else
+            {
+                crystal.gameObject.SetActive(false);
+                Instantiate(crystCollect, crystal.position, Quaternion.Euler(0, 0, 0));
+                PlayerPrefs.SetInt(crystal.GetChild(0).name, 0);
+            }
+        }
         yield return null;
     }
     public void Death()
@@ -150,11 +180,18 @@ public class player_main : MonoBehaviour
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, dist);
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, crystSpotDist);
     }
     private void OnApplicationQuit()
     {
         PlayerPrefs.DeleteKey("x");
         PlayerPrefs.DeleteKey("died");
         PlayerPrefs.DeleteKey("time");
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        
     }
 }

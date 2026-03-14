@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class _interface : MonoBehaviour
@@ -28,16 +29,13 @@ public class _interface : MonoBehaviour
             GameObject.Find("player").GetComponent<player_main>().Death();
         });
 
-        if (!Application.isMobilePlatform)
+        if (Application.isMobilePlatform)
+            panels[0].SetActive(true);
+        else
             panels[0].SetActive(false);
 
         if (PlayerPrefs.HasKey("timer"))
             tmp.transform.parent.gameObject.SetActive(PlayerPrefs.GetInt("timer") == 0);
-
-        input = new _InputSystem();
-        input.Enable();
-        input.normal.pause.performed += ctx => pause = ctx.ReadValue<float>();
-        input.normal.pause.canceled += ctx => pause = 0;
     }
     private void Start()
     {
@@ -46,6 +44,20 @@ public class _interface : MonoBehaviour
     public Text tmp;
     void Update()
     {
+        if (Keyboard.current.escapeKey.wasPressedThisFrame)
+        {
+            if (Application.isMobilePlatform)
+                panels[0].SetActive(!panels[0].activeInHierarchy);
+            panels[1].SetActive(!panels[1].activeInHierarchy);
+            if (!panels[1].activeInHierarchy)
+                Time.timeScale = 1;
+            else
+            {
+                Time.timeScale = 0;
+                PlayerPrefs.SetInt("timer", tmp.transform.parent.gameObject.activeInHierarchy ? 1 : 0);
+            }
+        }
+            
         time += Time.deltaTime;
         #region timer
         if (((int)(time / 60)) < 1)
@@ -69,20 +81,7 @@ public class _interface : MonoBehaviour
         else
             tmp.text += "." + Mathf.Round((time - (int)time) * 10);
         #endregion
-        if (pause == 1)
-        {
-            if(Application.isMobilePlatform)
-                panels[0].SetActive(!panels[0].activeInHierarchy);
-            panels[1].SetActive(!panels[1].activeInHierarchy);
-            if(!panels[1].activeInHierarchy)
-                Time.timeScale = 1;
-            else
-            {
-                Time.timeScale = 0;
-                PlayerPrefs.SetInt("timer", tmp.transform.parent.gameObject.activeInHierarchy ? 1 : 0);
-            }
-        }
-        pause = 0;
+        
         
     }
     void clearSessionSaves()

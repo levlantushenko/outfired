@@ -10,21 +10,21 @@ public class Walk : MonoBehaviour
 {
     [Serialize] public float max;
     public float acceleration;
+    public float groundDeceleration;
+    public float airDeceleration;
     public Transform groundCheck;
     public LayerMask lay;
     float checkLength;
     Rigidbody2D rb;
-
+    public Transform sc;
     bool isDashing = false;
     bool dashAble;
-    Animator anim;
     Dash dash;
     private void Start()
     {
         checkLength = GetComponent<Jump>().checkLength;
         rb = GetComponent<Rigidbody2D>();
         dashAble = GetComponent<Dash>()? true : false;
-        anim = GetComponent<Animator>();
         dash = GetComponent<Dash>();
     }
     float hor;
@@ -41,27 +41,25 @@ public class Walk : MonoBehaviour
             else
                 hor = Gamepad.current.leftStick.value.x;
 
-            float newXspeed = Mathf.MoveTowards(rb.velocity.x, max * hor, acceleration * Time.deltaTime);
+            float newXspeed = 0;
+            if(rb.velocity.x < max)
+                newXspeed = Mathf.MoveTowards(rb.velocity.x, max * hor, acceleration * Time.deltaTime);
+            else if(isGrounded)
+                newXspeed = Mathf.MoveTowards(rb.velocity.x, max * hor, groundDeceleration * Time.deltaTime);
+            else if(!isGrounded)
+                newXspeed = Mathf.MoveTowards(rb.velocity.x, max * hor, airDeceleration * Time.deltaTime);
 
-            if(normal(rb.velocity.x) != normal(hor) || isGrounded)
+            if (normal(rb.velocity.x) != normal(hor) || isGrounded)
                 rb.velocity = new Vector2(newXspeed, rb.velocity.y);
 
             else if(Mathf.Abs(rb.velocity.x) < max)
                 rb.velocity = new Vector2(newXspeed, rb.velocity.y);
 
             if (hor > 0) 
-                transform.localScale = new Vector2(1, 1);
+                sc.localScale = new Vector2(1, 1);
             else if (hor < 0)
-                transform.localScale = new Vector2(-1, 1);
+                sc.localScale = new Vector2(-1, 1);
             
-            if (isGrounded)
-                anim.SetBool("run", hor != 0);
-            else
-                anim.SetBool("run", false);
-        }
-        else
-        {
-            anim.SetBool("run", false);
         }
     }
     public float GetAxis(KeyControl positive, KeyControl negative)

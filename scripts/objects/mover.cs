@@ -41,28 +41,11 @@ public class mover : MonoBehaviour
             {
                 isMoving = false;
                 collision.gameObject.GetComponent<Dash>().isDashing = false;
+                collision.gameObject.GetComponent<Dash>().dashImitate = false;
                 collision.gameObject.GetComponent<Dash>().isDashable = true;
-                Debug.Log("moving");
                 isMoving = false;
                 arrow.GetComponent<SpriteRenderer>().color = Color.cyan;
-                switch (direction)
-                {
-                    case dir.top:
-                        arrow.transform.eulerAngles = new Vector3(0, 0, 90);
-                        rb.velocity = new Vector2(rb.velocity.x, -rb.velocity.y);
-                        break;
-                    case dir.right:
-                        arrow.transform.eulerAngles = new Vector3(0, 0, 0);
-                        rb.velocity = new Vector2(-rb.velocity.x, rb.velocity.y);
-                        break;
-                    case dir.down:
-                        arrow.transform.eulerAngles = new Vector3(0, 0, -90);
-                        break;
-                    case dir.left:
-                        arrow.transform.eulerAngles = new Vector3(0, 0, 180);
-                        rb.velocity = new Vector2(-rb.velocity.x, rb.velocity.y);
-                        break;
-                }
+                
                 yield return new WaitForSeconds(waitT);
                 isMoving = true;
                 fin = direction;
@@ -70,17 +53,17 @@ public class mover : MonoBehaviour
         }
         else
         {
-            collision.gameObject.transform.parent = transform;
             arrow.GetComponent<SpriteRenderer>().color = Color.cyan;
             yield return new WaitForSeconds(waitT);
             isMoving = true; 
         }
         
     }
+
+    
     private IEnumerator OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.tag != "Player") yield break;
-        collision.gameObject.transform.parent = null;
         yield return null;
     }
     public enum dir
@@ -111,24 +94,25 @@ public class mover : MonoBehaviour
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (!isMoving) return;
         bakedSpeed = speed;
-        if(dashReq)
-            switch (fin)
-            {
-                case dir.top:
-                    transform.Translate(Vector2.up * bakedSpeed * Time.deltaTime);
-                    break;
-                case dir.right:
-                    transform.Translate(Vector2.right * bakedSpeed * Time.deltaTime);
-                    break;
-                case dir.down:
-                    transform.Translate(Vector2.down * bakedSpeed * Time.deltaTime);
-                    break;
-                case dir.left:
-                    transform.Translate(Vector2.left * bakedSpeed * Time.deltaTime); 
-                    break;
-            }
-        else
-            transform.Translate(Vector2.right * bakedSpeed * Time.deltaTime);
+        switch (fin)
+        {
+            case dir.top:
+                transform.Translate(Vector2.up * bakedSpeed * Time.deltaTime);
+                arrow.transform.rotation = Quaternion.Euler(0, 0, 90 - transform.rotation.z);
+                break;
+            case dir.right:
+                transform.Translate(Vector2.right * bakedSpeed * Time.deltaTime);
+                arrow.transform.rotation = Quaternion.Euler(0, 0, 0 - transform.rotation.z);
+                break;
+            case dir.down:
+                transform.Translate(Vector2.down * bakedSpeed * Time.deltaTime);
+                arrow.transform.rotation = Quaternion.Euler(0, 0, -90 - transform.rotation.z);
+                break;
+            case dir.left:
+                transform.Translate(Vector2.left * bakedSpeed * Time.deltaTime);
+                arrow.transform.rotation = Quaternion.Euler(0, 0, 180 - transform.rotation.z);
+                break;
+        }
         
     }
     dir inverseDir(dir _dir)

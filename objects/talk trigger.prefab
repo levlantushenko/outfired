@@ -47,12 +47,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: 0
   textMesh: {fileID: 0}
+  img: {fileID: 0}
   lines:
   - "\u043D\u0443 \u0438 \u0433\u0434\u0435 \u044F?"
   - "\u0432\u0440\u043E\u0434\u0435 \u044D\u0442\u043E \u043D\u0435\u0431\u043E\u043B\u044C\u0448\u043E\u0439
     \u0430\u0441\u0442\u0435\u0440\u043E\u0438\u0434"
   - "\u0434\u0443\u043C\u0430\u044E, \u043D\u0435 \u0441\u0442\u043E\u0438\u0442
     \u0442\u0443\u0442 \u0437\u0430\u0434\u0435\u0440\u0436\u0438\u0432\u0430\u0442\u044C\u0441\u044F"
+  icons:
+  - {fileID: 21300000, guid: e62e1fe5b4774634282eec4bb99636e3, type: 3}
+  - {fileID: 21300000, guid: e62e1fe5b4774634282eec4bb99636e3, type: 3}
+  - {fileID: 21300000, guid: e62e1fe5b4774634282eec4bb99636e3, type: 3}
 --- !u!61 &6322700160242349986
 BoxCollider2D:
   m_ObjectHideFlags: 0

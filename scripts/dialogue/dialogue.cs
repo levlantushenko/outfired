@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class dialogue : MonoBehaviour
 {
@@ -10,34 +11,38 @@ public class dialogue : MonoBehaviour
     public float input;
     
     public TextMeshProUGUI textMesh;
+    public Image img;
     GameObject parent;
-    private void Awake()
+    
+    void Awake()
     {
         inp = new _InputSystem();
         inp.Enable();
         inp.normal.talk.performed += ctx => input = ctx.ReadValue<float>();
-        textMesh = GameObject.Find("talkText").GetComponent<TextMeshProUGUI>();
-        parent = textMesh.transform.parent.gameObject;
-    }
-    void Start()
-    {
+        parent = textMesh.transform.parent.parent.gameObject;
         parent.SetActive(false);
     }
-    private void LateUpdate()
-    {
-        
-    }
+    
 
-    public IEnumerator Say(string[] _text)
+    public IEnumerator Say(string[] _text, Sprite[] _icons)
     {
         parent.SetActive(true);
         for(int i = 0; i < _text.Length; i++)
         {
             input = 0;
+            img.sprite = _icons[i];
             textMesh.text = _text[i];
+            //for (int ii = 0; ii < _text[i].Length; ii++)
+            //{
+            //    textMesh.text += _text[i].ToCharArray().GetValue(ii);
+            //    yield return new WaitForSeconds(0.02f);
+            //    if (input != 0)
+            //        break; continue;
+            //}
             while(input == 0)
                 yield return new WaitForEndOfFrame();
         }
         parent.SetActive(false);
+        gameObject.SetActive(false);
     }
 }

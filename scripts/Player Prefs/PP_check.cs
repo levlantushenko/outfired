@@ -12,7 +12,7 @@ public class PP_check : MonoBehaviour
     public bool activate = false;
     public bool start;
     public bool invert = false;
-    private void Start()
+    private void Awake()
     {
         if (!start) return;
         if (!PlayerPrefs.HasKey(name))

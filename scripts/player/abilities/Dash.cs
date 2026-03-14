@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
+using UnityEngine.Localization.SmartFormat.Extensions;
 /// <summary>
 /// allows to dash in 8 dircetions
 /// </summary>
@@ -19,17 +20,16 @@ public class Dash : MonoBehaviour
     public Color hasDash;
     public Color noDash;
     Rigidbody2D rb;
-    Animator anim;
     float g;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
         g = rb.gravityScale;
     }
-
+    public float imitateT;
     [DoNotSerialize] public bool isDashing;
+    [DoNotSerialize] public bool dashImitate;
     [DoNotSerialize] public bool isDashable = true;
     float ver;
     float hor;
@@ -40,22 +40,27 @@ public class Dash : MonoBehaviour
             hor = GetAxis(Keyboard.current.rightArrowKey, Keyboard.current.leftArrowKey);
             ver = GetAxis(Keyboard.current.upArrowKey, Keyboard.current.downArrowKey);
         }
-        else if (Application.isMobilePlatform)
-        {
-            hor = Mathf.Round((Gamepad.current.leftStick.value.x / 50) * 2) / 2;
-            ver = Mathf.Round((Gamepad.current.leftStick.value.y / 50) * 2) / 2;
-        }
-        else
+        else if (Gamepad.all.Count != 0 && !Application.isMobilePlatform)
         {
             hor = Mathf.Round(Gamepad.current.leftStick.value.x * 2) / 2;
             ver = Mathf.Round(Gamepad.current.leftStick.value.y * 2) / 2;
         }
+        if (Application.isMobilePlatform)
+        {
+            hor = Mathf.Round(Gamepad.current.leftStick.value.x * 2) / 2;
+            ver = Mathf.Round(Gamepad.current.leftStick.value.y * 2) / 2;
+        }
+        if (hor == 0 && ver == 0)
+            hor = 1;
+        if(Gamepad.all.Count != 0)
+            if(Gamepad.current.rightTrigger.wasPressedThisFrame && isDashable)
+                StartCoroutine(_Dash());
 
+        if (InputSystem.devices.Count != 0)
+            if (Keyboard.current.leftShiftKey.wasPressedThisFrame && isDashable)
+                StartCoroutine(_Dash());
 
-        if (Keyboard.current.leftShiftKey.wasPressedThisFrame && isDashable)
-            StartCoroutine(_Dash());
-
-        if (Physics2D.Raycast(groundCheck.position, Vector2.down, 0.1f, lay))
+        if (Physics2D.Raycast(groundCheck.position, Vector2.down, 0.1f, lay) && !dashImitate)
         {
             isDashable = true;
         }
@@ -67,21 +72,25 @@ public class Dash : MonoBehaviour
 
     IEnumerator _Dash()
     {
-        anim.SetBool("dash", true);
         GetComponent<Jump>()?.StopAllCoroutines();
+        dashImitate = true;
         isDashing = true;
         isDashable = false;
-        if (rb.velocity.x < speed)
+        if (Mathf.Abs(rb.velocity.x) <= speed / 1.5f)
             rb.velocity = new Vector2(hor * speed, ver * speed);
         else
-            rb.velocity = new Vector2(hor * rb.velocity.x * 1.1f, ver * speed);
+        {
+            rb.velocity = new Vector2(hor * Mathf.Abs(rb.velocity.x) * 1.2f, ver * speed);
+            isDashable = true;
+        }
         rb.gravityScale = 0;
 
         yield return new WaitForSeconds(duration);
 
-        anim.SetBool("dash", false);
         isDashing = false;
         rb.gravityScale = g;
+        yield return new WaitForSeconds(imitateT - duration);
+        dashImitate = false;
     }
 
     public float GetAxis(KeyControl positive, KeyControl negative)

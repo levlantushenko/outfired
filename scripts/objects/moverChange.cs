@@ -9,7 +9,8 @@ public class moverChange : MonoBehaviour
         Destroy,
         Redirect,
         Boost,
-        Stop
+        Stop,
+        Trigger
     }
     public MChange type;
     public float colorLerpT;
@@ -52,6 +53,9 @@ public class moverChange : MonoBehaviour
                     break;
                 case MChange.Boost:
                     _mover.speed += boost;
+                    break;
+                case MChange.Trigger:
+                    _mover.isMoving = true; ;
                     break;
             }
         }

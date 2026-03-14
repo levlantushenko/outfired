@@ -37,6 +37,10 @@ public class menu : MonoBehaviour
     public float scrollSpd;
     private void Start()
     {
+        if (Application.isMobilePlatform)
+            PlayerPrefs.SetInt("mobile", 0);
+        else
+            PlayerPrefs.SetInt("pc", 0);
         // achievments
         PlayerPrefs.SetInt("complete", 0);
         PlayerPrefs.SetInt("mercy", 0);

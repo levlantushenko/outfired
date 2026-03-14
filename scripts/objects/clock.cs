@@ -18,6 +18,9 @@ public class clock : MonoBehaviour
             yield return new WaitForSeconds(t);
 
             collision.gameObject.transform.position = transform.position;
+            yield return new WaitForEndOfFrame();
+            collision.gameObject.transform.position = transform.position;
+
             Instantiate(eff, transform.position, transform.rotation);
             gameObject.SetActive(false);
         }

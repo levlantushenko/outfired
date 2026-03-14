@@ -16,18 +16,19 @@ public class WallJump : MonoBehaviour
     public float wallFallSpd;
     public Vector2 force;
     Transform groundCheck;
+    public Transform sc;
+    public float coyotT;
 
     Rigidbody2D rb;
     Dash dash;
     float g;
-    Animator anim;
+    float jump = 0;
     void Start()
     {
         groundCheck = GetComponent<Jump>().groundCheck;
         rb = GetComponent<Rigidbody2D>();
         dash = GetComponent<Dash>();
         g = rb.gravityScale;
-        anim = GetComponent<Animator>();
     }
 
     float JumpWallDir;
@@ -39,44 +40,46 @@ public class WallJump : MonoBehaviour
         if (left != null && right == null && !left.gameObject.CompareTag("slash"))
         {
             JumpWallDir = 1;
-            if (!dash.isDashing && !Keyboard.current.downArrowKey.isPressed)
+            if (!dash.isDashing && (!Keyboard.current.downArrowKey.isPressed || !Gamepad.current.leftStick.down.isPressed))
                 rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, wallFallSpd, Mathf.Infinity));
 
-            transform.localScale = new Vector3(1, 1, 1);
-            anim.SetBool("climb", true);
+            sc.localScale = new Vector3(1, 1, 1);
         }
         else if (right != null && left == null && !right.gameObject.CompareTag("slash"))
         {
             JumpWallDir = -1;
-            if (!dash.isDashing && !Keyboard.current.downArrowKey.isPressed)
+            if (!dash.isDashing && (!Keyboard.current.downArrowKey.isPressed || Gamepad.current.buttonWest.wasPressedThisFrame))
                 rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, wallFallSpd, Mathf.Infinity));
-            transform.localScale = new Vector3(-1, 1, 1);
-            anim.SetBool("climb", true);
+            sc.localScale = new Vector3(-1, 1, 1);
         }
         else
         {
             JumpWallDir = 0;
-            anim.SetBool("climb", false);
         }
-        if (!Physics2D.Raycast(groundCheck.position, Vector2.down, 0.2f, lay) &&
-            Keyboard.current.zKey.wasPressedThisFrame && JumpWallDir != 0)
+        if(Keyboard.current.zKey.wasPressedThisFrame || Gamepad.current.buttonWest.wasPressedThisFrame)
+        {
+            jump = 1;
+            Invoke("jumpCancel", coyotT);
+        }
+            if (!Physics2D.Raycast(groundCheck.position, Vector2.down, 0.2f, lay) &&
+            jump == 1 && JumpWallDir != 0)
                 StartCoroutine(Jump());
 
     }
+    void jumpCancel() => jump = 0;
     IEnumerator Jump()
     {
         dash.StopAllCoroutines();
         GetComponent<Jump>()?.StopAllCoroutines();
         rb.gravityScale = g;
-        if(rb.velocity.y < dash.speed)
+        if(!dash.isDashing)
             rb.velocity = new Vector2(force.x * JumpWallDir, force.y);
         else
-            rb.velocity = new Vector2(force.x * JumpWallDir, rb.velocity.y + force.y / 2);
+            rb.velocity = new Vector2(force.x * JumpWallDir * 3, rb.velocity.y);
         JumpWallDir = 0;
         dash.isDashing = true;
         yield return new WaitForSeconds(muteT);
         dash.isDashing = false;
-        anim.SetBool("dash", false);
     }
     private void OnDrawGizmos()
     {

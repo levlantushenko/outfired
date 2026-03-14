@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class tp_cannon : MonoBehaviour
 {
@@ -10,18 +11,7 @@ public class tp_cannon : MonoBehaviour
     public Vector2 axis;
     public float jump;
     public float dash;
-    private void Awake()
-    {
-        input = new _InputSystem();
-        input.Enable();
-        input.normal.Move.performed += ctx => axis = ctx.ReadValue<Vector2>();
-
-        input.normal.Jump.performed += ctx => jump = ctx.ReadValue<float>();
-        input.normal.Jump.canceled += ctx => jump = 0;
-
-        input.normal.Dash.performed += ctx => dash = ctx.ReadValue<float>();
-        input.normal.Dash.canceled += ctx => dash = 0;
-    }
+    
     #endregion
     public Vector2 force;
     public float dist;
@@ -41,7 +31,7 @@ public class tp_cannon : MonoBehaviour
         if (obj == null) return;
         if (Vector2.Distance(transform.position, obj.position) < dist)
         {
-            if (jump != 0 && !shooting)
+            if(!shooting && (Keyboard.current.zKey.isPressed || Gamepad.current.buttonWest.isPressed))
             {
                 shooting = true;
                 StartCoroutine(Shoot());
@@ -50,31 +40,34 @@ public class tp_cannon : MonoBehaviour
     }
     IEnumerator Shoot()
     {
+        Dash dash = obj.GetComponent<Dash>();
         obj.position = transform.position;
-        obj.GetComponent<Dash>().isDashing = false;
-        obj.GetComponent<Animator>().SetBool("dash", false);
+        dash.isDashing = false;
+        dash.dashImitate = false;
         yield return new WaitForEndOfFrame();
+        obj.position = transform.position;
         obj.gameObject.SetActive(false);
         yield return new WaitForSeconds(1);
         src.Play();
-        obj.GetComponent<Dash>().isDashing = true;
+        dash.isDashing = true;
+        dash.dashImitate = false;
         obj.gameObject.SetActive(true);
         obj.GetComponent<Rigidbody2D>().velocity = force;
-        obj.GetComponent<Dash>().isDashable = true;
+        dash.isDashable = true;
 
         float g = obj.GetComponent<Rigidbody2D>().gravityScale;
         obj.GetComponent<Rigidbody2D>().gravityScale = 0;
 
         Instantiate(eff, transform.position, transform.rotation);
         shooting = false;
-        obj.GetComponent<Animator>().SetBool("dash", true);
 
         //step 2
         yield return new WaitForSeconds(stun);
 
-        obj.GetComponent<Animator>().SetBool("dash", false);
         obj.GetComponent<Rigidbody2D>().gravityScale = g;
-        obj.GetComponent<Dash>().isDashing = false;
+        dash.isDashing = false;
+        yield return new WaitForSeconds(dash.imitateT);
+        dash.dashImitate = false;
     }
     private void OnDrawGizmos()
     {

@@ -65,7 +65,6 @@ public class _Control : MonoBehaviour
         
         if (joy.Horizontal != 0 && Mathf.Abs(rb.velocity.x) < speed)
         {
-            Debug.Log("moving!");
             if (rb.velocity.x < speed)
                 rb.AddForce(Vector2.right * joy.Horizontal * speed * 2 * rb.mass, ForceMode2D.Force);
         }
@@ -145,7 +144,6 @@ public class _Control : MonoBehaviour
     /// world cinemachine camera
     public static void getControl(Transform tr, float dist, CinemachineVirtualCamera cam)
     {
-        Debug.Log("control : void caused!");
         List<Unit> enemies = getWeakEnemies(tr, dist);
         if (enemies.Count == 0) return;
         float closestDist = dist;
@@ -163,24 +161,18 @@ public class _Control : MonoBehaviour
         PlayerPrefs.SetInt(enemy.name + " hp", 0);
         cam.Follow = enemy.transform;
         Destroy(tr.gameObject);
-        Debug.Log("we took control!");
     }
     //getting all enemies in range
     public static List<Unit> getWeakEnemies(Transform tr, float dist)
     {
         List<Unit> enemies = new List<Unit>();
         Unit[] enemiesRaw = FindObjectsByType<Unit>(FindObjectsSortMode.None);
-        Debug.Log("enemies on Map : " + enemiesRaw.Count());
         foreach (Unit enemy in enemiesRaw)
         {
             Transform t = enemy.transform;
             if (enemy.hp <= enemy.controlHp && Vector2.Distance(t.position, tr.position) < dist)
                 enemies.Add(enemy);
         }
-        if (enemies.Count != 0)
-            Debug.Log("enemies found!");
-        else
-            Debug.Log("enemies not found!");
         return enemies;
     }
     /// <summary>
@@ -245,7 +237,6 @@ public class _Control : MonoBehaviour
     {
         if (collision.gameObject.layer == 3)
         {
-            Debug.Log("now starring : " + collision.name);
             cam.m_BoundingShape2D = collision.gameObject.GetComponent<Collider2D>();
         }
     }

@@ -19,13 +19,13 @@ public class Jump : MonoBehaviour
     public float pressSaveT;
     public float coyotT;
     Dash dash;
-    Animator anim;
+    BoxCollider2D coll;
     void Start()
     {
+        coll = GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
         g = rb.gravityScale;
         dash = GetComponent<Dash>();
-        anim = GetComponent<Animator>();
     }
 
     bool isGrounded = false;
@@ -34,13 +34,12 @@ public class Jump : MonoBehaviour
     bool coyotChecked;
     void Update()
     {
-        if (Keyboard.current.zKey.wasPressedThisFrame)
+        if (Keyboard.current.zKey.wasPressedThisFrame || Gamepad.current.buttonWest.wasPressedThisFrame)
         {
-            Debug.Log("jump");
             CancelInvoke("pressSaveCancel");
+            Invoke("pressSaveCancel", pressSaveT);
             jump = 1;
         }
-        else if (Keyboard.current.zKey.wasReleasedThisFrame) Invoke("pressSaveCancel", pressSaveT);
 
         if (Physics2D.Raycast(groundCheck.position, Vector2.down, checkLength, lay))
         {
@@ -52,7 +51,7 @@ public class Jump : MonoBehaviour
         else if (!coyotChecked)
             Invoke("CoyotCheck", coyotT);
 
-        if(dash != null && dash.isDashing && isGrounded && jump == 1)
+        if(dash != null && dash.dashImitate && isGrounded && jump == 1)
         {
             StartCoroutine(DashJump());
         }
@@ -62,29 +61,7 @@ public class Jump : MonoBehaviour
             StartCoroutine(_Jump());
         }
         rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -maxFallSpd, Mathf.Infinity));
-        if (!dash.isDashing)
-        {
-            if(rb.velocity.y > 0.5f)
-            {
-                anim.SetBool("rise", true);
-                anim.SetBool("fall", false);
-            }
-            else if(rb.velocity.y < -0.5f)
-            {
-                anim.SetBool("rise", false);
-                anim.SetBool("fall", true);
-            }
-            else
-            {
-                anim.SetBool("rise", false);
-                anim.SetBool("fall", false);
-            }
-        }
-        else
-        {
-            anim.SetBool("rise", false);
-            anim.SetBool("fall", false);
-        }
+        
     }
     void pressSaveCancel() => jump = 0;
     void CoyotCheck() => isGrounded = false;
@@ -92,30 +69,53 @@ public class Jump : MonoBehaviour
     {
         StopCoroutine(_Jump());
         rb.gravityScale = g;
-        rb.velocity = new Vector2(rb.velocity.x * 1.1f, force / 1.5f);
+
+        Vector2 additive = jumpAffect != null ? jumpAffect.velocity : Vector2.zero;
+        rb.velocity = new Vector2(rb.velocity.x * 1.1f, force / 1.5f) + additive;
+
         dash.isDashable = true;
         dash.StopAllCoroutines();
         isGrounded = false;
         jump = 0;
         yield return new WaitForSeconds(dashJumpLength);
-        anim.SetBool("dash", false);
         dash.isDashing = false;
+        dash.dashImitate = false;
     }
     IEnumerator _Jump()
     {
-        jump = 0;
-        rb.velocity = new Vector2(rb.velocity.x, force);
-        isGrounded = false;
-        while(rb.velocity.y >= 0f)
-            yield return new WaitForEndOfFrame();
-        Debug.Log("step 2");
-        rb.gravityScale = 0;
-        rb.velocity = new Vector2(rb.velocity.x, 0);
-        yield return new WaitForSeconds(stillT);
-        rb.gravityScale = g;
-        yield break;
-    }
+        //Vector2 additive = jumpAffect != null ? jumpAffect.velocity : Vector2.zero;
 
+        rb.velocity = new Vector2(rb.velocity.x * 1.05f, rb.velocity.y * force);
+
+        jumpAffect = null;
+
+        while (rb.velocity.y >= 0f)
+            yield return new WaitForEndOfFrame();
+
+
+        rb.gravityScale = 0;
+        rb.velocity = new Vector2(rb.velocity.x, 0f);
+
+        yield return new WaitForSeconds(stillT);
+
+        rb.gravityScale = g;
+    }
+    Rigidbody2D jumpAffect;
+    //private void OnCollisionStay2D(Collision2D collision)
+    //{
+        
+    //    jumpAffect = collision.rigidbody; 
+    //    Debug.Log("---" + jumpAffect.name);
+    //    return;
+    //}
+
+    //private void OnCollisionExit2D(Collision2D collision)
+    //{
+    //    if (collision.rigidbody == jumpAffect)
+    //    {
+    //        jumpAffect = null;
+    //    }
+    //}
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
