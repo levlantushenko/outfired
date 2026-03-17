@@ -18,7 +18,8 @@ public class Attack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Keyboard.current.xKey.wasPressedThisFrame || Gamepad.current.leftTrigger.wasPressedThisFrame)
+        if (Gamepad.all.Count > 0 && Gamepad.current.leftTrigger.wasPressedThisFrame ||
+            InputSystem.devices.Count > 0 && Keyboard.current.xKey.wasPressedThisFrame)
             att = 1;
         if(att==1 && charged)
             StartCoroutine(attack());

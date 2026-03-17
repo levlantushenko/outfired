@@ -60,10 +60,15 @@ public class mover : MonoBehaviour
         
     }
 
-    
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag != "Player") return;
+        collision.gameObject.transform.parent = transform;
+    }
     private IEnumerator OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.tag != "Player") yield break;
+        collision.gameObject.transform.parent = null;
         yield return null;
     }
     public enum dir

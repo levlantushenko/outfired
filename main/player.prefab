@@ -546,7 +546,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   force: 15
-  stillT: 0.125
+  stillT: 0
   maxFallSpd: 100
   checkLength: 1
   lay:

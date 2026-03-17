@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class shattersong : MonoBehaviour
 {
@@ -40,5 +41,13 @@ public class shattersong : MonoBehaviour
 
         yield return new WaitForSeconds(cooldown);
         StartCoroutine(strike());
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.name != "stop") return;
+        StopAllCoroutines();
+        str.SetActive(false);
+        transform.parent.GetComponent<PlayableDirector>().Play();
     }
 }

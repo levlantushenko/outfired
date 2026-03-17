@@ -34,7 +34,8 @@ public class Jump : MonoBehaviour
     bool coyotChecked;
     void Update()
     {
-        if (Keyboard.current.zKey.wasPressedThisFrame || Gamepad.current.buttonWest.wasPressedThisFrame)
+        if ((Gamepad.all.Count > 0 && Gamepad.current.buttonWest.wasPressedThisFrame) ||
+            (InputSystem.devices.Count > 0 && Keyboard.current.zKey.wasPressedThisFrame))
         {
             CancelInvoke("pressSaveCancel");
             Invoke("pressSaveCancel", pressSaveT);
@@ -69,9 +70,7 @@ public class Jump : MonoBehaviour
     {
         StopCoroutine(_Jump());
         rb.gravityScale = g;
-
-        Vector2 additive = jumpAffect != null ? jumpAffect.velocity : Vector2.zero;
-        rb.velocity = new Vector2(rb.velocity.x * 1.1f, force / 1.5f) + additive;
+        rb.velocity = new Vector2(rb.velocity.x * 1.1f, force / 1.5f);
 
         dash.isDashable = true;
         dash.StopAllCoroutines();
@@ -85,18 +84,18 @@ public class Jump : MonoBehaviour
     {
         //Vector2 additive = jumpAffect != null ? jumpAffect.velocity : Vector2.zero;
 
-        rb.velocity = new Vector2(rb.velocity.x * 1.05f, rb.velocity.y * force);
+        rb.velocity = new Vector2(rb.velocity.x * 1.05f, force);
 
         jumpAffect = null;
 
-        while (rb.velocity.y >= 0f)
+        while (rb.velocity.y > 0f)
             yield return new WaitForEndOfFrame();
 
 
         rb.gravityScale = 0;
         rb.velocity = new Vector2(rb.velocity.x, 0f);
-
-        yield return new WaitForSeconds(stillT);
+        if(stillT != 0)
+            yield return new WaitForSeconds(stillT);
 
         rb.gravityScale = g;
     }

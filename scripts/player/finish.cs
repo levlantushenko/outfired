@@ -25,6 +25,7 @@ public class achievments : MonoBehaviour
     {
         if(other.tag != "Player") return;
         canvas.SetActive(true);
+        Time.timeScale = 0;
         switch (SceneManager.GetActiveScene().name)
         {
             case "cave":

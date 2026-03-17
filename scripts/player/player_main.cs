@@ -77,9 +77,10 @@ public class player_main : MonoBehaviour
         {
             StartCoroutine(HighSpeedReact(obstacle));
         }
-        
-        
-        if (Keyboard.current.aKey.wasPressedThisFrame || Gamepad.current.buttonNorth.wasPressedThisFrame)
+
+
+        if ((Gamepad.all.Count > 0 && Gamepad.current.buttonNorth.wasPressedThisFrame) ||
+            (InputSystem.devices.Count > 0 && Keyboard.current.aKey.wasPressedThisFrame))
             GetControl();
 
         float vel = GetComponent<Rigidbody2D>().velocity.magnitude;

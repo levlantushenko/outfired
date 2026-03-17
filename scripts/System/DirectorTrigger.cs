@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Playables;
 
 public class DirectorTrigger : MonoBehaviour
@@ -28,7 +29,8 @@ public class DirectorTrigger : MonoBehaviour
     }
     private void Update()
     {
-        if (jump != 0 && stopable && trigered)
+        if ((Gamepad.all.Count > 0 && Gamepad.current.buttonWest.wasPressedThisFrame ||
+            InputSystem.devices.Count > 0 && Keyboard.current.zKey.wasPressedThisFrame) && stopable && trigered)
         {
             GetComponent<PlayableDirector>()?.Stop();
             GetComponent<Collider2D>().enabled = false;

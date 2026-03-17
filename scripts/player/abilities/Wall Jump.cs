@@ -40,15 +40,16 @@ public class WallJump : MonoBehaviour
         if (left != null && right == null && !left.gameObject.CompareTag("slash"))
         {
             JumpWallDir = 1;
-            if (!dash.isDashing && (!Keyboard.current.downArrowKey.isPressed || !Gamepad.current.leftStick.down.isPressed))
-                rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, wallFallSpd, Mathf.Infinity));
+            if (Gamepad.all.Count > 0 && Gamepad.current.buttonWest.wasPressedThisFrame ||
+            InputSystem.devices.Count > 0 && Keyboard.current.zKey.wasPressedThisFrame && !dash.dashImitate)
 
-            sc.localScale = new Vector3(1, 1, 1);
+                sc.localScale = new Vector3(1, 1, 1);
         }
         else if (right != null && left == null && !right.gameObject.CompareTag("slash"))
         {
             JumpWallDir = -1;
-            if (!dash.isDashing && (!Keyboard.current.downArrowKey.isPressed || Gamepad.current.buttonWest.wasPressedThisFrame))
+            if (Gamepad.all.Count > 0 && Gamepad.current.buttonWest.wasPressedThisFrame ||
+            InputSystem.devices.Count > 0 && Keyboard.current.zKey.wasPressedThisFrame && !dash.dashImitate)
                 rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, wallFallSpd, Mathf.Infinity));
             sc.localScale = new Vector3(-1, 1, 1);
         }
@@ -56,7 +57,8 @@ public class WallJump : MonoBehaviour
         {
             JumpWallDir = 0;
         }
-        if(Keyboard.current.zKey.wasPressedThisFrame || Gamepad.current.buttonWest.wasPressedThisFrame)
+        if (Gamepad.all.Count > 0 && Gamepad.current.buttonWest.wasPressedThisFrame ||
+            InputSystem.devices.Count > 0 && Keyboard.current.zKey.wasPressedThisFrame)
         {
             jump = 1;
             Invoke("jumpCancel", coyotT);
@@ -72,10 +74,10 @@ public class WallJump : MonoBehaviour
         dash.StopAllCoroutines();
         GetComponent<Jump>()?.StopAllCoroutines();
         rb.gravityScale = g;
-        if(!dash.isDashing)
+        if(!dash.dashImitate)
             rb.velocity = new Vector2(force.x * JumpWallDir, force.y);
         else
-            rb.velocity = new Vector2(force.x * JumpWallDir * 3, rb.velocity.y);
+            rb.velocity = new Vector2(force.x * JumpWallDir * 3, force.y);
         JumpWallDir = 0;
         dash.isDashing = true;
         yield return new WaitForSeconds(muteT);
