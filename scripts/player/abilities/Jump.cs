@@ -41,10 +41,10 @@ public class Jump : MonoBehaviour
             Invoke("pressSaveCancel", pressSaveT);
             jump = 1;
         }
-
+        
         if (Physics2D.Raycast(groundCheck.position, Vector2.down, checkLength, lay))
         {
-
+            
             isGrounded = true;
             StopCoroutine(_Jump());
             rb.gravityScale = g;
@@ -82,16 +82,12 @@ public class Jump : MonoBehaviour
     }
     IEnumerator _Jump()
     {
-        //Vector2 additive = jumpAffect != null ? jumpAffect.velocity : Vector2.zero;
-
-        rb.velocity = new Vector2(rb.velocity.x * 1.05f, force);
-
-        jumpAffect = null;
+        rb.velocity = new Vector2(rb.velocity.x * 1.01f, force);
 
         while (rb.velocity.y > 0f)
             yield return new WaitForEndOfFrame();
 
-
+        isGrounded = false;
         rb.gravityScale = 0;
         rb.velocity = new Vector2(rb.velocity.x, 0f);
         if(stillT != 0)
@@ -99,25 +95,6 @@ public class Jump : MonoBehaviour
 
         rb.gravityScale = g;
     }
-    Rigidbody2D jumpAffect;
-    //private void OnCollisionStay2D(Collision2D collision)
-    //{
-        
-    //    jumpAffect = collision.rigidbody; 
-    //    Debug.Log("---" + jumpAffect.name);
-    //    return;
-    //}
-
-    //private void OnCollisionExit2D(Collision2D collision)
-    //{
-    //    if (collision.rigidbody == jumpAffect)
-    //    {
-    //        jumpAffect = null;
-    //    }
-    //}
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawLine(groundCheck.position, groundCheck.position - new Vector3(0, checkLength, 0));
-    }
+    
+    
 }

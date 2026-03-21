@@ -12,6 +12,7 @@ using UnityEngine.Localization.SmartFormat.Extensions;
 /// </summary>
 public class Dash : MonoBehaviour
 {
+    public GameObject eff;
     public float speed;
     public float duration;
     public LayerMask lay;
@@ -81,8 +82,10 @@ public class Dash : MonoBehaviour
         else
         {
             rb.velocity = new Vector2(hor * Mathf.Abs(rb.velocity.x) * 1.2f, ver * speed);
-            isDashable = true;
         }
+        float z = Mathf.Atan2(ver, hor) * Mathf.Rad2Deg;
+        Instantiate(eff, transform.position, Quaternion.Euler(0, 0, z));
+
         rb.gravityScale = 0;
 
         yield return new WaitForSeconds(duration);

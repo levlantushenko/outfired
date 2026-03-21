@@ -48,8 +48,8 @@ public class maestro : MonoBehaviour
     public GameObject oldCL;
     public GameObject chaser;
 
-
-
+    Animator anim;
+    SpriteRenderer spr;
     Transform pl;
     bool started = false;
     bool isAttacking = false;
@@ -57,6 +57,8 @@ public class maestro : MonoBehaviour
     private void Start()
     {
         pl = GameObject.Find("player").transform;
+        anim = GetComponent<Animator>();
+        spr = GetComponent<SpriteRenderer>();
     }
     void Update()
     {
@@ -115,6 +117,7 @@ public class maestro : MonoBehaviour
     IEnumerator Wind()
     {
         isAttacking = true;
+        anim.SetTrigger("strike");
 
         horWarn.transform.position = new Vector2(horWarn.transform.position.x, pl.position.y);
         horWind.transform.position = new Vector2(horWind.transform.position.x, pl.position.y);
@@ -144,8 +147,9 @@ public class maestro : MonoBehaviour
     IEnumerator Strings()
     {
         isAttacking = true;
+        anim.SetTrigger("strike");
 
-        for(int i = 0; i < strWarns.Length; i++)
+        for (int i = 0; i < strWarns.Length; i++)
         {
             strWarns[i].position = pl.position;
             strWarns[i].rotation = Quaternion.Euler(0, 0, Random.Range(0, 180));
@@ -180,11 +184,13 @@ public class maestro : MonoBehaviour
         {
             curPoint++;
             transform.position = tpPoints[1].position;
+            spr.flipX = false;
         }
         else
         {
             curPoint--;
             transform.position = tpPoints[0].position;
+            spr.flipX = true;
         }
         Instantiate(tpEff, transform.position, transform.rotation);
         yield return new WaitForSeconds(0.5f);

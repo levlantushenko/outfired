@@ -160,7 +160,7 @@ public class _Control : MonoBehaviour
         enemy.isControlled = true;
         PlayerPrefs.SetInt(enemy.name + " hp", 0);
         cam.Follow = enemy.transform;
-        Destroy(tr.gameObject);
+        tr.gameObject.SetActive(false);    
     }
     //getting all enemies in range
     public static List<Unit> getWeakEnemies(Transform tr, float dist)
@@ -254,7 +254,9 @@ public class _Control : MonoBehaviour
     public static void Explode(GameObject origin, Transform tr, float force, GameObject expl, Vector2 axis)
     {
         Vector2 bakedForce = axis * force;
-        GameObject obj = Instantiate(origin, tr.position, tr.rotation);
+        GameObject obj = FindAnyObjectByType<player_main>(FindObjectsInactive.Include).gameObject;
+        obj.transform.position = tr.position;
+        obj.SetActive(true);
         GameObject _expl = Instantiate(expl, tr.position, tr.rotation);
         Destroy(tr.gameObject);
         obj.GetComponent<Rigidbody2D>().velocity = bakedForce;

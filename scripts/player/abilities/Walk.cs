@@ -45,10 +45,11 @@ public class Walk : MonoBehaviour
             if(rb.velocity.x < max)
                 newXspeed = Mathf.MoveTowards(rb.velocity.x, max * hor, acceleration * Time.deltaTime);
             else if(isGrounded)
-                newXspeed = Mathf.MoveTowards(rb.velocity.x, max * hor, groundDeceleration * Time.deltaTime);
+                newXspeed = Mathf.MoveTowards(rb.velocity.x, max * hor, acceleration * Time.deltaTime);
             else if(!isGrounded)
                 newXspeed = Mathf.MoveTowards(rb.velocity.x, max * hor, airDeceleration * Time.deltaTime);
-
+            if(isGrounded && rb.velocity.x > max)
+                newXspeed = Mathf.MoveTowards(rb.velocity.x, max * hor, groundDeceleration * Time.deltaTime);
             if (normal(rb.velocity.x) != normal(hor) || isGrounded)
                 rb.velocity = new Vector2(newXspeed, rb.velocity.y);
 
@@ -76,4 +77,5 @@ public class Walk : MonoBehaviour
             return val / Math.Abs(val);
         else return 0;
     }
+    
 }

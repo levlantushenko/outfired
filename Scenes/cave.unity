@@ -369,6 +369,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 105973860}
     m_Modifications:
+    - target: {fileID: 3494107645491196873, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6330587673565600197, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -506,6 +510,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 105973860}
     m_Modifications:
+    - target: {fileID: 3494107645491196873, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6330587673565600197, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -589,6 +597,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 105973860}
     m_Modifications:
+    - target: {fileID: 3494107645491196873, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6330587673565600197, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -1070,6 +1082,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 105973860}
     m_Modifications:
+    - target: {fileID: 3494107645491196873, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6330587673565600197, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -2487,6 +2503,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 105973860}
     m_Modifications:
+    - target: {fileID: 3494107645491196873, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6330587673565600197, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -2631,6 +2651,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 105973860}
     m_Modifications:
+    - target: {fileID: 3494107645491196873, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6330587673565600197, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -3390,6 +3414,7 @@ GameObject:
   - component: {fileID: 256863648}
   - component: {fileID: 256863650}
   - component: {fileID: 256863649}
+  - component: {fileID: 256863651}
   m_Layer: 2
   m_Name: spike (1)
   m_TagString: slash
@@ -3509,6 +3534,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &256863651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 256863647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efe85915046f2b04eb7adee5e77fab5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  attSpeed: 0
 --- !u!1 &261304794
 GameObject:
   m_ObjectHideFlags: 0
@@ -3953,6 +3992,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 105973860}
     m_Modifications:
+    - target: {fileID: 3494107645491196873, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6330587673565600197, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -4504,6 +4547,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1724185397}
     m_Modifications:
+    - target: {fileID: 3494107645491196873, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6330587673565600197, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -4577,6 +4624,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1724185397}
     m_Modifications:
+    - target: {fileID: 3494107645491196873, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6330587673565600197, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -5382,6 +5433,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1724185397}
     m_Modifications:
+    - target: {fileID: 3494107645491196873, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6330587673565600197, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -5623,6 +5678,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 105973860}
     m_Modifications:
+    - target: {fileID: 3494107645491196873, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6330587673565600197, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -5774,6 +5833,7 @@ GameObject:
   - component: {fileID: 442892621}
   - component: {fileID: 442892623}
   - component: {fileID: 442892622}
+  - component: {fileID: 442892624}
   m_Layer: 2
   m_Name: spike(Clone) (5)
   m_TagString: slash
@@ -5893,6 +5953,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &442892624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 442892620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efe85915046f2b04eb7adee5e77fab5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  attSpeed: 0
 --- !u!1 &446053710
 GameObject:
   m_ObjectHideFlags: 0
@@ -7168,6 +7242,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 105973860}
     m_Modifications:
+    - target: {fileID: 3494107645491196873, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6330587673565600197, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -7744,6 +7822,7 @@ GameObject:
   - component: {fileID: 601693848}
   - component: {fileID: 601693850}
   - component: {fileID: 601693849}
+  - component: {fileID: 601693851}
   m_Layer: 2
   m_Name: spike (2)
   m_TagString: slash
@@ -7863,6 +7942,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &601693851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 601693847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efe85915046f2b04eb7adee5e77fab5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  attSpeed: 0
 --- !u!1001 &606073151
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7871,6 +7964,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 105973860}
     m_Modifications:
+    - target: {fileID: 3494107645491196873, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6330587673565600197, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -8247,6 +8344,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 105973860}
     m_Modifications:
+    - target: {fileID: 3494107645491196873, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6330587673565600197, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -8673,6 +8774,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 105973860}
     m_Modifications:
+    - target: {fileID: 3494107645491196873, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6330587673565600197, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -10651,6 +10756,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1724185397}
     m_Modifications:
+    - target: {fileID: 3494107645491196873, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6330587673565600197, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -11000,6 +11109,7 @@ GameObject:
   - component: {fileID: 878558413}
   - component: {fileID: 878558415}
   - component: {fileID: 878558414}
+  - component: {fileID: 878558416}
   m_Layer: 2
   m_Name: spike(Clone) (3)
   m_TagString: slash
@@ -11119,6 +11229,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &878558416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 878558412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efe85915046f2b04eb7adee5e77fab5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  attSpeed: 0
 --- !u!1 &889803194
 GameObject:
   m_ObjectHideFlags: 0
@@ -11379,6 +11503,7 @@ GameObject:
   - component: {fileID: 899957457}
   - component: {fileID: 899957459}
   - component: {fileID: 899957458}
+  - component: {fileID: 899957460}
   m_Layer: 2
   m_Name: spike(Clone) (9)
   m_TagString: slash
@@ -11498,6 +11623,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &899957460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 899957456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efe85915046f2b04eb7adee5e77fab5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  attSpeed: 0
 --- !u!1 &904451589
 GameObject:
   m_ObjectHideFlags: 0
@@ -12993,6 +13132,7 @@ GameObject:
   - component: {fileID: 1048459193}
   - component: {fileID: 1048459195}
   - component: {fileID: 1048459194}
+  - component: {fileID: 1048459196}
   m_Layer: 2
   m_Name: spike(Clone) (7)
   m_TagString: slash
@@ -13112,6 +13252,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1048459196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1048459192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efe85915046f2b04eb7adee5e77fab5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  attSpeed: 0
 --- !u!1001 &1057100356
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13425,6 +13579,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1724185397}
     m_Modifications:
+    - target: {fileID: 3494107645491196873, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6330587673565600197, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -14092,6 +14250,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 105973860}
     m_Modifications:
+    - target: {fileID: 3494107645491196873, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6330587673565600197, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -15088,6 +15250,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 105973860}
     m_Modifications:
+    - target: {fileID: 3494107645491196873, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6330587673565600197, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -15240,6 +15406,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 105973860}
     m_Modifications:
+    - target: {fileID: 3494107645491196873, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6330587673565600197, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -15740,6 +15910,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 105973860}
     m_Modifications:
+    - target: {fileID: 3494107645491196873, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6330587673565600197, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -15810,6 +15984,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 246922782}
     m_Modifications:
+    - target: {fileID: 3494107645491196873, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6330587673565600197, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -15884,6 +16062,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 246922782}
     m_Modifications:
+    - target: {fileID: 3494107645491196873, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6330587673565600197, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -16440,6 +16622,7 @@ GameObject:
   - component: {fileID: 1373773718}
   - component: {fileID: 1373773720}
   - component: {fileID: 1373773719}
+  - component: {fileID: 1373773721}
   m_Layer: 2
   m_Name: spike(Clone)
   m_TagString: slash
@@ -16559,6 +16742,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1373773721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1373773717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efe85915046f2b04eb7adee5e77fab5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  attSpeed: 0
 --- !u!1 &1405824270
 GameObject:
   m_ObjectHideFlags: 0
@@ -17129,6 +17326,7 @@ GameObject:
   - component: {fileID: 1434199185}
   - component: {fileID: 1434199187}
   - component: {fileID: 1434199186}
+  - component: {fileID: 1434199188}
   m_Layer: 2
   m_Name: spike(Clone) (11)
   m_TagString: slash
@@ -17248,6 +17446,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1434199188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1434199184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efe85915046f2b04eb7adee5e77fab5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  attSpeed: 0
 --- !u!1 &1434463748
 GameObject:
   m_ObjectHideFlags: 0
@@ -17343,6 +17555,7 @@ GameObject:
   - component: {fileID: 1438439320}
   - component: {fileID: 1438439322}
   - component: {fileID: 1438439321}
+  - component: {fileID: 1438439323}
   m_Layer: 2
   m_Name: spike(Clone) (6)
   m_TagString: slash
@@ -17462,6 +17675,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1438439323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1438439319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efe85915046f2b04eb7adee5e77fab5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  attSpeed: 0
 --- !u!1 &1446444727
 GameObject:
   m_ObjectHideFlags: 0
@@ -17707,6 +17934,7 @@ GameObject:
   - component: {fileID: 1456437593}
   - component: {fileID: 1456437595}
   - component: {fileID: 1456437594}
+  - component: {fileID: 1456437596}
   m_Layer: 2
   m_Name: spike(Clone) (1)
   m_TagString: slash
@@ -17826,6 +18054,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1456437596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1456437592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efe85915046f2b04eb7adee5e77fab5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  attSpeed: 0
 --- !u!1 &1469009402
 GameObject:
   m_ObjectHideFlags: 0
@@ -18099,6 +18341,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 105973860}
     m_Modifications:
+    - target: {fileID: 3494107645491196873, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6330587673565600197, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -18478,6 +18724,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 105973860}
     m_Modifications:
+    - target: {fileID: 3494107645491196873, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6330587673565600197, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -18918,6 +19168,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 105973860}
     m_Modifications:
+    - target: {fileID: 3494107645491196873, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6330587673565600197, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -18988,6 +19242,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 105973860}
     m_Modifications:
+    - target: {fileID: 3494107645491196873, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6330587673565600197, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -19174,6 +19432,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 105973860}
     m_Modifications:
+    - target: {fileID: 3494107645491196873, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6330587673565600197, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -19244,6 +19506,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 105973860}
     m_Modifications:
+    - target: {fileID: 3494107645491196873, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6330587673565600197, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -24488,6 +24754,7 @@ GameObject:
   - component: {fileID: 1605207721}
   - component: {fileID: 1605207723}
   - component: {fileID: 1605207722}
+  - component: {fileID: 1605207724}
   m_Layer: 2
   m_Name: spike (3)
   m_TagString: slash
@@ -24607,6 +24874,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1605207724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1605207720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efe85915046f2b04eb7adee5e77fab5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  attSpeed: 0
 --- !u!1 &1613570038
 GameObject:
   m_ObjectHideFlags: 0
@@ -24835,6 +25116,7 @@ GameObject:
   - component: {fileID: 1644054746}
   - component: {fileID: 1644054748}
   - component: {fileID: 1644054747}
+  - component: {fileID: 1644054749}
   m_Layer: 2
   m_Name: spike (6)
   m_TagString: slash
@@ -24954,6 +25236,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1644054749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1644054745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efe85915046f2b04eb7adee5e77fab5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  attSpeed: 0
 --- !u!1 &1656707573
 GameObject:
   m_ObjectHideFlags: 0
@@ -24999,6 +25295,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 105973860}
     m_Modifications:
+    - target: {fileID: 3494107645491196873, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6330587673565600197, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -25077,6 +25377,7 @@ GameObject:
   - component: {fileID: 1687028516}
   - component: {fileID: 1687028518}
   - component: {fileID: 1687028517}
+  - component: {fileID: 1687028519}
   m_Layer: 2
   m_Name: spike (4)
   m_TagString: slash
@@ -25196,6 +25497,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1687028519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1687028515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efe85915046f2b04eb7adee5e77fab5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  attSpeed: 0
 --- !u!1 &1693789520
 GameObject:
   m_ObjectHideFlags: 0
@@ -25260,6 +25575,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 246922782}
     m_Modifications:
+    - target: {fileID: 3494107645491196873, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6330587673565600197, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -25419,6 +25738,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 105973860}
     m_Modifications:
+    - target: {fileID: 3494107645491196873, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6330587673565600197, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -25893,6 +26216,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 246922782}
     m_Modifications:
+    - target: {fileID: 3494107645491196873, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6330587673565600197, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -26186,6 +26513,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1724185397}
     m_Modifications:
+    - target: {fileID: 3494107645491196873, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6330587673565600197, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -26511,6 +26842,7 @@ GameObject:
   - component: {fileID: 1856886533}
   - component: {fileID: 1856886535}
   - component: {fileID: 1856886534}
+  - component: {fileID: 1856886536}
   m_Layer: 2
   m_Name: spike (5)
   m_TagString: slash
@@ -26630,6 +26962,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1856886536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1856886532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efe85915046f2b04eb7adee5e77fab5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  attSpeed: 0
 --- !u!1 &1870713289
 GameObject:
   m_ObjectHideFlags: 0
@@ -26641,6 +26987,7 @@ GameObject:
   - component: {fileID: 1870713290}
   - component: {fileID: 1870713292}
   - component: {fileID: 1870713291}
+  - component: {fileID: 1870713293}
   m_Layer: 2
   m_Name: spike(Clone) (4)
   m_TagString: slash
@@ -26760,6 +27107,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1870713293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870713289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efe85915046f2b04eb7adee5e77fab5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  attSpeed: 0
 --- !u!1001 &1871732895
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26768,6 +27129,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1724185397}
     m_Modifications:
+    - target: {fileID: 3494107645491196873, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6330587673565600197, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -26849,6 +27214,7 @@ GameObject:
   - component: {fileID: 1875046857}
   - component: {fileID: 1875046859}
   - component: {fileID: 1875046858}
+  - component: {fileID: 1875046860}
   m_Layer: 2
   m_Name: spike(Clone) (10)
   m_TagString: slash
@@ -26968,6 +27334,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1875046860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1875046856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efe85915046f2b04eb7adee5e77fab5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  attSpeed: 0
 --- !u!1 &1893987524
 GameObject:
   m_ObjectHideFlags: 0
@@ -28237,6 +28617,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 105973860}
     m_Modifications:
+    - target: {fileID: 3494107645491196873, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6330587673565600197, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -28307,6 +28691,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 105973860}
     m_Modifications:
+    - target: {fileID: 3494107645491196873, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6330587673565600197, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -28526,6 +28914,7 @@ GameObject:
   - component: {fileID: 2022817312}
   - component: {fileID: 2022817314}
   - component: {fileID: 2022817313}
+  - component: {fileID: 2022817315}
   m_Layer: 2
   m_Name: spike(Clone) (2)
   m_TagString: slash
@@ -28645,6 +29034,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2022817315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2022817311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efe85915046f2b04eb7adee5e77fab5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  attSpeed: 0
 --- !u!224 &2037891116 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3652579541369613885, guid: 710901d75b40a634cb7e83e651eb6686, type: 3}
@@ -28658,6 +29061,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 105973860}
     m_Modifications:
+    - target: {fileID: 3494107645491196873, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6330587673565600197, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -28728,6 +29135,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 246922782}
     m_Modifications:
+    - target: {fileID: 3494107645491196873, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6330587673565600197, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -28952,6 +29363,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 105973860}
     m_Modifications:
+    - target: {fileID: 3494107645491196873, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6330587673565600197, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -29030,6 +29445,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 105973860}
     m_Modifications:
+    - target: {fileID: 3494107645491196873, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6330587673565600197, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -30191,6 +30610,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: -5.9854736
       objectReference: {fileID: 0}
+    - target: {fileID: 6110109898203910309, guid: da399345d727e4d4295a6751d022f25f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -7.5272217
+      objectReference: {fileID: 0}
     - target: {fileID: 6731628472831389492, guid: da399345d727e4d4295a6751d022f25f, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -30221,11 +30644,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7646191749666392648, guid: da399345d727e4d4295a6751d022f25f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -13.30892
+      value: -15.43299
       objectReference: {fileID: 0}
     - target: {fileID: 7646191749666392648, guid: da399345d727e4d4295a6751d022f25f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.3547
+      value: -5.35284
       objectReference: {fileID: 0}
     - target: {fileID: 7646191749666392648, guid: da399345d727e4d4295a6751d022f25f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -30308,6 +30731,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1416874627}
     m_Modifications:
+    - target: {fileID: 3494107645491196873, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6330587673565600197, guid: e0a4b6331589faf468e0f5197b8c5be5, type: 3}
       propertyPath: m_RootOrder
       value: -1
