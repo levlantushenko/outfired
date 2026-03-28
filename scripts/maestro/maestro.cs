@@ -3,8 +3,15 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
-public class maestro : MonoBehaviour
+public class maestro : AudioManager
 {
+    [Tooltip("songs for each stage :" +
+        "\n 0 - entrance" +
+        "\n 1 - phase 1" +
+        "\n 2 - phase 2" +
+        "\n 3 - ending")]
+    public AudioClip[] clips;
+    public Collider2D entrance;
     public float afterWait;
     public float hp;
     public GameObject hitEff;
@@ -62,7 +69,12 @@ public class maestro : MonoBehaviour
     }
     void Update()
     {
-        if(started && !isAttacking)
+        if (entrance.IsTouching(pl.GetComponent<Collider2D>()))
+        {
+            entrance.gameObject.SetActive(false);
+            LerpAudio(1, 0, clips[0]);
+        }
+        if (started && !isAttacking)
             switch (Random.Range(0, 3))
             {
                 case 0:
@@ -110,8 +122,12 @@ public class maestro : MonoBehaviour
         {
             hp -= 5;
         }
-        started = true;
-        hp--;
+        if (!started)
+        {
+            started = true;
+            LerpAudio(0.5f, 0, clips[1]);
+            Debug.Log(src.clip);
+        }
     }
     #region phase 1
     IEnumerator Wind()
@@ -197,14 +213,17 @@ public class maestro : MonoBehaviour
         isAttacking = false;
     }
     #endregion
-
+    //294 377
     IEnumerator phase2Start()
     {
+
         isAttacking = true;
         Instantiate(tpEff, transform.position, transform.rotation);
 
         GetComponent<SpriteRenderer>().enabled = false;
         GetComponent<Collider2D>().enabled = false;
+
+        LerpAudio(0.5f, 0, clips[2]);
 
         yield return new WaitForSeconds(phase2StartT);
 
@@ -214,4 +233,5 @@ public class maestro : MonoBehaviour
         oldCL.SetActive(false);
         newCL.SetActive(true);
     }
+    public void End() => LerpAudio(2, 2, clips[3]);
 }

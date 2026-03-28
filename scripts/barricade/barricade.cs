@@ -5,10 +5,9 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.UI;
 
-public class barricade : MonoBehaviour
+public class barricade : AudioManager
 {
     [Header("Sounds")]
-    public AudioSource world;
     public AudioClip main;
     public AudioClip laserSd;
     public AudioClip rocketSd;
@@ -38,11 +37,8 @@ public class barricade : MonoBehaviour
     public GameObject hpBar;
     private IEnumerator Start()
     {
-        Joystick joy = new Joystick();
-        
-        world.clip = main;
-        world.Play();
         source = GetComponent<AudioSource>();
+        LerpAudio(0.5f, 0, main);
         startHp = hp;
         startScale = transform.localScale;
         pixPerHp = hpBar.transform.localScale.x / hp;

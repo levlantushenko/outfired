@@ -547,7 +547,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   force: 15
-  stillT: 0
+  stillT: 0.15
   maxFallSpd: 100
   checkLength: 1
   lay:
@@ -590,6 +590,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba3ae7fcd3a711742b4e15f39eccd6d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weakEff: {fileID: 2656394348914218496, guid: 19c5f56bd7ff9c243b45e730113464b9, type: 3}
   hp: 3
   knockback: 0
   deathEff: {fileID: 7327882760250055820, guid: 843751c67614eee4481293df4de3882c, type: 3}

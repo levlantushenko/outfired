@@ -5,6 +5,7 @@ using UnityEngine.Playables;
 
 public class shattersong : MonoBehaviour
 {
+
     public GameObject str;
     public GameObject warn;
     public float delay;
@@ -45,9 +46,11 @@ public class shattersong : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.name != "stop") return;
+        if (collision.gameObject.name != "shattersong stop") return;
         StopAllCoroutines();
+        GetComponent<Animator>().SetTrigger("stop");
         str.SetActive(false);
+        warn.SetActive(false);
         transform.parent.GetComponent<PlayableDirector>().Play();
     }
 }

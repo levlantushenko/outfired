@@ -25,7 +25,7 @@ public class hp_interface : MonoBehaviour
         {
             icon.fillAmount = Mathf.MoveTowards(icon.fillAmount, pl.hp / maxHP, iconFillSpd * Time.deltaTime);
             text.text = "" + pl.hp;
-            if (pl.hp == 1)
+            if (pl.hp <= 1)
                 text.color = attackedCol;
         }
         else

@@ -12,7 +12,7 @@ public class player_main : MonoBehaviour
     {
         checkPP();
     }
-
+    public GameObject weakEff;
     [Header("----- death -----")]
     [Space]
     public float hp;
@@ -64,9 +64,28 @@ public class player_main : MonoBehaviour
         crystal = GameObject.Find("Crystal").transform;
 
     }
-
+    Transform curEn = null;
+    Transform foundEn = null;
     void Update()
     {
+        Transform foundEn = null;
+        if(_Control.getWeakEnemy(transform, dist) != null)
+            foundEn = _Control.getWeakEnemy(transform, dist).transform;
+
+        if (curEn != null && Vector2.Distance(curEn.position, transform.position) > dist || foundEn != curEn && curEn != null)
+        {
+            Destroy(curEn.Find(weakEff.name).gameObject);
+            curEn = null;
+        }
+        if(foundEn != null && foundEn != curEn)
+        {
+            GameObject eff = Instantiate(weakEff, foundEn.position, foundEn.rotation);
+            eff.transform.parent = foundEn;
+            eff.transform.localScale = Vector2.one;
+            eff.name = weakEff.name;
+            curEn = foundEn;
+        }
+
         if (Vector2.Distance(transform.position, crystal.position) > crystSpotDist)
             FindAnyObjectByType<CinemachineVirtualCamera>().Follow = transform;
         else
@@ -167,6 +186,7 @@ public class player_main : MonoBehaviour
     }
     public void Death()
     {
+        hp = 0;
         PlayerPrefs.SetInt("died", 0);
         Instantiate(deathEff, transform.position, transform.rotation);
         PlayerPrefs.SetInt("time", (int)Time.timeAsDouble);

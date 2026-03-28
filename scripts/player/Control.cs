@@ -144,18 +144,9 @@ public class _Control : MonoBehaviour
     /// world cinemachine camera
     public static void getControl(Transform tr, float dist, CinemachineVirtualCamera cam)
     {
-        List<Unit> enemies = getWeakEnemies(tr, dist);
-        if (enemies.Count == 0) return;
-        float closestDist = dist;
-        Unit enemy = null;
-        for (int i = 0; i < enemies.Count; i++)
-        {
-            if (Vector3.Distance(enemies[i].transform.position, tr.position) < closestDist)
-            {
-                closestDist = Vector3.Distance(enemies[i].transform.position, tr.position);
-                enemy = enemies[i];
-            }
-        }
+        Unit enemy = getWeakEnemy(tr, dist);
+        if (enemy == null) return;
+        float closestDist = dist; 
         enemy.Invoke("BombTime", 1f);
         enemy.isControlled = true;
         PlayerPrefs.SetInt(enemy.name + " hp", 0);
@@ -163,7 +154,7 @@ public class _Control : MonoBehaviour
         tr.gameObject.SetActive(false);    
     }
     //getting all enemies in range
-    public static List<Unit> getWeakEnemies(Transform tr, float dist)
+    public static Unit getWeakEnemy(Transform tr, float dist)
     {
         List<Unit> enemies = new List<Unit>();
         Unit[] enemiesRaw = FindObjectsByType<Unit>(FindObjectsSortMode.None);
@@ -173,7 +164,17 @@ public class _Control : MonoBehaviour
             if (enemy.hp <= enemy.controlHp && Vector2.Distance(t.position, tr.position) < dist)
                 enemies.Add(enemy);
         }
-        return enemies;
+        float closestDist = dist;
+        Unit _enemy = null;
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            if (Vector2.Distance(enemies[i].transform.position, tr.position) < closestDist)
+            {
+                closestDist = Vector3.Distance(enemies[i].transform.position, tr.position);
+                _enemy = enemies[i];
+            }
+        }
+        return _enemy;
     }
     /// <summary>
     /// Dashes player in direction

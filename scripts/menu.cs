@@ -35,8 +35,12 @@ public class menu : MonoBehaviour
     int totalActs = 1;
     int prevAct = 0;
     public float scrollSpd;
+
+    Animator anim;
+
     private void Start()
     {
+        anim = GetComponent<Animator>();
         if (Application.isMobilePlatform)
             PlayerPrefs.SetInt("mobile", 0);
         else
@@ -117,5 +121,7 @@ public class menu : MonoBehaviour
             else acts[i].transform.GetChild(0).gameObject.SetActive(false);
         }
     }
-    
+    public void PlayAnim() => anim.SetTrigger("play");
+    public void MenuAnim() => anim.SetTrigger("menu");
+    public void AmmunitionAnim() => anim.SetTrigger("ammunition");
 }

@@ -9,7 +9,7 @@ public class refill : MonoBehaviour
     public GameObject refillEff;
     private IEnumerator OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.name != "player" && 
+        if (collision.gameObject.name != "player" &&
             !collision.gameObject.GetComponent<Dash>().isDashable) yield return null;
 
         collision.gameObject.GetComponent<Dash>().isDashable = true;

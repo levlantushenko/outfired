@@ -85,7 +85,10 @@ public class Jump : MonoBehaviour
         rb.velocity = new Vector2(rb.velocity.x * 1.01f, force);
 
         while (rb.velocity.y > 0f)
+        {
             yield return new WaitForEndOfFrame();
+        }
+            
 
         isGrounded = false;
         rb.gravityScale = 0;
