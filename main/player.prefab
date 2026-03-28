@@ -591,6 +591,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weakEff: {fileID: 2656394348914218496, guid: 19c5f56bd7ff9c243b45e730113464b9, type: 3}
+  instEff: {fileID: 4042631814365660760, guid: 09479327137721545820507d97955e15, type: 3}
   hp: 3
   knockback: 0
   deathEff: {fileID: 7327882760250055820, guid: 843751c67614eee4481293df4de3882c, type: 3}

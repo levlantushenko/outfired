@@ -13,6 +13,7 @@ public class player_main : MonoBehaviour
         checkPP();
     }
     public GameObject weakEff;
+    public GameObject instEff;
     [Header("----- death -----")]
     [Space]
     public float hp;
@@ -146,7 +147,7 @@ public class player_main : MonoBehaviour
     }
     public void GetControl()
     {
-        _Control.getControl(transform, dist, conf.GetComponent<CinemachineVirtualCamera>());
+        _Control.getControl(transform, dist, conf.GetComponent<CinemachineVirtualCamera>(), instEff);
     }
     
     private IEnumerator OnTriggerEnter2D(Collider2D collision)

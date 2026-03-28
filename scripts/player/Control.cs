@@ -142,15 +142,21 @@ public class _Control : MonoBehaviour
     /// finds opponents in distance
     /// <param name="cam"></param>
     /// world cinemachine camera
-    public static void getControl(Transform tr, float dist, CinemachineVirtualCamera cam)
+    public static void getControl(Transform tr, float dist, CinemachineVirtualCamera cam, GameObject instEff)
     {
         Unit enemy = getWeakEnemy(tr, dist);
         if (enemy == null) return;
-        float closestDist = dist; 
+        Instantiate(instEff, enemy.transform.transform.position, Quaternion.identity);
+
+        if (enemy.transform.Find("weakness eff") != null)
+            Destroy(enemy.transform.Find("weakness eff").gameObject);
+
         enemy.Invoke("BombTime", 1f);
         enemy.isControlled = true;
+
         PlayerPrefs.SetInt(enemy.name + " hp", 0);
         cam.Follow = enemy.transform;
+
         tr.gameObject.SetActive(false);    
     }
     //getting all enemies in range
