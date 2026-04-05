@@ -6,7 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Playables;
 
-public class diver : MonoBehaviour
+public class diver : AudioManager
 {
     Transform pl;
     Animator anim;
@@ -59,7 +59,8 @@ public class diver : MonoBehaviour
     public AudioClip[] attackSfx;
     public AudioClip deathSfx;
     public AudioClip stunSfx;
-    public AudioSource music;
+    public AudioClip clip;
+    public AudioClip main;
 
     AudioSource source;
     Collider2D fallEffColl;
@@ -67,13 +68,17 @@ public class diver : MonoBehaviour
     void Start()
     {
         splashEff.transform.GetChild(0).GetComponent<Collider2D>().enabled = false;
-        music.Play();
+
+
         source = GetComponent<AudioSource>();
         startPos = transform.position;
         fallEffColl = fallEff.GetComponentInChildren<Collider2D>();
         anim = GetComponent<Animator>();
         pl = FindAnyObjectByType<player_main>().transform;
         defHeight = transform.position.y;
+
+        LerpAudio(0.5f, 0.5f, clip);
+        RepeatAudio(0, 75.5f);
     }
     bool isAttacking = false;
     // Update is called once per frame
@@ -367,12 +372,14 @@ public class diver : MonoBehaviour
         }
         anim.SetTrigger("jump");
         yield return new WaitForSeconds(jumpDelay);
+        GetComponent<Collider2D>().enabled = false;
         //jump
         while (Mathf.Abs(transform.position.y - airPoint.y) > 0.1f)
         {
             transform.position = Vector2.Lerp(transform.position, airPoint, flySpeed * Time.deltaTime);
             yield return new WaitForNextFrameUnit();
         }
+        GetComponent<Collider2D>().enabled = true;
         //fall
         yield return new WaitForSeconds(diveDelay);
         switch (Random.Range(0, 2))
@@ -440,10 +447,7 @@ public class diver : MonoBehaviour
         diveDelay /= rageImprovement;
         platRegenT *= rageImprovement;
         isAttacking = false;
-        while(1.05 - music.pitch > 0.001)
-        {
-            music.pitch = Mathf.Lerp(music.pitch, 1.05f, 10);
-        }
+        RepeatAudio(75.5f, 112);
     }
     IEnumerator stun()
     {
@@ -482,6 +486,7 @@ public class diver : MonoBehaviour
         source.clip = deathSfx;
         source.Play();
         source.loop = true;
+        LerpAudio(1, 1, main);
     }
     
 }

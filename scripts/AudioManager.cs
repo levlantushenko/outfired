@@ -55,7 +55,8 @@ public class AudioManager : MonoBehaviour
     {
         for(; ; )
         {
-            if(src.time == topT || src.time < bottomT)
+            Debug.Log("loop");
+            if(src.time >= topT || src.time < bottomT)
                 src.time = bottomT;
             yield return new WaitForEndOfFrame();
         }

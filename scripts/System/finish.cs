@@ -15,4 +15,9 @@ public class finish : MonoBehaviour
             SceneManager.LoadScene("menu");
         }
     }
+    public void _change()
+    {
+        PlayerPrefs.SetInt(act, 0);
+        SceneManager.LoadScene("menu");
+    }
 }

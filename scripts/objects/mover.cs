@@ -63,11 +63,13 @@ public class mover : MonoBehaviour
     private void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject.tag != "Player") return;
+        Debug.Log("Mover keeping");
         collision.gameObject.transform.parent = transform;
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.tag != "Player") return;
+        Debug.Log("Mover released");
         collision.gameObject.transform.parent = null;
     }
     public enum dir

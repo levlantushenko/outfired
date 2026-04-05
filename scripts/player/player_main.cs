@@ -69,6 +69,7 @@ public class player_main : MonoBehaviour
     Transform foundEn = null;
     void Update()
     {
+        #region instillation effect
         Transform foundEn = null;
         if(_Control.getWeakEnemy(transform, dist) != null)
             foundEn = _Control.getWeakEnemy(transform, dist).transform;
@@ -86,11 +87,15 @@ public class player_main : MonoBehaviour
             eff.name = weakEff.name;
             curEn = foundEn;
         }
+        #endregion
 
-        if (Vector2.Distance(transform.position, crystal.position) > crystSpotDist)
-            FindAnyObjectByType<CinemachineVirtualCamera>().Follow = transform;
-        else
-            FindAnyObjectByType<CinemachineVirtualCamera>().Follow = crystal;
+        if(crystal != null)
+        {
+            if (Vector2.Distance(transform.position, crystal.position) > crystSpotDist)
+                FindAnyObjectByType<CinemachineVirtualCamera>().Follow = transform;
+            else
+                FindAnyObjectByType<CinemachineVirtualCamera>().Follow = crystal;
+        }
 
         RaycastHit2D obstacle = Physics2D.Raycast(transform.position, rb.velocity.normalized, rb.velocity.magnitude);
         if (Physics2D.RaycastAll(transform.position, rb.velocity.normalized, rb.velocity.magnitude) != null)

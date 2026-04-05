@@ -93,7 +93,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   t: 2
-  final: {r: 0.5566038, g: 0.5566038, b: 0.5566038, a: 1}
+  final: {r: 1, g: 1, b: 1, a: 1}
   eff: {fileID: 601735589381423498, guid: dd581adc81c1dd645804b1fa27414259, type: 3}
 --- !u!95 &4177107822487299853
 Animator:
@@ -190,7 +190,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 2ecb71602d3958948a01503ba101ec80, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9056604, g: 0.9056604, b: 0.9056604, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

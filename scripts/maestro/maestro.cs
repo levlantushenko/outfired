@@ -200,13 +200,13 @@ public class maestro : AudioManager
         {
             curPoint++;
             transform.position = tpPoints[1].position;
-            spr.flipX = false;
+            spr.flipX = true;
         }
         else
         {
             curPoint--;
             transform.position = tpPoints[0].position;
-            spr.flipX = true;
+            spr.flipX = false;
         }
         Instantiate(tpEff, transform.position, transform.rotation);
         yield return new WaitForSeconds(0.5f);
