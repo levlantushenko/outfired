@@ -21,10 +21,13 @@ public class Dash : MonoBehaviour
     public Color hasDash;
     public Color noDash;
     Rigidbody2D rb;
+    AudioSource src;
+    public AudioClip clip;
     float g;
 
     void Start()
     {
+        src = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody2D>();
         g = rb.gravityScale;
     }
@@ -36,15 +39,15 @@ public class Dash : MonoBehaviour
     float hor;
     void Update()
     {
-        if (!Application.isMobilePlatform && Gamepad.all.Count == 0)
-        {
-            hor = GetAxis(Keyboard.current.rightArrowKey, Keyboard.current.leftArrowKey);
-            ver = GetAxis(Keyboard.current.upArrowKey, Keyboard.current.downArrowKey);
-        }
-        else if (Gamepad.all.Count != 0 && !Application.isMobilePlatform)
+        if (Gamepad.all.Count > 0)
         {
             hor = Mathf.Round(Gamepad.current.leftStick.value.x * 2) / 2;
             ver = Mathf.Round(Gamepad.current.leftStick.value.y * 2) / 2;
+        }
+        else if (InputSystem.devices.Count > 0)
+        {
+            hor = GetAxis(Keyboard.current.rightArrowKey, Keyboard.current.leftArrowKey);
+            ver = GetAxis(Keyboard.current.upArrowKey, Keyboard.current.downArrowKey);
         }
         if (Application.isMobilePlatform)
         {
@@ -53,8 +56,9 @@ public class Dash : MonoBehaviour
         }
         if (hor == 0 && ver == 0)
             hor = 1;
+        Debug.Log(hor + "|" + ver);
         if(Gamepad.all.Count != 0)
-            if(Gamepad.current.rightTrigger.wasPressedThisFrame && isDashable)
+            if (Gamepad.current.rightTrigger.wasPressedThisFrame && isDashable)
                 StartCoroutine(_Dash());
 
         if (InputSystem.devices.Count != 0)
@@ -73,11 +77,18 @@ public class Dash : MonoBehaviour
 
     IEnumerator _Dash()
     {
+        if(GetComponent<Jump>() != null)
+            GetComponent<Jump>().jump = 0;
+        Debug.Log(hor + " _ " + ver);
         GetComponent<Jump>()?.StopAllCoroutines();
         dashImitate = true;
         isDashing = true;
         isDashable = false;
-        if (Mathf.Abs(rb.velocity.x) <= speed / 1.5f)
+        src.clip = clip;
+        src.pitch += UnityEngine.Random.Range(-0.1f, 0.1f);
+        src.pitch = Mathf.Clamp(src.pitch, 1.1f, 1.3f);
+        src.Play();
+        if (Mathf.Abs(rb.velocity.x) <= speed * 0.8f)
             rb.velocity = new Vector2(hor * speed, ver * speed);
         else
         {

@@ -9,7 +9,6 @@ public class AudioManager : MonoBehaviour
     private void Awake()
     {
         src = GameObject.Find("Music").GetComponent<AudioSource>();
-        Debug.Log(src);
     } 
     public void Play(AudioClip clip)
     {
@@ -55,7 +54,6 @@ public class AudioManager : MonoBehaviour
     {
         for(; ; )
         {
-            Debug.Log("loop");
             if(src.time >= topT || src.time < bottomT)
                 src.time = bottomT;
             yield return new WaitForEndOfFrame();

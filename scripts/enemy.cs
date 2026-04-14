@@ -20,13 +20,11 @@ public class enemy : MonoBehaviour
 
             collision.gameObject.GetComponent<Collider2D>().enabled = false;
             hp -= collision.gameObject.GetComponent<slash>().damage;
-            achievments.pacifist = false;
         }
         if (collision.gameObject.tag == "explosion")
         {
             hp -= 5;
             PlayerPrefs.SetInt(name + " hp", (int)hp);
-            achievments.pacifist = false;
         }
         if (hp <= 0) Destroy(gameObject);
     }

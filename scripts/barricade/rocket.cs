@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class rocket : MonoBehaviour
 {
+    public GameObject exception;
     public float startVel;
     public float speed;
     public float spinTime;
@@ -37,7 +38,7 @@ public class rocket : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.layer == 3 || collision.gameObject.name.Contains("striker") || collision.gameObject.name.Contains("Barricade")) return;
+        if(collision.gameObject.layer == 3 || collision.gameObject.name == "R-1 Barricade" || collision.gameObject.name.Contains("striker")) return;
         
         Instantiate(eff, transform.position, Quaternion.identity);
         Destroy(gameObject);

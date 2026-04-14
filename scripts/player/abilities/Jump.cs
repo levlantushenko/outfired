@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 /// <summary>
 /// allows to jump and dashJump
 /// </summary>
@@ -29,11 +30,15 @@ public class Jump : MonoBehaviour
     }
 
     bool isGrounded = false;
-    bool isJumping;
-    float jump;
+    public float jump;
     bool coyotChecked;
+    float hor = 0;
     void Update()
     {
+        if (Gamepad.all.Count > 0)
+            hor = Gamepad.current.leftStick.value.x;
+        else
+            hor = GetAxis(Keyboard.current.rightArrowKey, Keyboard.current.leftArrowKey);
         if ((Gamepad.all.Count > 0 && Gamepad.current.buttonWest.wasPressedThisFrame) ||
             (InputSystem.devices.Count > 0 && Keyboard.current.zKey.wasPressedThisFrame))
         {
@@ -66,11 +71,19 @@ public class Jump : MonoBehaviour
     }
     void pressSaveCancel() => jump = 0;
     void CoyotCheck() => isGrounded = false;
+    public float GetAxis(KeyControl positive, KeyControl negative)
+    {
+        if (positive.isPressed)
+            return 1;
+        else if (negative.isPressed)
+            return -1;
+        else return 0;
+    }
     IEnumerator DashJump()
     {
         StopCoroutine(_Jump());
         rb.gravityScale = g;
-        rb.velocity = new Vector2(rb.velocity.x * 1.1f, force / 1.5f);
+        rb.velocity = new Vector2(dash.speed * 1.2f * hor, force / 1.5f);
 
         dash.isDashable = true;
         dash.StopAllCoroutines();

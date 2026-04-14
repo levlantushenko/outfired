@@ -1,0 +1,78 @@
+apply plugin: 'com.android.application'
+
+dependencies {
+    implementation project(':unityLibrary')
+    }
+
+android {
+    ndkPath "**NDKPATH**"
+
+    compileSdkVersion **APIVERSION**
+    buildToolsVersion '**BUILDTOOLS**'
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    defaultConfig {
+        minSdkVersion **MINSDKVERSION**
+        targetSdkVersion **TARGETSDKVERSION**
+        applicationId '**APPLICATIONID**'
+        ndk {
+            abiFilters **ABIFILTERS**
+        }
+        versionCode **VERSIONCODE**
+        versionName '**VERSIONNAME**'
+    }
+
+    aaptOptions {
+        noCompress = ['.unity3d', '.ress', '.resource', '.obb', '.bundle', '.unityexp'] + unityStreamingAssets.tokenize(', ')
+        ignoreAssetsPattern = "!.svn:!.git:!.ds_store:!*.scc:!CVS:!thumbs.db:!picasa.ini:!*~"
+    }
+
+    lintOptions {
+        abortOnError false
+        checkReleaseBuilds false
+    }
+
+    signingConfigs {
+        release {
+            storeFile file('E:/MyGames/fireless/user.keystore')
+            storePassword 'kingleV7!+'
+            keyAlias 'lev1on'
+            keyPassword 'kingleV7!+'
+        }
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled **MINIFY_DEBUG**
+            proguardFiles getDefaultProguardFile('proguard-android.txt')
+            signingConfig signingConfigs.release
+            jniDebuggable true
+        }
+        release {
+            minifyEnabled **MINIFY_RELEASE**
+            proguardFiles getDefaultProguardFile('proguard-android.txt')
+            signingConfig signingConfigs.release
+        }
+    }
+
+    packagingOptions {
+        doNotStrip '*/armeabi-v7a/*.so'
+        doNotStrip '*/arm64-v8a/*.so'
+    }
+
+    bundle {
+        language {
+            enableSplit = false
+        }
+        density {
+            enableSplit = false
+        }
+        abi {
+            enableSplit = true
+        }
+    }
+}

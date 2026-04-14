@@ -42,7 +42,7 @@ public class striker: enemy
         eff.SetActive(true);
         Invoke("effDisable", 0.5f);
         collException = Instantiate(rocket, shootPos.position, transform.rotation);
-
+        collException.GetComponent<rocket>().exception = gameObject;
         yield return new WaitForSeconds(cooldown);
         if(Physics2D.OverlapBoxAll(fireArea.position, areaScale, 0).Contains(pl.gameObject.GetComponent<Collider2D>()))
             StartCoroutine(EUpdate());

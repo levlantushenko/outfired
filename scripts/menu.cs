@@ -67,4 +67,5 @@ public class menu : MonoBehaviour
     public void PlayAnim() => anim.SetTrigger("play");
     public void MenuAnim() => anim.SetTrigger("menu");
     public void AmmunitionAnim() => anim.SetTrigger("ammunition");
+    public void Clear() => PlayerPrefs.DeleteAll();
 }

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2054733826754876861}
   - component: {fileID: 3014171522082661263}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -151,7 +151,7 @@ GameObject:
   - component: {fileID: -62241642874659569}
   - component: {fileID: -7336004462537766499}
   - component: {fileID: 1222002987240773071}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: rocket
   m_TagString: slash
   m_Icon: {fileID: 0}
@@ -238,6 +238,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9c62c9e261148c43950ced2632956ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  exception: {fileID: 0}
   startVel: 5
   speed: 20
   spinTime: 0.5

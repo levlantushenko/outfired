@@ -419,6 +419,7 @@ GameObject:
   - component: {fileID: 7038624745809980311}
   - component: {fileID: 8108258409766946637}
   - component: {fileID: 3539856077687493045}
+  - component: {fileID: 2187977625564822588}
   m_Layer: 1
   m_Name: player
   m_TagString: Player
@@ -443,7 +444,7 @@ Transform:
   - {fileID: 2183771553580038619}
   - {fileID: 8412660087902398259}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &8584859748216562992
 Rigidbody2D:
@@ -486,6 +487,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attObj: {fileID: 7010554425687495850, guid: 530fc0b921af0c642a0861a0405fad4e, type: 3}
   attPos: {fileID: 7242983312264892752}
+  clip: {fileID: 8300000, guid: 41eef6d6ec1607d49840bf857fdb3e9b, type: 3}
 --- !u!114 &3565916325793000572
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -530,6 +532,7 @@ MonoBehaviour:
   trail: {fileID: 8149216091342988511}
   hasDash: {r: 1, g: 1, b: 1, a: 1}
   noDash: {r: 0, g: 0.98021173, b: 1, a: 1}
+  clip: {fileID: 8300000, guid: b9d68e71872974c4190437ee5911ab0f, type: 3}
   imitateT: 0.4
   isDashing: 0
   dashImitate: 0
@@ -546,7 +549,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 405b211e76b7880428bf5eaf8067056b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 15
+  force: 12
   stillT: 0.15
   maxFallSpd: 100
   checkLength: 1
@@ -557,6 +560,7 @@ MonoBehaviour:
   dashJumpLength: 0.2
   pressSaveT: 0.2
   coyotT: 0.2
+  jump: 0
 --- !u!114 &8979173616856525866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -571,7 +575,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   max: 10
   acceleration: 30
-  groundDeceleration: 30
+  groundDeceleration: 60
   airDeceleration: 20
   groundCheck: {fileID: 5307184560833828326}
   lay:
@@ -799,6 +803,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &2187977625564822588
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6941273551317526572}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7614383597241562476
 GameObject:
   m_ObjectHideFlags: 0

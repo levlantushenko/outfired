@@ -32,15 +32,14 @@ public class Walk : MonoBehaviour
     private void Update()
     {
         bool isGrounded = Physics2D.Raycast(groundCheck.position, Vector2.down, 0.1f, lay);
-
+        
         if (dashAble)
             isDashing = dash.isDashing;
         if (!isDashing) {
-            if (!Application.isMobilePlatform && Gamepad.all.Count == 0)
-                hor = GetAxis(Keyboard.current.rightArrowKey, Keyboard.current.leftArrowKey);
-            else
+            if (Gamepad.all.Count > 0)
                 hor = Gamepad.current.leftStick.value.x;
-
+            else
+                hor = GetAxis(Keyboard.current.rightArrowKey, Keyboard.current.leftArrowKey);
             float newXspeed = 0;
             if(rb.velocity.x < max)
                 newXspeed = Mathf.MoveTowards(rb.velocity.x, max * hor, acceleration * Time.deltaTime);

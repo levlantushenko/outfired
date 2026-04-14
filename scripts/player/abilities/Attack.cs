@@ -7,10 +7,13 @@ public class Attack : MonoBehaviour
 {
     public GameObject attObj;
     public Transform attPos;
+    AudioSource src;
+    public AudioClip clip;
     float rech = 1;
 
     void Start()
     {
+        src = GetComponent<AudioSource>();
         rech = attObj.GetComponent<slash>().attSpeed;
     }
     bool charged = true;
@@ -27,6 +30,11 @@ public class Attack : MonoBehaviour
     }
     IEnumerator attack()
     {
+        src.clip = clip;
+        src.pitch += Random.Range(-0.1f, 0.1f);
+        src.pitch = Mathf.Clamp(src.pitch, 1.1f, 1.3f);
+        src.Play();
+        
         att = 0;
         Transform cur = Instantiate(attObj, attPos).transform;
         cur.position = attPos.position;

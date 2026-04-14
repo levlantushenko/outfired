@@ -40,16 +40,14 @@ public class WallJump : MonoBehaviour
         if (left != null && right == null && !left.gameObject.CompareTag("slash"))
         {
             JumpWallDir = 1;
-            if (Gamepad.all.Count > 0 && Gamepad.current.buttonWest.wasPressedThisFrame ||
+            if (
             InputSystem.devices.Count > 0 && Keyboard.current.zKey.wasPressedThisFrame && !dash.dashImitate)
-
                 sc.localScale = new Vector3(1, 1, 1);
         }
         else if (right != null && left == null && !right.gameObject.CompareTag("slash"))
         {
             JumpWallDir = -1;
-            if (Gamepad.all.Count > 0 && Gamepad.current.buttonWest.wasPressedThisFrame ||
-            InputSystem.devices.Count > 0 && Keyboard.current.zKey.wasPressedThisFrame && !dash.dashImitate)
+            if (InputSystem.devices.Count > 0 && Keyboard.current.zKey.wasPressedThisFrame && !dash.dashImitate)
                 rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, wallFallSpd, Mathf.Infinity));
             sc.localScale = new Vector3(-1, 1, 1);
         }

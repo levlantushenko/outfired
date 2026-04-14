@@ -39,10 +39,12 @@ Material:
     m_Floats:
     - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
-    - _opacity: 0.5
+    - _noiseRate: 0.58
+    - _opacity: 0.93
     - _scale: 1
-    - _t: 0.5
+    - _t: 0.21
     m_Colors:
+    - _MainColor: {r: 0, g: 2, b: 1.3120174, a: 0}
     - _color: {r: 0, g: 0, b: 0, a: 1}
     - _speed: {r: 0, g: -2, b: 0, a: 0}
   m_BuildTextureStacks: []

@@ -44,7 +44,7 @@ public class _interface : MonoBehaviour
     public Text tmp;
     void Update()
     {
-        if (Keyboard.current.escapeKey.wasPressedThisFrame)
+        if (InputSystem.devices.Count > 0 && Keyboard.current.escapeKey.wasPressedThisFrame)
         {
             if (Application.isMobilePlatform)
                 panels[0].SetActive(!panels[0].activeInHierarchy);

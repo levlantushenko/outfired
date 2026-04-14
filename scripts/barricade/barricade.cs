@@ -58,8 +58,6 @@ public class barricade : AudioManager
     {
         if (dead) return;
         if (hp <= lowHp) hpBar.GetComponent<Image>().color = Color.yellow;
-        if (!isAngry && hp <= startHp / 2)
-            Anger();
         hpBar.transform.localScale = new Vector3(hp * pixPerHp, hpBar.transform.localScale.y);
         Transform pl = FindAnyObjectByType<player_main>().transform;
         if (!anim.GetCurrentAnimatorStateInfo(0).IsName("laserBeam"))
@@ -90,15 +88,7 @@ public class barricade : AudioManager
     }
     void end() => GameObject.Find("roof fall").GetComponent<PlayableDirector>()?.Play();
 
-    public void Anger()
-    {
-        
-        rocketAmount *= 2;
-        rocketRech /= 2;
-        laserTime = 3;
-        rocketSpeed *= 2;
-        isAngry = true;
-    }
+    
     float rocketTime = 3;
     public float rocketSpeed;
     public IEnumerator RocketAttack()
@@ -110,6 +100,7 @@ public class barricade : AudioManager
         {
             source.Play();
             rocket _rocket = Instantiate(rocket, rocketLauncher.position, Quaternion.Euler(0, 0, degrees)).GetComponent<rocket>();
+            _rocket.exception = gameObject;
             _rocket.speed = rocketSpeed;
             degrees += dgrDelta;
             yield return new WaitForSeconds(rocketRech);
@@ -138,7 +129,6 @@ public class barricade : AudioManager
             collision.gameObject.GetComponent<Collider2D>().enabled = false;
             hp -= 1;
             StartCoroutine(Hit());
-            achievments.pacifist = false;
         }
     }
 

@@ -24,7 +24,6 @@ public class cosmo : MonoBehaviour
         if (follow)
         {
             RaycastHit2D ray = Physics2D.Raycast(transform.position, (pl.position - transform.position).normalized, Mathf.Infinity, 0);
-            Debug.Log(ray.point);
             line.SetPosition(1, ray.point - (Vector2)transform.position);
         }
 
@@ -32,7 +31,6 @@ public class cosmo : MonoBehaviour
     // Update is called once per frame
     IEnumerator attack()
     {
-        Debug.Log("catched " + pl.name);
         line.SetColors(aim, aim);
         follow = true;
         yield return new WaitForSeconds(aimT);

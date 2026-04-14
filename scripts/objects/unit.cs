@@ -14,42 +14,6 @@ public class Unit : MonoBehaviour
     public float dash;
     public float attack;
     public float control;
-    private void Start()
-    {
-        input = new _InputSystem();
-        input.Enable();
-
-        input.normal.Move.performed += ctx => axis = ctx.ReadValue<Vector2>();
-        input.normal.Move.canceled += ctx => axis = Vector2.zero;
-
-        input.normal.Jump.performed += ctx => jump = ctx.ReadValue<float>();
-        input.normal.Jump.canceled += ctx => jump = 0;
-
-        input.normal.Dash.performed += ctx => dash = ctx.ReadValue<float>();
-        input.normal.Dash.canceled += ctx => dash = 0;
-
-        input.normal.Attack.performed += ctx => attack = ctx.ReadValue<float>();
-        input.normal.Attack.canceled += ctx => attack = 0;
-
-        input.normal.Control.performed += ctx => control = ctx.ReadValue<float>();
-        input.normal.Control.canceled += ctx => control = 0;
-
-        originSc = transform.localScale;
-        anim = GetComponent<Animator>();
-        conf = FindAnyObjectByType<CinemachineConfiner2D>();
-        if(hp != 0)
-            pixPerHp = hpBar.transform.localScale.x / hp;
-        else
-            pixPerHp = 0;
-        startScale = transform.localScale;
-
-        rb = GetComponent<Rigidbody2D>();
-
-        if (PlayerPrefs.HasKey(name + " hp"))
-            hp = PlayerPrefs.GetInt(name + " hp");
-        else PlayerPrefs.SetInt(name + " hp", (int)hp);
-    }
-    #endregion
 
     public GameObject hitEff;
     public enum enTypes
@@ -89,6 +53,51 @@ public class Unit : MonoBehaviour
 
     float HPold;
     Transform _enemy;
+
+    
+    private void Start()
+    {
+        input = new _InputSystem();
+        input.Enable();
+
+        input.normal.Move.performed += ctx => axis = ctx.ReadValue<Vector2>();
+        input.normal.Move.canceled += ctx => axis = Vector2.zero;
+
+        input.normal.Jump.performed += ctx => jump = ctx.ReadValue<float>();
+        input.normal.Jump.canceled += ctx => jump = 0;
+
+        input.normal.Dash.performed += ctx => dash = ctx.ReadValue<float>();
+        input.normal.Dash.canceled += ctx => dash = 0;
+
+        input.normal.Attack.performed += ctx => attack = ctx.ReadValue<float>();
+        input.normal.Attack.canceled += ctx => attack = 0;
+
+        input.normal.Control.performed += ctx => control = ctx.ReadValue<float>();
+        input.normal.Control.canceled += ctx => control = 0;
+
+        originSc = transform.localScale;
+        anim = GetComponent<Animator>();
+        conf = FindAnyObjectByType<CinemachineConfiner2D>();
+        if(hp != 0)
+            pixPerHp = hpBar.transform.localScale.x / hp;
+        else
+            pixPerHp = 0;
+        startScale = transform.localScale;
+
+        rb = GetComponent<Rigidbody2D>();
+
+        if (PlayerPrefs.HasKey(name + " hp"))
+            hp = PlayerPrefs.GetInt(name + " hp");
+        else PlayerPrefs.SetInt(name + " hp", (int)hp);
+        if(hp <= 0)
+        {
+            anim.SetBool("isAlive", false);
+            GetComponent<Collider2D>().enabled = false;
+            GetComponent<Rigidbody2D>().simulated = false;
+        }
+            
+    }
+    #endregion
     private void Update()
     {
         HPold = hp;
@@ -204,13 +213,11 @@ public class Unit : MonoBehaviour
             collision.gameObject.GetComponent<Collider2D>().enabled = false;   
             hp -= collision.gameObject.GetComponent<slash>().damage;
             StartCoroutine(Hit());
-            achievments.pacifist = false;
         }
         if(collision.gameObject.tag == "explosion")
         {
             hp -= 5;
             PlayerPrefs.SetInt(name + " hp", (int)hp);
-            achievments.pacifist = false;
         }
     }
     

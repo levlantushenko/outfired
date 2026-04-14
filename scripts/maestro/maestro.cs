@@ -63,6 +63,8 @@ public class maestro : AudioManager
     int phase = 1;
     private void Start()
     {
+        oldCL.SetActive(true);
+        newCL.SetActive(false);
         pl = GameObject.Find("player").transform;
         anim = GetComponent<Animator>();
         spr = GetComponent<SpriteRenderer>();
@@ -126,7 +128,6 @@ public class maestro : AudioManager
         {
             started = true;
             LerpAudio(0.5f, 0, clips[1]);
-            Debug.Log(src.clip);
         }
     }
     #region phase 1
@@ -136,9 +137,9 @@ public class maestro : AudioManager
         anim.SetTrigger("strike");
 
         horWarn.transform.position = new Vector2(horWarn.transform.position.x, pl.position.y);
-        horWind.transform.position = new Vector2(horWind.transform.position.x, pl.position.y);
+        horWind.transform.position = new Vector3(horWind.transform.position.x, pl.position.y, horWind.transform.position.z);
         verWarn.transform.position = new Vector2(pl.position.x, verWarn.transform.position.y);
-        verWind.transform.position = new Vector2(pl.position.x, verWind.transform.position.y);
+        verWind.transform.position = new Vector3(pl.position.x, verWind.transform.position.y, horWind.transform.position.z);
 
         horWarn.SetActive(true);
         verWarn.SetActive(true);

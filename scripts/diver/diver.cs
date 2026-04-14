@@ -119,7 +119,6 @@ public class diver : AudioManager
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag != "slash" || collision.gameObject.name.Contains("diver")) return;
-        Debug.Log("collide");
         GameObject eff = Instantiate(hitEff, transform.position, Quaternion.Euler(0, -90, 0));
         float effDir = _Control.normal(transform.position.x - collision.transform.position.x);
         eff.transform.localScale = Vector3.one;
@@ -129,12 +128,10 @@ public class diver : AudioManager
         hp--;
         if(hp == rageHp)
         {
-            Debug.Log("rage");
             StopAllCoroutines();
             StartCoroutine(rage());
         } else if (stunPoints.Contains(hp))
         {
-            Debug.Log("stun");
             StopAllCoroutines();
             StartCoroutine(stun());
         }else if (hp <= 0)
@@ -342,7 +339,6 @@ public class diver : AudioManager
         {
             transform.position = new Vector2(Mathf.MoveTowards(transform.position.x, pointX, slashSpd * Time.deltaTime),
                 transform.position.y);
-            Debug.Log(Time.deltaTime);
             yield return new WaitForNextFrameUnit();
         }
         //ending attack
